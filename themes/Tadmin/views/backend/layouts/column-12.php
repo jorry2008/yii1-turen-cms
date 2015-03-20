@@ -69,11 +69,8 @@
                     <li class="dropdown notifications-menu">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o">
-                            </i>
-                            <span class="label label-warning">
-                                10
-                            </span>
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">
@@ -85,8 +82,7 @@
                                     <li>
                                         <!-- start notification -->
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua">
-                                            </i>
+                                            <i class="fa fa-users text-aqua"></i>
                                             5 new members joined today
                                         </a>
                                     </li>
@@ -94,9 +90,7 @@
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="#">
-                                    View all
-                                </a>
+                                <a href="#">查看所有</a>
                             </li>
                         </ul>
                     </li>
@@ -104,16 +98,11 @@
                     <li class="dropdown tasks-menu">
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-flag-o">
-                            </i>
-                            <span class="label label-danger">
-                                9
-                            </span>
+                            <i class="fa fa-flag-o"></i>
+                            <span class="label label-danger">9</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">
-                                You have 9 tasks
-                            </li>
+                            <li class="header">土人消息</li>
                             <li>
                                 <!-- Inner menu: contains the tasks -->
                                 <ul class="menu">
@@ -123,9 +112,7 @@
                                             <!-- Task title and progress text -->
                                             <h3>
                                                 Design some buttons
-                                                <small class="pull-right">
-                                                    20%
-                                                </small>
+                                                <small class="pull-right">20%</small>
                                             </h3>
                                             <!-- The progress bar -->
                                             <div class="progress xs">
@@ -143,9 +130,7 @@
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="#">
-                                    View all tasks
-                                </a>
+                                <a href="#">查看所有</a>
                             </li>
                         </ul>
                     </li>
@@ -217,10 +202,14 @@
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active">
-                    <a href="#"><span>仪表盘</span></a>
+                    <a href="#">
+	                    <i class="fa fa-dashboard"></i>
+	                    <span>仪表盘</span>
+                    </a>
 				</li>
 				<li>
 					<a href="#">
+						<i class="fa fa-list-ul"></i>
 						<span>栏目管理</span>
 						<i class="fa fa-angle-left pull-right"></i>
 					</a>
@@ -256,15 +245,14 @@
         </section>
         <!-- /.sidebar -->
     </aside>
+    
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>
-                    Optional description
-                </small>
+                <?php echo $this->pageTitle;?>
+                <small>Optional description</small>
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -286,6 +274,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- To the right -->

@@ -8,7 +8,7 @@ class DefaultController extends TBackendController
 {
 	public function actionIndex()
 	{
-		
+		$this->pageTitle = '仪表盘';
 		
 		
 		

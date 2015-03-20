@@ -4,9 +4,15 @@
 	padding-bottom: 5px;
 	padding-top: 5px;
 }
-
-
-
+.skin-blue .main-header .logo {
+	background-color: #3c8dbc;
+}
+.content-header {
+	padding-top: 10px;
+}
+.content-header > .breadcrumb {
+	top: 10px;
+}
 
 
 
