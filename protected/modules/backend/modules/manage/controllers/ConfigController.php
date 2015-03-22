@@ -93,23 +93,53 @@ class ConfigController extends TBackendController
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Setting']))
-		{
-			$model->attributes=$_POST['Setting'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		//$params = Yii::app()->request->getParam();
+		$message = array();
+		if(isset($_POST)) {
+			$model = Setting::model();
+			foreach ($_POST as $key=>$value) {
+				if(!empty($key)) {
+					$config = $model->checkConfig($key);
+					if($config !== null) {//有则更新
+						$config->value = $value;
+						if(!$config->save()) {
+							$message['error'] = $config->getError();
+						}
+					} else {//无则创建
+						//序列化处理
+						$model = new Setting();
+						$model->code = 'any';
+						$model->ckey = $key;
+						$model->value = $value;
+						$model->serialized = 1;
+						
+						if(!$model->save()) {
+							$message['error'] = $model->getError();
+						}
+					}
+				} else {
+					//空键
+				}
+			}
 		}
-
-		$this->render('update',array(
-				'model'=>$model,
-		));
+		
+		//直接执行admin控制器
+		//$this->forward('admin');
+		
+		//消息通知
+		if(empty($message)) {
+			$message['success'] = '配置项保存成功!';
+		}
+		
+		
+		//生成新的缓存文件
+		
+		
+		
+		//跳转到控制器
+		$this->redirect(array('admin'));
 	}
 
 	/**
@@ -142,13 +172,16 @@ class ConfigController extends TBackendController
 	 */
 	public function actionAdmin()
 	{
-		$model=new Setting('search');
+		$model=new Setting();
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Setting']))
-			$model->attributes=$_GET['Setting'];
-
+		$configs = $model->findAll();
+		
+		$configArrs = array();
+		foreach ($configs as $config)
+			$configArrs[$config->ckey] = $config->attributes;
+		
 		$this->render('admin',array(
-				'model'=>$model,
+			'configs'=>$configArrs,
 		));
 	}
 

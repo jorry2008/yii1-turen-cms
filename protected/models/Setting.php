@@ -28,13 +28,13 @@ class Setting extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('code, key, value, serialized', 'required'),
+			array('code, ckey, value, serialized', 'required'),
 			array('serialized', 'numerical', 'integerOnly'=>true),
 			array('code', 'length', 'max'=>32),
-			array('key', 'length', 'max'=>64),
+			array('ckey', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, key, value, serialized', 'safe', 'on'=>'search'),
+			array('id, code, ckey, value, serialized', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Setting extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'code' => 'Code',
-			'key' => 'Key',
+			'ckey' => 'Key',
 			'value' => 'Value',
 			'serialized' => 'Serialized',
 		);
@@ -83,7 +83,7 @@ class Setting extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('code',$this->code,true);
-		$criteria->compare('key',$this->key,true);
+		$criteria->compare('ckey',$this->ckey,true);
 		$criteria->compare('value',$this->value,true);
 		$criteria->compare('serialized',$this->serialized);
 
@@ -91,7 +91,17 @@ class Setting extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
+	
+	/**
+	 * 检测数据库里是否有对应的配置项
+	 * @param string $key 配置项名
+	 * @return Object or Null 
+	 */
+	public function checkConfig($key)
+	{
+		return $this->model()->find('ckey=:key', array(':key'=>$key));
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

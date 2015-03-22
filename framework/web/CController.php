@@ -865,7 +865,7 @@ class CController extends CBaseController
 	public function renderPartial($view,$data=null,$return=false,$processOutput=false)
 	{
 		if(($viewFile=$this->getViewFile($view))!==false)
-		{fb($viewFile);
+		{
 			$output=$this->renderFile($viewFile,$data,true);
 			if($processOutput)
 				$output=$this->processOutput($output);

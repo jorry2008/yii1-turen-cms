@@ -14,6 +14,16 @@
 	top: 10px;
 }
 
-
+.form-label {
+	height: 34px;
+	line-height: 34px;
+	margin-bottom: 0;
+}
+.form-group {
+	margin-bottom: 5px;
+}
+.form-group .help-block {
+	clear: both;
+}
 
 

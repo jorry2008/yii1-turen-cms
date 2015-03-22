@@ -202,7 +202,7 @@
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active">
-                	<?php echo CHtml::link('<i class="fa fa-dashboard"></i><span>仪表盘</span>',array('/backend/manage/default/index'));?></li>
+                	<?php echo CHtml::link('<i class="fa fa-dashboard"></i><span>仪表盘</span>',array('/backend/manage/default/index'));?>
 				</li>
 				<li>
 					<a href="#">
