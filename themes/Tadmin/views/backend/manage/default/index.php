@@ -1,5 +1,6 @@
+
 <!-- COLOR PALETTE -->
-          <div class='box box-default'>
+          <div class='box box-primary'>
             <div class='box-header with-border'>
               <h3 class='box-title'><i class="fa fa-tag"></i> Color Palette</h3>
             </div>

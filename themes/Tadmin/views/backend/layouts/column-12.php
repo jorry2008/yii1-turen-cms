@@ -202,10 +202,7 @@
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active">
-                    <a href="#">
-	                    <i class="fa fa-dashboard"></i>
-	                    <span>仪表盘</span>
-                    </a>
+                	<?php echo CHtml::link('<i class="fa fa-dashboard"></i><span>仪表盘</span>',array('/backend/manage/default/index'));?></li>
 				</li>
 				<li>
 					<a href="#">
@@ -226,9 +223,7 @@
 						<i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
-						<li>
-							<a href="#">站点配置</a>
-						</li>
+						<li><?php echo CHtml::link('站点配置',array('/backend/manage/config/admin'));?></li>
 						<li>
 							<a href="#">模块管理</a>
 						</li>
