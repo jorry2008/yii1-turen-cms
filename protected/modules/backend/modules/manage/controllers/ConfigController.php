@@ -113,7 +113,7 @@ class ConfigController extends TBackendController
 						$model->code = 'any';
 						$model->ckey = $key;
 						$model->value = $value;
-						$model->serialized = 1;
+						$model->serialized = 0;
 						
 						if(!$model->save()) {
 							$message['error'] = $model->getError();
@@ -133,10 +133,8 @@ class ConfigController extends TBackendController
 			$message['success'] = '配置项保存成功!';
 		}
 		
-		
-		//生成新的缓存文件
-		
-		
+		//强制更新缓存，即删除缓存
+		Yii::app()->cache->delete(TConfig::CACHE_KEY);
 		
 		//跳转到控制器
 		$this->redirect(array('admin'));

@@ -264,6 +264,26 @@
         </section>
         <!-- Main content -->
         <section class="content">
+        
+        	<!-- 
+        	<div class="alert alert-danger alert-dismissable">
+			    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			    <i class="icon fa fa-ban"></i>这是一个错误
+			</div>
+			<div class="alert alert-info alert-dismissable">
+			    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<i class="icon fa fa-info"></i>这是一个提示信息
+			</div>
+			<div class="alert alert-warning alert-dismissable">
+			    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			    <i class="icon fa fa-warning"></i>这是一个警告
+			</div>
+			<div class="alert alert-success alert-dismissable">
+			    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			    <i class="icon fa fa-check"></i>这是一个成功
+			</div>
+			 -->
+			 
             <?php echo $content; ?>
         </section>
         <!-- /.content -->

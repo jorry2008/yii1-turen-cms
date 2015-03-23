@@ -113,6 +113,11 @@ return array(
 
 	// application components
 	'components'=>array(
+		//系统配置组件
+		'config' => array(
+			'class' => 'TConfig',
+			'cacheID' => 'cache',//开启缓存
+		),
 		//adminlte组件，只是声明，是否使用由前后台自身决定
 		'adminlte' => array(
 			'class' => 'adminlte.components.Bootstrap',   //加载核心接口
@@ -127,7 +132,11 @@ return array(
 				YII_DEBUG?'/dist/css/skins/skin-blue.css':'/dist/css/skins/skin-blue.min.css',
 			),
 		),
-		
+		//文件缓存
+		'cache' => array (
+			'class' => 'CFileCache',
+			'directoryLevel' => 2,
+		),
 		'user'=>array(
 			// enable cookie-based authentication
 			'stateKeyPrefix'=>'x_',//身份验证cookie名称【一个专用cookie】
