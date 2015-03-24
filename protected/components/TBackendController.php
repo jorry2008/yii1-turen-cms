@@ -24,8 +24,7 @@ class TBackendController extends CController
 	//测试数据库连接失败实例
 	public function init()
 	{
-		$post = Post::model()->find('id=3');
-		//fb($post);
+		
 	}
 	
 	public function filters()
@@ -33,7 +32,7 @@ class TBackendController extends CController
 		return array(
 			array(
 				//测试数据库连接错误
-				'application.filters.ControllerFiler',
+				'application.filters.LoginFilter',
 			),
 		);
 	}

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * 
+ * @author xia.q
+ *
+ */
 class SiteController extends TBackendController
 {
 	//权限交给了module
@@ -21,34 +25,9 @@ class SiteController extends TBackendController
 	public function actions()
 	{
 		return array(
-			// captcha action renders the CAPTCHA image displayed on the contact page
 			'captcha'=>array(
 				'class'=>'CCaptchaAction',
 				'backColor'=>0xFFFFFF,
-			),
-			// page action renders "static" pages stored under 'protected/views/site/pages'
-			// They can be accessed via: index.php?r=site/page&view=FileName
-			'page'=>array(
-				'class'=>'CViewAction',
-			),
-			
-			'login1.'=>array(
-				'class'=>'application.controllers.PostController',//这里也是可以进行控制器类初始化的
-				'testtest'=>'test007',
-				
-				'test'=>array(//这里进行控制器方法初始化
-					'property'=>'value',
-				),
-			),
-				
-			'login.'=>array(
-				'class'=>'application.controllers.PostController',
-				'test'=>array(
-					'property'=>'value',
-				),
-				'test1'=>array(
-					'property'=>'value',
-				),
 			)
 		);
 	}

@@ -35,8 +35,8 @@ return array(
 	//从配置文件导入类库
 	// autoloading model and component classes
 	'import'=>array(
-		'application.models.*',
-		'application.components.*',
+		'application.models.*',//导入公共模型
+		'application.components.*',//导入公共组件
 	),
 	
 	//定义开发程序所在目录，默认是当前访问下的protected目录
@@ -105,8 +105,7 @@ return array(
 			
 			'modules'=>array(
 				'manage',//后台管理模块（用来管理其它模块的模块）
-				'user',
-				'cms',
+				'user',//管理员模块
 			),
 		),
 	),
@@ -137,6 +136,8 @@ return array(
 			'class' => 'CFileCache',
 			'directoryLevel' => 2,
 		),
+			
+		//后台管理员
 		'user'=>array(
 			// enable cookie-based authentication
 			'stateKeyPrefix'=>'x_',//身份验证cookie名称【一个专用cookie】
@@ -147,7 +148,7 @@ return array(
 			//未验证者的名字
 			'guestName'=>'游客',
 			//用户登录的rul
-			'loginUrl'=>array('/site/login'),
+			'loginUrl'=>array('/backend/user/common/login'),
 			//重点，当开始基于cookie登录时，这个数组就是初始化系列化持久的cookie初始值
 			//即专为身份验证的cookie配置专用的cookie对象，以下就是对象的初始化参数
 			'identityCookie'=>array('path' => '/'),//可以实现如子站点同时登录

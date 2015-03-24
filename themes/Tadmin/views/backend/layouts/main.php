@@ -8,11 +8,8 @@
     <![endif]-->
 </head>
 
-<body class="skin-blue <?php echo $route = str_replace('/', '-', $this->module->id);echo ' '.$route.'-'.$this->id; ?>">
-	
-	<?php echo $content; ?>
-	
-</body>
+<?php echo $content; ?>
+
 </html>
 
 

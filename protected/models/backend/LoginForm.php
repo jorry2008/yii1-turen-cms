@@ -1,17 +1,17 @@
 <?php
-
 /**
- * LoginForm class.
- * LoginForm is the data structure for keeping
- * user login form data. It is used by the 'login' action of 'SiteController'.
+ * 
+ * @author xia.q
+ *
  */
 class LoginForm extends CFormModel
 {
-	public $username;
+	public $user_name;
 	public $password;
 	public $rememberMe;
+	public $verifyCode;
 
-	private $_identity;
+	private $_identity;//身份验证
 
 	/**
 	 * Declares the validation rules.
@@ -22,11 +22,13 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('username, password', 'required'),
+			array('user_name, password, verifyCode', 'required'),
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
 			// password needs to be authenticated
 			array('password', 'authenticate'),
+				
+			array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
 
@@ -36,7 +38,7 @@ class LoginForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'rememberMe'=>'Remember me next time',
+			'rememberMe'=>'记住下次登录',
 		);
 	}
 
@@ -46,7 +48,7 @@ class LoginForm extends CFormModel
 	 */
 	public function authenticate($attribute,$params)
 	{
-		$this->_identity=new UserIdentity($this->username,$this->password);
+		$this->_identity = new UserIdentity($this->user_name,$this->password);
 		if(!$this->_identity->authenticate())
 			$this->addError('password','Incorrect username or password.');
 	}
@@ -57,18 +59,16 @@ class LoginForm extends CFormModel
 	 */
 	public function login()
 	{
-		if($this->_identity===null)
-		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
+		if($this->_identity === null) {
+			$this->_identity = new UserIdentity($this->user_name,$this->password);
 			$this->_identity->authenticate();
 		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
-		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
+		
+		if($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
+			$duration = $this->rememberMe ? 3600*24*30 : 0; // 30 days
 			Yii::app()->user->login($this->_identity,$duration);
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 }

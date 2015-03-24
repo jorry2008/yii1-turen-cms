@@ -10,13 +10,12 @@ class BackendModule extends CWebModule
 	{
 		//导入后台模块相关组件和模型
 		$this->setImport(array(
-			'backend.models.*',
-			'backend.components.*',
+			'application.models.backend.*',//导入后台表单模型
 		));
 		
 		//设置后台模板
 		Yii::app()->theme = 'Tadmin';//目前后台只准备一套模板
-		Yii::app()->homeUrl = Yii::app()->createUrl('backend/manage/default/index');//仪表盘页面
+		Yii::app()->homeUrl = Yii::app()->createUrl('backend/manage/default/index');//后台首页，仪表盘页面
 		
 		//独立配置后台模块初始信息
 		$this->layout = 'column-12';//独立模块的布局文件
@@ -26,8 +25,7 @@ class BackendModule extends CWebModule
 	
 	public function beforeControllerAction($controller, $action)
 	{
-		if(parent::beforeControllerAction($controller, $action))
-		{
+		if(parent::beforeControllerAction($controller, $action)) {
 			$assetManager = Yii::app()->assetManager;
 			$clientScript = Yii::app()->clientScript;
 			
@@ -64,8 +62,7 @@ class BackendModule extends CWebModule
 			*/
 			
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 }

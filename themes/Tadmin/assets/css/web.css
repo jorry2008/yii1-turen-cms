@@ -25,5 +25,9 @@
 .form-group .help-block {
 	clear: both;
 }
-
-
+/* 后台背景 */
+.login-page, .register-page {
+    background-image: url(../images/bg/bg3.jpg);
+    background-position: center 0;
+    background-repeat: repeat-x;
+}

@@ -1,7 +1,14 @@
 <?php
-class MyFilter extends CFilter
+/**
+ * 
+ * @author xia.q
+ * 过滤器的位置：
+ * TBackendController
+ *
+ */
+class LoginFilter extends CFilter
 {
-	private $_id = 'myfilter';
+	private $id = 'loginfilter';
 	
 	public function init()
 	{
