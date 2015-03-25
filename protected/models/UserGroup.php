@@ -1,29 +1,21 @@
 <?php
+
 /**
- * 
- * This is the model class for table "{{user}}".
+ * This is the model class for table "{{user_group}}".
  *
- * The followings are the available columns in table '{{user}}':
+ * The followings are the available columns in table '{{user_group}}':
  * @property integer $id
- * @property string $user_name
- * @property string $password
- * @property string $email
- * @property string $nick_name
- * @property integer $question
- * @property string $answer
- * @property string $user_group_id
- * @property string $login_ip
- * @property string $date_added
- * @property integer $status
+ * @property string $name
+ * @property string $permission
  */
-class User extends CActiveRecord
+class UserGroup extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{user}}';
+		return '{{user_group}}';
 	}
 
 	/**
@@ -34,14 +26,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_name, password, email, nick_name, user_group_id, status', 'required'),
-			array('status', 'numerical', 'integerOnly'=>true),
-			array('user_name', 'length', 'max'=>30),
-			array('password, email', 'length', 'max'=>128),
-			array('nick_name', 'length', 'max'=>32),
+			array('name, permission', 'required'),
+			array('name', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_name, password, email, nick_name, user_group_id, login_ip, date_added, status', 'safe', 'on'=>'search'),
+			array('id, name, permission', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,15 +51,9 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'id',
-			'user_name' => '用户名',
-			'password' => '密码',
-			'email' => '邮箱',
-			'nick_name' => '昵称',
-			'user_group_id' => '用户组',
-			'login_ip' => '登录IP',
-			'date_added' => '登录时间',
-			'status' => '启用',
+			'id' => 'ID',
+			'name' => 'Name',
+			'permission' => 'Permission',
 		);
 	}
 
@@ -90,17 +73,11 @@ class User extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria = new CDbCriteria;
+		$criteria=new CDbCriteria;
 
-		$criteria->compare('user_name',$this->user_name,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('nick_name',$this->nick_name,true);
-		$criteria->compare('user_group_id',$this->user_group_id,true);
-		$criteria->compare('login_ip',$this->login_ip,true);
-		$criteria->compare('date_added',$this->date_added,true);
-		$criteria->compare('status',$this->status);
-		
-		$criteria->order = 'user_group_id';
+		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('permission',$this->permission,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -111,7 +88,7 @@ class User extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return UserGroup the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

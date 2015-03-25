@@ -27,7 +27,11 @@ class CommonController extends TBackendController
 		return array(
 			'captcha'=>array(
 				'class'=>'CCaptchaAction',
-				'backColor'=>0xFFFFFF,
+				'width'=>80,
+				'height'=>50,
+				'padding'=>0,
+				'minLength'=>3,
+				'maxLength'=>4,	
 			),
 		);
 	}

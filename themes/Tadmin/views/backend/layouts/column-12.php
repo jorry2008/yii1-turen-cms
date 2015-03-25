@@ -6,8 +6,8 @@
 	    <!-- Main Header -->
 	    <header class="main-header">
 	    
-	        <!-- Logo -->
-	        <a href="" class="logo">土人系统</a>
+	        <!-- Logo固定在这里，不容易修改 -->
+	        <?php echo CHtml::link('土人系统', Yii::app()->homeUrl, array('class'=>'logo'));?>
 	        
 	        <!-- Header Navbar -->
 	        <nav class="navbar navbar-static-top" role="navigation">
@@ -204,7 +204,7 @@
 	                <li class="header"></li>
 	                <!-- Optionally, you can add icons to the links -->
 	                <li class="active">
-	                	<?php echo CHtml::link('<i class="fa fa-dashboard"></i><span>仪表盘</span>',array('/backend/manage/default/index'));?>
+	                	<?php echo CHtml::link('<i class="fa fa-dashboard"></i><span>仪表盘</span>',Yii::app()->homeUrl);?>
 					</li>
 					<li>
 						<a href="#">
@@ -218,6 +218,18 @@
 							<span>界面管理</span>
 							<i class="fa fa-angle-left pull-right"></i>
 						</a>
+					</li>
+					<li class="treeview">
+						<a href="#">
+							<span>管理员管理</span>
+							<i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li><?php echo CHtml::link('管理员管理',array('/backend/user/user/admin'));?></li>
+							<li>
+								<a href="#">管理员群组</a>
+							</li>
+						</ul>
 					</li>
 					<li class="treeview">
 						<a href="#">
@@ -249,20 +261,37 @@
 	        <section class="content-header">
 	            <h1>
 	                <?php echo $this->pageTitle;?>
-	                <small>Optional description</small>
+	                <i><small>hi turen!</small></i>
 	            </h1>
-	            <ol class="breadcrumb">
-	                <li>
-	                    <a href="#">
-	                        <i class="fa fa-dashboard">
-	                        </i>
-	                        Level
-	                    </a>
-	                </li>
-	                <li class="active">
-	                    Here
-	                </li>
-	            </ol>
+	            
+	            
+					
+						
+	            
+	            
+<!-- 	            <ol class="breadcrumb"> -->
+<!-- 	                <li> -->
+<!-- 	                    <a href="#"><i class="fa fa-dashboard"></i>Level</a> -->
+<!-- 	                </li> -->
+<!-- 	                <li class="active">Here</li> -->
+<!-- 	            </ol> -->
+	            
+				<?php 
+// 					$this->widget('zii.widgets.CMenu',array(
+//  					'encodeLabel'=>false,//关闭自动转码
+// 						'htmlOptions'=>array('id'=>'child_links'),//作用于子ul上
+// 						'items'=>$this->menu,
+// 					));?>
+				
+				<!-- breadcrumbs -->
+				<?php 
+				//改变home链接
+				$homeLink = CHtml::link('<a href="#"><i class="fa fa-dashboard"></i> Home', Yii::app()->homeUrl);
+				$this->widget('zii.widgets.CBreadcrumbs', 
+					array('links'=>$this->breadcrumbs,'homeLink'=>$homeLink, 'tagName'=>'ol', 'htmlOptions'=>array('class'=>'breadcrumb'))
+				); 
+				?>
+	            
 	        </section>
 	        <!-- Main content -->
 	        <section class="content">

@@ -48,12 +48,8 @@ $this->breadcrumbs=array(
             <!-- /.col -->
             <?php if(CCaptcha::checkRequirements()): ?>
             <div class="col-xs-7">
-            	<div class="col-xs-3">
             	<?php echo $form->textField($model,'verifyCode',array('placeholder'=>'VerifyCode')); ?>
-            	</div>
-            	<div class="col-xs-4">
             	<?php $this->widget('CCaptcha',array('clickableImage'=>true,'showRefreshButton'=>false,)); ?>
-            	</div>
             	<?php echo $form->error($model,'verifyCode'); ?>
             </div>
             <?php endif; ?>
