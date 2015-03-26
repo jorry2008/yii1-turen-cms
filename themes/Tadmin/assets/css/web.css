@@ -37,11 +37,15 @@
 .breadcrumb a i {
 	color: #333;
 }
-
-
-
-
-
+.pager li > a, .pager li > span {
+	border-radius: 0;
+}
+.pagination .selected a {
+	background: #eee;
+}
+.box-header {
+	border-bottom: 1px solid #f4f4f4;
+}
 
 
 

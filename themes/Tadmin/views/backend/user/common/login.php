@@ -49,7 +49,9 @@ $this->breadcrumbs=array(
             <?php if(CCaptcha::checkRequirements()): ?>
             <div class="col-xs-7">
             	<?php echo $form->textField($model,'verifyCode',array('placeholder'=>'VerifyCode')); ?>
-            	<?php $this->widget('CCaptcha',array('clickableImage'=>true,'showRefreshButton'=>false,)); ?>
+            	<?php $this->widget('CCaptcha',array('clickableImage'=>true,'showRefreshButton'=>false,
+            			'imageOptions'=>array('alt'=>'点击换图','title'=>'点击换图','style'=>'cursor:pointer'))); ?>
+            	
             	<?php echo $form->error($model,'verifyCode'); ?>
             </div>
             <?php endif; ?>

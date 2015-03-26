@@ -108,6 +108,7 @@ class UserController extends TBackendController
 		if(isset($_GET['User']))
 			$model->attributes = $_GET['User'];
 
+		//这里要判断ajax
 		$this->render('admin',array(
 			'model'=>$model,
 		));

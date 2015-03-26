@@ -29,56 +29,6 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-
-
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box box-primary">
-        
-            <div class="box-header">
-                <h3 class="box-title">Responsive Hover Table</h3>
-                <div class="box-tools">
-                    <div class="input-group">
-                        <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
-                        <div class="input-group-btn">
-                            <button class="btn btn-sm btn-default">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                    <tr>
-                        <td>
-                            175
-                        </td>
-                        <td>
-                            Mike Doe
-                        </td>
-                        <td>
-                            11-7-2014
-                        </td>
-                        <td>
-                            <span class="label label-danger">Denied</span>
-                        </td>
-                        <td>
-                            Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    </div>
-</div>
-
-
-
 <?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php 
@@ -94,13 +44,21 @@ $('.search-form form').submit(function(){
         <div class="box box-primary">
 			<?php 
 			//yiiPager
-			$this->widget('zii.widgets.grid.CGridView', array(
+			//$this->widget('zii.widgets.grid.CGridView', array(
+			$this->widget('TGridView', array(
 				'id'=>'user-grid',
 				'dataProvider'=>$model->search(),
 				//'filter'=>$model,//不显示过滤器
 				'summaryText'=>'',//不显示分页信息
 				'itemsCssClass'=>'table table-hover',//表格table上的样式
 				'htmlOptions'=>array('class'=>'box-body table-responsive no-padding'),//整个表的样式，与id同级
+				'template'=>"{summary}\n{header}\n{items}\n{pager}",//创建一个新的header
+				//'updateSelector'=>'{sort}',
+				'pager'=>array(//CGridView默认使用CLinkPager分页显示
+					//'class'=>'CLinkPager',
+					'header'=>'',//去除头部
+					'htmlOptions'=>array('class'=>'pagination pagination-sm no-margin pull-right', 'style'=>'padding-right: 10px;'),
+				),
 				'columns'=>array(
 					array(
 						'class'=>'CCheckBoxColumn',

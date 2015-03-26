@@ -31,7 +31,7 @@ class CommonController extends TBackendController
 				'height'=>50,
 				'padding'=>0,
 				'minLength'=>3,
-				'maxLength'=>4,	
+				'maxLength'=>4,
 			),
 		);
 	}
