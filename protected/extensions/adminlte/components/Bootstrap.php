@@ -49,8 +49,8 @@ class Bootstrap extends CComponent
     	Yii::app()->getClientScript()->registerMetaTag('width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no','viewport');
     	 
     	//加载远程字体
-    	Yii::app()->getClientScript()->registerCssFile('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-    	Yii::app()->getClientScript()->registerCssFile('http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css');
+//     	Yii::app()->getClientScript()->registerCssFile('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+//     	Yii::app()->getClientScript()->registerCssFile('http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css');
     	
         /* register css assets */
         foreach ($this->assetsCss as $css) {

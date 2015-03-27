@@ -126,6 +126,8 @@ return array(
 				YII_DEBUG?'/dist/js/app.js':'/dist/js/app.min.js',
 			),
 			'assetsCss'=>array(
+				YII_DEBUG?'/font-awesome-4.3.0/css/font-awesome.css':'/font-awesome-4.3.0/css/font-awesome.min.css',
+				YII_DEBUG?'/ionicons-2.0.1/css/ionicons.css':'/ionicons-2.0.1/css/ionicons.min.css',
 				YII_DEBUG?'/bootstrap/css/bootstrap.css':'/bootstrap/css/bootstrap.min.css',
 				YII_DEBUG?'/dist/css/AdminLTE.css':'/dist/css/AdminLTE.min.css',
 				YII_DEBUG?'/dist/css/skins/skin-blue.css':'/dist/css/skins/skin-blue.min.css',
