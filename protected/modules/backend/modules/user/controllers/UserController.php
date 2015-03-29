@@ -109,9 +109,10 @@ class UserController extends TBackendController
 			$model->attributes = $_GET['User'];
 
 		//这里要判断ajax
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+		if(!isset($_GET['ajax'])) //grid默认是get提交数据
+			$this->render('admin',array('model'=>$model,));
+		else  
+			$this->renderPartial('admin',array('model'=>$model,));
 	}
 
 	/**

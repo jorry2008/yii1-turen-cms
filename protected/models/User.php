@@ -18,6 +18,7 @@
  */
 class User extends CActiveRecord
 {
+	public $keyword;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -91,6 +92,8 @@ class User extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria = new CDbCriteria;
+		
+		//fb($_GET);
 
 		$criteria->compare('user_name',$this->user_name,true);
 		$criteria->compare('email',$this->email,true);
