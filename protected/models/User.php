@@ -91,7 +91,6 @@ class User extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 		//http://localhost/turen.pw/index.php?r=backend/user/user/admin&0=&User_sort=email.desc&ajax=user-grid&1=
-		$_GET['User_sort'] = '';
 		
 		$criteria = new CDbCriteria;
 
@@ -107,6 +106,10 @@ class User extends CActiveRecord
 
 		$ActiveDataProvider = new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>array(
+				'class'=>'CSort',//指定排序类
+				'multiSort'=>true,//连续排序
+			),
 		));
 		
 		return $ActiveDataProvider;
