@@ -13,6 +13,10 @@ $this->menu=array(
 	array('label'=>'List User', 'url'=>array('index')),
 	array('label'=>'Create User', 'url'=>array('create')),
 );
+
+
+// fb($this->route, FirePHP::TRACE);
+
 ?>
 
 
@@ -25,6 +29,7 @@ $this->menu=array(
 			$this->widget('TGridView', array(
 				'route'=>$this->route,//TGridView专用
 				'model'=>$model,//TGridView专用
+				'headerTitle'=>'管理员列表',
 				
 				'id'=>'user-grid',
 				'dataProvider'=>$model->search(),

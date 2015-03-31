@@ -90,10 +90,10 @@ class User extends CActiveRecord
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria = new CDbCriteria;
+		//http://localhost/turen.pw/index.php?r=backend/user/user/admin&0=&User_sort=email.desc&ajax=user-grid&1=
+		$_GET['User_sort'] = '';
 		
-		//fb($_GET);
+		$criteria = new CDbCriteria;
 
 		$criteria->compare('user_name',$this->user_name,true);
 		$criteria->compare('email',$this->email,true);
@@ -105,9 +105,11 @@ class User extends CActiveRecord
 		
 		$criteria->order = 'user_group_id';
 
-		return new CActiveDataProvider($this, array(
+		$ActiveDataProvider = new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+		
+		return $ActiveDataProvider;
 	}
 
 	/**

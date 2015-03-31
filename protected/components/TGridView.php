@@ -8,10 +8,9 @@ Yii::import('zii.widgets.grid.CGridView');
 
 class TGridView extends CGridView
 {
-// 	public $headerBoxCss = 
-
 	public $route;
 	public $model;
+	public $headerTitle;
 	
 	/**
 	 * 拓展一个header模板
@@ -28,12 +27,12 @@ class TGridView extends CGridView
 		");
 		
 		echo '<div class="box-header">
-				<h3 class="box-title">管理员列表</h3>
+				<h3 class="box-title">'.$this->headerTitle.'</h3>
 				<div class="box-tools search-form">';
 		
 		$form=$this->beginWidget('CActiveForm', array(
 			'action'=>Yii::app()->createUrl($this->route),
-			'method'=>'get',
+			'method'=>'post',
 		));
 		
 		echo '<div class="input-group">';

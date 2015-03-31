@@ -104,6 +104,7 @@ class UserController extends TBackendController
 	public function actionAdmin()
 	{
 		$model=new User('search');
+		fb($model);
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['User']))
 			$model->attributes = $_GET['User'];
