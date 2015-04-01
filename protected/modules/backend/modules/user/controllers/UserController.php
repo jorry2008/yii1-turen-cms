@@ -104,10 +104,16 @@ class UserController extends TBackendController
 	public function actionAdmin()
 	{
 		$model=new User('search');
-		fb($model);
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
+		
+// 		$model->with('user_group')->findAll();
+		
+		if(isset($_GET['User'])) {
 			$model->attributes = $_GET['User'];
+			$user = Yii::app()->request->getQuery('User', array());//get
+			$model->keyword = empty($user['keyword'])?'':$user['keyword'];
+			//Yii::app()->request->getParam('keyword', '');//get or post
+		}
 
 		//这里要判断ajax
 		if(!isset($_GET['ajax'])) //grid默认是get提交数据

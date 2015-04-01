@@ -9,12 +9,11 @@
  * @property string $password
  * @property string $email
  * @property string $nick_name
- * @property integer $question
- * @property string $answer
  * @property string $user_group_id
  * @property string $login_ip
  * @property string $date_added
  * @property integer $status
+ * @property string $keyword//非数据库字段
  */
 class User extends CActiveRecord
 {
@@ -42,7 +41,7 @@ class User extends CActiveRecord
 			array('nick_name', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_name, password, email, nick_name, user_group_id, login_ip, date_added, status', 'safe', 'on'=>'search'),
+			array('id, user_name, password, email, nick_name, user_group_id, login_ip, date_added, status, keyword', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +53,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user_group'=>array(self::BELONGS_TO, 'UserGroup', 'user_group_id'),
 		);
 	}
 
@@ -93,26 +93,28 @@ class User extends CActiveRecord
 		//http://localhost/turen.pw/index.php?r=backend/user/user/admin&0=&User_sort=email.desc&ajax=user-grid&1=
 		
 		$criteria = new CDbCriteria;
-
-		$criteria->compare('user_name',$this->user_name,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('nick_name',$this->nick_name,true);
-		$criteria->compare('user_group_id',$this->user_group_id,true);
-		$criteria->compare('login_ip',$this->login_ip,true);
-		$criteria->compare('date_added',$this->date_added,true);
-		$criteria->compare('status',$this->status);
 		
-		$criteria->order = 'user_group_id';
+		if(!empty($this->keyword)) {
+			//匹配功能
+			//compare($column, $value, $partialMatch=false, $operator='AND', $escape=true)
+			//参数：$partialMatch是否完全匹配即有几个%，$escape是否使用%
+			$criteria->compare('user_name',$this->keyword,true,'OR');
+			$criteria->compare('nick_name',$this->keyword,true,'OR');
+			$criteria->compare('email',$this->keyword,true,'OR');
+			$criteria->compare('login_ip','='.$this->keyword,true,'OR');
+		}
 
-		$ActiveDataProvider = new CActiveDataProvider($this, array(
+		//使用渴望式加载，只需查询一次，相比懒惰加载高效得多
+		return $ActiveDataProvider = new CActiveDataProvider($this->with('user_group'), array(
 			'criteria'=>$criteria,
 			'sort'=>array(
 				'class'=>'CSort',//指定排序类
-				'multiSort'=>true,//连续排序
+				//'multiSort'=>true,//连续排序
+				'defaultOrder'=>array(//指定默认排序的属性
+					'date_added'=>CSort::SORT_DESC,//降序排列
+				)
 			),
 		));
-		
-		return $ActiveDataProvider;
 	}
 
 	/**

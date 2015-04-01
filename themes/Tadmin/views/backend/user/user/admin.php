@@ -19,6 +19,8 @@ $this->menu=array(
 
 ?>
 
+<?php //$this->renderPartial('_search', array('model'=>$model));?>
+
 
 <div class="row">
     <div class="col-xs-12">
@@ -73,7 +75,7 @@ $this->menu=array(
 						//'header'=>'测试列头部文本',
 						'name'=>'user_group_id',
 						'type'=>'raw',
-						'value'=>'UserGroup::model()->findByPk($data->user_group_id)->name',
+						'value'=>'$data->user_group->name',//'UserGroup::model()->findByPk($data->user_group_id)->name',
 						//'htmlOptions'=>array('class'=>'aaaa'),
 						//'cssClassExpression'=>'$row+8',
 						//'visible'=>true,
