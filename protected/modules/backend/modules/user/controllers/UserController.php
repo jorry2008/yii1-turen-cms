@@ -85,6 +85,51 @@ class UserController extends TBackendController
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		//以上功能是，删除之后并以php的方式跳转到一个ajax指定的路径
+	}
+	
+	/**
+	 * 批量删除
+	 * @param array $ids
+	 * @return boolean
+	 */
+	public function actionBatchDelete()
+	{
+		if(isset($_POST[$this->id.'-grid_c0'])) {
+			$ids = $_POST[$this->id.'-grid_c0'];
+			$criteria = new CDbCriteria;
+			$criteria->addInCondition('id', $ids);
+			if(User::model()->deleteAll($criteria) > 0)
+				return true;
+			else
+				return false;
+		}
+		
+// 		if(!isset($_GET['ajax']))
+// 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
+	
+	/**
+	 * 批量修改状态
+	 * @param array $ids
+	 * @return boolean
+	 */
+	public function actionBatchStatus()
+	{
+		if(isset($_POST[$this->id.'-grid_c0'])) {
+			$ids = $_POST[$this->id.'-grid_c0'];
+			fb($ids);
+			$status = 0;
+			$criteria = new CDbCriteria;
+			$criteria->addInCondition('id', $ids);
+			if(User::model()->updateAll(array('status'=>$status), $criteria) > 0)
+				return true;
+			else
+				return false;
+		}
+	
+		// 		if(!isset($_GET['ajax']))
+			// 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
 	/**
