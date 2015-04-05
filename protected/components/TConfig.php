@@ -69,7 +69,8 @@ class TConfig extends CApplicationComponent
 		if(isset($this->configs[$key]))
 			return $this->configs[$key];
 		else
-			throw new CException("Unable to get value - no entry present with key \"{$key}\".");
+			return '';
+			//throw new CException("Unable to get value - no entry present with key \"{$key}\".");
 	}
 	
 	/**

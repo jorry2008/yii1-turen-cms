@@ -111,12 +111,12 @@ $('.search-form form').submit(function(){
 		
 		$str = '<div id="bottomToolbar" class="pull-left">'."\n";
 		$str .= '<span class="selArea">'."\n";
-		$str .= '<span>'.'SELECT:'.'</span>';
+		$str .= '<span>'.'BATCH_SELECT:'.'</span>';
 		if(empty($this->actions))
 			$this->actions = array(
 					'batch_null'=>'NULL',
-					'batch_del'=>'BATCH DELETE',
-					'batch_status'=>'BATCH STATUS',
+					'batch_del'=>'BATCH_DELETE',
+					'batch_status'=>'BATCH_STATUS',
 			);
 		
 		$str .= CHtml::link('ALL', 'javascript:;', array('id'=>'all_select'));

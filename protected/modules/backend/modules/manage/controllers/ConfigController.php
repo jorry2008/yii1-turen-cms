@@ -33,6 +33,7 @@ class ConfigController extends TBackendController
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
+	/*
 	public function accessRules()
 	{
 		return array(
@@ -53,6 +54,7 @@ class ConfigController extends TBackendController
 				),
 		);
 	}
+	*/
 
 	/**
 	 * Displays a particular model.
@@ -178,8 +180,15 @@ class ConfigController extends TBackendController
 		foreach ($configs as $config)
 			$configArrs[$config->ckey] = $config->attributes;
 		
+		//多语言
+		$language = array();
+		$languageObj = Language::model()->findAll();
+		foreach ($languageObj as $lang)
+			$language[$lang->code] = $lang->name;
+		
 		$this->render('admin',array(
 			'configs'=>$configArrs,
+			'language'=>$language,
 		));
 	}
 

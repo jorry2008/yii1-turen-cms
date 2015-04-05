@@ -13,6 +13,8 @@ class BackendModule extends CWebModule
 			'application.models.backend.*',//导入后台表单模型
 		));
 		
+		Yii::app()->language = Yii::app()->config->get('config_back_language');
+		
 		//设置后台模板
 		Yii::app()->theme = 'Tadmin';//目前后台只准备一套模板
 		Yii::app()->homeUrl = Yii::app()->createUrl('backend/manage/default/index');//后台首页，仪表盘页面

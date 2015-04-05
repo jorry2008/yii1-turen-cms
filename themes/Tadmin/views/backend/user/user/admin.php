@@ -29,6 +29,7 @@ $this->menu=array(
 			//yiiPager
 			//$this->widget('zii.widgets.grid.CGridView', array(
 			$this->widget('TGridView', array(
+				//jorry Ext
 				'route'=>$this->route,//TGridView专用
 				'model'=>$model,//TGridView专用
 				'headerTitle'=>'管理员列表',

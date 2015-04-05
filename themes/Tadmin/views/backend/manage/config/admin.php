@@ -67,19 +67,19 @@ $this->menu=array(
 	                	<?php $this->renderPartial('_config/_base', array('configs'=>$configs));?>
 	                </div>
 	                <div class="tab-pane" id="tab_2">
-	                    <?php $this->renderPartial('_config/_local', array('configs'=>$configs));?>
+	                	<?php $this->renderPartial('_config/_site', array('configs'=>$configs));?>
 	                </div>
 	                <div class="tab-pane" id="tab_3">
-	                    <?php $this->renderPartial('_config/_mail', array('configs'=>$configs));?>
+	                	<?php $this->renderPartial('_config/_local', array('configs'=>$configs, 'language'=>$language));?>
 	                </div>
 	                <div class="tab-pane" id="tab_4">
 	                    <?php $this->renderPartial('_config/_pic', array('configs'=>$configs));?>
 	                </div>
 	                <div class="tab-pane" id="tab_5">
-	                    <?php $this->renderPartial('_config/_server', array('configs'=>$configs));?>
+	                <?php $this->renderPartial('_config/_mail', array('configs'=>$configs));?>
 	                </div>
 	                <div class="tab-pane" id="tab_6">
-	                    <?php $this->renderPartial('_config/_site', array('configs'=>$configs));?>
+	                    <?php $this->renderPartial('_config/_server', array('configs'=>$configs));?>
 	                </div>
 	                <!-- /.tab-pane -->
 	                
