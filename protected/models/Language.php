@@ -61,13 +61,13 @@ class Language extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'code' => 'Code',
-			'locale' => 'Locale',
-			'image' => 'Image',
-			'directory' => 'Directory',
-			'sort_order' => 'Sort Order',
-			'status' => 'Status',
+			'name' => Yii::t('language', 'Name'),
+			'code' => Yii::t('language', 'Code'),
+			'locale' => Yii::t('language', 'Locale'),
+			'image' => Yii::t('language', 'Image'),
+			'directory' => Yii::t('language', 'Directory'),
+			'sort_order' => Yii::t('language', 'Sort Order'),
+			'status' => Yii::t('language', 'Status'),
 		);
 	}
 

@@ -2,7 +2,7 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->pageTitle = '管理员管理';
+$this->pageTitle = Yii::t('user_user', 'Administrator Manage');
 
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
@@ -32,7 +32,7 @@ $this->menu=array(
 				//jorry Ext
 				'route'=>$this->route,//TGridView专用
 				'model'=>$model,//TGridView专用
-				'headerTitle'=>'管理员列表',
+				'headerTitle'=>Yii::t('user_user', 'Administrator List'),
 				
 				'id'=>'user-grid',
 				'dataProvider'=>$model->search(),

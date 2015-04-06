@@ -138,6 +138,15 @@ return array(
 			'class' => 'CFileCache',
 			'directoryLevel' => 2,
 		),
+		
+		//翻译
+		'messages'=>array(
+			'class'=>'CDbMessageSource',
+			'sourceMessageTable'=>'{{source_message}}',
+			'translatedMessageTable'=>'{{message}}',
+			'onMissingTranslation'=>array('TMissingTranslation', 'handleMissingTranslation'),//翻译错误处理
+			//'cachingDuration'=>0,//缓存时间
+		),
 			
 		//后台管理员
 		'user'=>array(
@@ -197,7 +206,7 @@ return array(
 		
 		'session'=>array(
 			'class' => 'CDbHttpSession',
-			'sessionName'=>'blog',
+			'sessionName'=>'turen',
 			//'cookieMode'=>'only',
 			'timeout'=>3600,
 			'connectionID' => 'db',

@@ -24,6 +24,7 @@ class TBackendController extends CController
 	//测试数据库连接失败实例
 	public function init()
 	{
+		parent::init();
 		
 	}
 	
@@ -31,12 +32,16 @@ class TBackendController extends CController
 	{
 		return array(
 			array(
-				//测试数据库连接错误
-				'application.filters.LoginFilter',
+				//多语言过滤器
+				'application.filters.backend.LanguageFilter',
 			),
+			array(
+					//登录权限过滤
+				'application.filters.backend.LoginFilter',
+			),
+			
 		);
 	}
 }
-
 
 

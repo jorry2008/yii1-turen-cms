@@ -25,6 +25,7 @@ class ConfigController extends TBackendController
 	
 	public function init()
 	{
+		parent::init();
 		$this->pageTitle = '站点配置';
 	}
 

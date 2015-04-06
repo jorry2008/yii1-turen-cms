@@ -52,8 +52,8 @@ class UserGroup extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'permission' => 'Permission',
+			'name' => Yii::t('usergroup', 'Name'),
+			'permission' => Yii::t('usergroup' ,'Permission'),
 		);
 	}
 

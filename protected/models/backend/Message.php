@@ -1,23 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "{{setting}}".
+ * This is the model class for table "{{message}}".
  *
- * The followings are the available columns in table '{{setting}}':
+ * The followings are the available columns in table '{{message}}':
  * @property integer $id
- * @property string $code
- * @property string $key
- * @property string $value
- * @property integer $serialized
+ * @property string $language
+ * @property string $translation
+ *
+ * The followings are the available model relations:
+ * @property SourceMessage $id0
  */
-class Setting extends CActiveRecord
+class Message extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{setting}}';
+		return '{{message}}';
 	}
 
 	/**
@@ -28,13 +29,12 @@ class Setting extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('code, ckey, value, serialized', 'required'),
-			array('serialized', 'numerical', 'integerOnly'=>true),
-			array('code', 'length', 'max'=>32),
-			array('ckey', 'length', 'max'=>64),
+			array('id', 'numerical', 'integerOnly'=>true),
+			array('language', 'length', 'max'=>16),
+			array('translation', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, ckey, value, serialized', 'safe', 'on'=>'search'),
+			array('id, language, translation', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +46,7 @@ class Setting extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'id0' => array(self::BELONGS_TO, 'SourceMessage', 'id'),
 		);
 	}
 
@@ -56,10 +57,8 @@ class Setting extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'code' => Yii::t('setting', 'Code'),
-			'ckey' => Yii::t('setting', 'Key'),
-			'value' => Yii::t('setting' ,'Value'),
-			'serialized' => Yii::t('setting' ,'Serialized'),
+			'language' => '语言iso码',
+			'translation' => '翻译',
 		);
 	}
 
@@ -82,31 +81,19 @@ class Setting extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('code',$this->code,true);
-		$criteria->compare('ckey',$this->ckey,true);
-		$criteria->compare('value',$this->value,true);
-		$criteria->compare('serialized',$this->serialized);
+		$criteria->compare('language',$this->language,true);
+		$criteria->compare('translation',$this->translation,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-	
-	/**
-	 * 检测数据库里是否有对应的配置项
-	 * @param string $key 配置项名
-	 * @return Object or Null 
-	 */
-	public function checkConfig($key)
-	{
-		return $this->model()->find('ckey=:key', array(':key'=>$key));
-	}
-	
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Setting the static model class
+	 * @return Message the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

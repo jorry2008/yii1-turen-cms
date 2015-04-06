@@ -1,4 +1,3 @@
-        <?php fb($language);?>
         <div class="form-group">
             <label class="col-md-2 text-right form-label" for="frontLanguage">前台语言</label>
             <div class="col-md-10">

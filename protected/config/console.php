@@ -8,7 +8,7 @@ return array(
 		
 	'components'=>array(
 		'db'=>array(
-				'connectionString' => 'mysql:host=localhost;dbname=turen',
+				'connectionString' => 'mysql:host=localhost;dbname=turen_pw',
 				'emulatePrepare' => true,
 				'username' => 'root',
 				'password' => '123456',

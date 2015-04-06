@@ -64,14 +64,14 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'id',
-			'user_name' => '用户名',
-			'password' => '密码',
-			'email' => '邮箱',
-			'nick_name' => '昵称',
-			'user_group_id' => '用户组',
-			'login_ip' => '登录IP',
-			'date_added' => '登录时间',
-			'status' => '启用',
+			'user_name' => Yii::t('user', 'User Name'),
+			'password' => Yii::t('user', 'PassWord'),
+			'email' => Yii::t('user', 'Email'),
+			'nick_name' => Yii::t('user', 'Nick Name'),
+			'user_group_id' => Yii::t('user', 'Group Name'),
+			'login_ip' => Yii::t('user', 'IP'),
+			'date_added' => Yii::t('user', 'Login Time'),
+			'status' => Yii::t('user', 'Status'),
 		);
 	}
 

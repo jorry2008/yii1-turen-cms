@@ -92,7 +92,7 @@
 	                                </ul>
 	                            </li>
 	                            <li class="footer">
-	                                <a href="#">查看所有</a>
+	                                <a href="#"><?php echo Yii::t('common', 'View All');?></a>
 	                            </li>
 	                        </ul>
 	                    </li>
@@ -104,7 +104,7 @@
 	                            <span class="label label-danger">9</span>
 	                        </a>
 	                        <ul class="dropdown-menu">
-	                            <li class="header">土人消息</li>
+	                            <li class="header"><?php echo Yii::t('common', 'Message');?></li>
 	                            <li>
 	                                <!-- Inner menu: contains the tasks -->
 	                                <ul class="menu">
@@ -132,7 +132,7 @@
 	                                </ul>
 	                            </li>
 	                            <li class="footer">
-	                                <a href="#">查看所有</a>
+	                                <a href="#"><?php echo Yii::t('common', 'View All');?></a>
 	                            </li>
 	                        </ul>
 	                    </li>
