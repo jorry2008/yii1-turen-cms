@@ -2,29 +2,54 @@
 /**
  * 
  * @author xia.q
+ * 这个事件的事件类是 CMissingTranslationEvent
  *
  */
 class TMissingTranslation extends CComponent
 {
+	const DEFUALT = 'T';
+	
 	static function handleMissingTranslation($event)
 	{
-		// 这个事件的事件类是 CMissingTranslationEvent
-		// 因此我们能获得这个message的一些信息
-		$text = implode("\n", array(
-				'Language: '.$event->language,
-				'Category:'.$event->category,
-				'Message:'.$event->message
+		//数据库连接对象
+		$connection = $event->sender->getDbConnection();
+		
+		$newId = 0;
+		//查询source message表，没有就创建
+		$result = $connection->createCommand()
+				->select('id')
+				->from('{{source_message}}')
+				->where('category=:category', array(':category'=>$event->category))
+				->andWhere('message=:message', array(':message'=>$event->message))
+				->queryRow();
+		
+		//创建此记录
+		if($result === false) {
+			//获取最大id
+			$result = $connection->createCommand()
+					->select('id')
+					->from('{{source_message}}')
+					->where('1=1')
+					->order('id DESC')
+					->queryRow();
+			
+			$line = $connection->createCommand()->insert('{{source_message}}', array(
+				'id'=>($result['id']+1),
+				'category'=>$event->category,
+				'message'=>$event->message,
+			));
+			
+			$newId = $result['id']+1;
+		} else {
+			$newId = $result['id'];
+		}
+		
+		//插入一个空的
+		$line = $connection->createCommand()->insert('{{message}}', array(
+				'id'=>$newId,
+				'language'=>$event->language,
+				'translation'=>self::DEFUALT.$event->message,
 		));
-		
-		//事件的触发者
-		$dbMessageSource = $event->sender;
-		
-		//加入数据库
-		$command=$dbMessageSource->getDbConnection()->createCommand();
-		fb($command);
-// 		->select("t1.message AS message, t2.translation AS translation")
-// 		->from(array("{$this->sourceMessageTable} t1","{$this->translatedMessageTable} t2"))
-// 		->where('t1.id=t2.id AND t1.category=:category AND t2.language=:language',array(':category'=>$category,':language'=>$language))
 		
 		// 发送邮件
 // 		mail('admin@example.com', 'Missing translation', $text);

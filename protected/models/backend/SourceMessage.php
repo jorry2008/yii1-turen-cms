@@ -13,6 +13,8 @@
  */
 class SourceMessage extends CActiveRecord
 {
+	public $keyword;
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -85,7 +87,7 @@ class SourceMessage extends CActiveRecord
 		$criteria->compare('category',$this->category,true);
 		$criteria->compare('message',$this->message,true);
 
-		return new CActiveDataProvider($this, array(
+		return new CActiveDataProvider($this->with('messages'), array(
 			'criteria'=>$criteria,
 		));
 	}

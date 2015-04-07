@@ -13,6 +13,7 @@
  */
 class Message extends CActiveRecord
 {
+	public $keyword;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -84,7 +85,7 @@ class Message extends CActiveRecord
 		$criteria->compare('language',$this->language,true);
 		$criteria->compare('translation',$this->translation,true);
 
-		return new CActiveDataProvider($this, array(
+		return new CActiveDataProvider($this->with('id0'), array(
 			'criteria'=>$criteria,
 		));
 	}

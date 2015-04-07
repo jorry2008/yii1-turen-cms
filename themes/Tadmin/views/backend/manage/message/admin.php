@@ -2,7 +2,7 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->pageTitle = Yii::t('manage_user', 'Administrator Manage');
+$this->pageTitle = Yii::t('manage_message', 'Administrator Manage');
 
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
@@ -31,7 +31,7 @@ $this->menu=array(
 				//jorry Ext
 				'route'=>$this->route,//TGridView专用
 				'model'=>$model,//TGridView专用
-				'headerTitle'=>Yii::t('manage_user', 'Administrator List'),
+				'headerTitle'=>Yii::t('manage_message', 'Administrator List'),
 				
 				'id'=>'user-grid',
 				'dataProvider'=>$model->search(),
@@ -62,37 +62,21 @@ $this->menu=array(
 					'htmlOptions'=>array('class'=>'pagination pagination-sm no-margin pull-right', 'style'=>'padding-right: 10px;'),
 				),
 				'columns'=>array(//就是指一个单元格对象，默认为CDataColumn对象
+					'id',
+					'category',
+					'message',
+					
 					array(
-						'class'=>'CCheckBoxColumn',
-						'selectableRows' => 2,//0:禁止所有选项，1：单选，2：多选
-			// 			'headerTemplate'=>'{item}<span class="lbl"></span>',
-			// 			'checkBoxHtmlOptions'=>array('class'=>'ace'),
-					),
-					'user_name',
-					'nick_name',
-					'email',
-					array(
-						//'header'=>'测试列头部文本',
-						'name'=>'user_group_id',
+						'name'=>'language',
 						'type'=>'raw',
-						'value'=>'$data->user_group->name',//'UserGroup::model()->findByPk($data->user_group_id)->name',
-						//'htmlOptions'=>array('class'=>'aaaa'),
-						//'cssClassExpression'=>'$row+8',
-						//'visible'=>true,
-						//'footer'=>'测试列底部文本',
-						//'filter'=>'abc',//创建一个过滤器，可以是数组，默认为当前字段的input text类型
-					),
-					'login_ip',
-					array(
-						'name'=>'date_added',
-						'type'=>'raw',
-						'value'=>'Yii::app()->locale->getDateFormatter()->formatDateTime($data->date_added,\'short\')',
+						'value'=>'$data->messages->language',
 					),
 					array(
-						'name'=>'status',
+						'name'=>'translation',
 						'type'=>'raw',
-						'value'=>'($data->status)?\'<span class="label label-success">Yes</span>\':\'<span class="label label-danger">No</span>\'',
+						'value'=>'',
 					),
+					
 					array(
 						'class'=>'CButtonColumn',
 					),
