@@ -52,15 +52,14 @@ class MessageController extends TBackendController
 	 */
 	public function actionAdmin()
 	{
-		$model=new SourceMessage('search');
+		$model=new Message('search');
 		$model->unsetAttributes();  // clear any default values
-		
-// 		if(isset($_GET['SourceMessage'])) {
-// 			$model->attributes = $_GET['SourceMessage'];
-// 			$user = Yii::app()->request->getQuery('SourceMessage', array());//get
-// 			$model->keyword = empty($user['keyword'])?'':$user['keyword'];
-// 			//Yii::app()->request->getParam('keyword', '');//get or post
-// 		}
+
+		if(isset($_GET['Message'])) {
+			$model->attributes = $_GET['Message'];
+			$user = Yii::app()->request->getQuery('Message', array());
+			$model->keyword = empty($user['keyword'])?'':trim($user['keyword']);
+		}
 
 		//这里要判断ajax
 		if(!isset($_GET['ajax'])) //grid默认是get提交数据

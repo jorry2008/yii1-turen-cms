@@ -2,7 +2,7 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->pageTitle = Yii::t('manage_message', 'Administrator Manage');
+$this->pageTitle = Yii::t('manage_message', 'Language Manage');
 
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
@@ -31,9 +31,9 @@ $this->menu=array(
 				//jorry Ext
 				'route'=>$this->route,//TGridView专用
 				'model'=>$model,//TGridView专用
-				'headerTitle'=>Yii::t('manage_message', 'Administrator List'),
+				'headerTitle'=>Yii::t('manage_message', 'Language List'),
 				
-				'id'=>'user-grid',
+				'id'=>'message-grid',
 				'dataProvider'=>$model->search(),
 				//'filter'=>$model,//不显示过滤器
 				//'filterPosition'=>'body',
@@ -62,22 +62,26 @@ $this->menu=array(
 					'htmlOptions'=>array('class'=>'pagination pagination-sm no-margin pull-right', 'style'=>'padding-right: 10px;'),
 				),
 				'columns'=>array(//就是指一个单元格对象，默认为CDataColumn对象
-					'id',
-					'category',
-					'message',
-					
 					array(
-						'name'=>'language',
+						'class'=>'CCheckBoxColumn',
+						'selectableRows' => 2,//0:禁止所有选项，1：单选，2：多选
+					),
+// 					'id',
+					array(
+						'name'=>'source.category',
 						'type'=>'raw',
-						'value'=>'$data->messages->language',
+						'value'=>'$data->source->category',//$data->messages->language
 					),
 					array(
-						'name'=>'translation',
+						'name'=>'source.message',
 						'type'=>'raw',
-						'value'=>'',
+						'value'=>'$data->source->message',//$data->messages->language
 					),
+					'language',
+					'translation',
 					
 					array(
+						'header'=>'Operation',//头信息
 						'class'=>'CButtonColumn',
 					),
 				),

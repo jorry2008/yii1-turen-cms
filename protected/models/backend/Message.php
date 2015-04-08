@@ -47,7 +47,7 @@ class Message extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'id0' => array(self::BELONGS_TO, 'SourceMessage', 'id'),
+			'source' => array(self::BELONGS_TO, 'SourceMessage', 'id'),
 		);
 	}
 
@@ -80,13 +80,28 @@ class Message extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		if(!empty($this->keyword)) {
+			$criteria->compare('language',$this->keyword,true,'OR');
+			$criteria->compare('translation',$this->keyword,true,'OR');
+			$criteria->compare('category',$this->keyword,true,'OR');
+			$criteria->compare('message','='.$this->keyword,true,'OR');
+		}
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('language',$this->language,true);
-		$criteria->compare('translation',$this->translation,true);
-
-		return new CActiveDataProvider($this->with('id0'), array(
+		return new CActiveDataProvider($this->with('source'), array(
 			'criteria'=>$criteria,
+			'sort'=>array(
+				'class'=>'CSort',//指定排序类
+					'attributes'=>array(
+						'source.category',
+						'source.message',
+						'language',
+						'translation',
+					),
+					//'multiSort'=>true,//连续排序
+// 					'defaultOrder'=>array(//指定默认排序的属性
+// 						'date_added'=>CSort::SORT_DESC,//降序排列
+// 					)
+			),
 		));
 	}
 

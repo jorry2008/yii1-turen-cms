@@ -87,7 +87,7 @@ class SourceMessage extends CActiveRecord
 		$criteria->compare('category',$this->category,true);
 		$criteria->compare('message',$this->message,true);
 
-		return new CActiveDataProvider($this->with('messages'), array(
+		return new CActiveDataProvider($this, array(//->with('messages')
 			'criteria'=>$criteria,
 		));
 	}
