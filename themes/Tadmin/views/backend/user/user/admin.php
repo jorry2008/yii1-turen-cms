@@ -15,23 +15,122 @@ $this->menu=array(
 );
 
 
-// fb($this->route, FirePHP::TRACE);
+$id = $this->id;
 
+Yii::app()->clientScript->registerScript('search', "
+		$('.search-form form').submit(function(){
+			$('#{$id}').yiiGridView('update', {
+				data: $(this).serialize()
+			});
+			return false;
+		});
+");
+
+$headerHtml = '<div class="box-header">';
+$headerHtml .= '<h3 class="box-title">'.Yii::t('manage_user', 'Administrator List').'</h3>';
+$headerHtml .= '<div class="box-tools search-form">';
+$headerHtml .= CHtml::form(Yii::app()->createUrl($this->route),'get');
+$headerHtml .= '<div class="input-group">';
+$headerHtml .= CHtml::textField('keyword','kk',array('placeholder'=>'Search', 'style'=>'width: 150px;','class'=>'form-control input-sm pull-right'));
+$headerHtml .= '<div class="input-group-btn">';
+$headerHtml .= CHtml::button('<i class="fa fa-search"></i>',array('class'=>'btn btn-sm btn-default'));
+$headerHtml .= '</div></div>';
+$headerHtml .= '</form>';
+$headerHtml .= '</div></div>';
+
+
+
+
+
+//请求之前处理
+$confirmation = "if(!confirm(".CJavaScript::encode(Yii::t('zii','Are you sure you want to delete this item?')).")) return false;";
+$batchDetleteUrl = Yii::app()->createUrl(('backend/user/user/batchDelete'));
+$batchStatusUrl = Yii::app()->createUrl(('backend/user/user/batchStatus'));
+
+if(Yii::app()->request->enableCsrfValidation) {
+	$csrfTokenName = Yii::app()->request->csrfTokenName;
+	$csrfToken = Yii::app()->request->csrfToken;
+	$csrf = "&'$csrfTokenName'='$csrfToken'";
+} else
+	$csrf = '';
+
+//处理js
+Yii::app()->clientScript->registerScript('batch', "
+	
+	jQuery(document).on('click','#{$id} #all_select',function() {
+		jQuery(\"input[name='{$id}_c0\[\]']:enabled\").each(function() {this.checked=true;});
+	});
+	jQuery(document).on('click','#{$id} #no_select',function() {
+		jQuery(\"input[name='{$id}_c0\[\]']:enabled\").each(function() {this.checked=false;});
+	});
+	jQuery(document).on('click', '#{$id} .batchSave', function(){
+		{$confirmation}
+		var ac = $('#{$id} #operation').val();
+		if(ac == 'batch_del') {
+			var th = this,afterDelete = function(){};
+			jQuery('#{$id}').yiiGridView('update', {
+				type: 'POST',
+				url: '{$batchDetleteUrl}',
+				data: $('#{$id} input[name=\'{$id}_c0\[\]\'\]').serialize()+'{$csrf}',
+				success: function(data) {
+					jQuery('#{$id}').yiiGridView('update');
+				},
+				error: function(XHR) {
+					return afterDelete(th, false, XHR);
+				}
+			});
+			return false;
+		}
+		
+		if(ac == 'batch_status') {
+			jQuery('#{$id}').yiiGridView('update', {
+				type: 'POST',
+				url: '{$batchStatusUrl}',
+				data: $('#{$id} input[name=\'{$id}_c0\[\]\'\]').serialize()+'{$csrf}',
+				success: function(data) {
+					jQuery('#{$id}').yiiGridView('update');
+					//nothing
+				},
+				error: function(XHR) {
+					//nothing
+				}
+			});
+			return false;
+		}
+		if(ac == 'batch_null') {
+		
+		}
+	});
+	
+");
+
+
+$batchHtml = '<div id="bottomToolbar" class="pull-left">'."\n";
+$batchHtml .= '<span class="selArea">'."\n";
+$batchHtml .= '<span>'.'BATCH_SELECT:'.'</span>';
+$actions = array(
+	'batch_null'=>'NULL',
+	'batch_del'=>'BATCH_DELETE',
+	'batch_status'=>'BATCH_STATUS',
+);
+
+$batchHtml .= CHtml::link('ALL', 'javascript:;', array('id'=>'all_select'));
+$batchHtml .= CHtml::link('NO', 'javascript:;', array('id'=>'no_select'));
+$batchHtml .= CHtml::dropDownList('operation', 'batch_null', array());
+$batchHtml .= CHtml::button('保存', array('class'=>'btn btn-primary btn-flat batchSave'));
+
+$batchHtml .= '</span>';
+$batchHtml .= '</div>';
 ?>
-
-<?php //$this->renderPartial('_search', array('model'=>$model));?>
 
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
 			<?php 
-			//yiiPager
 			//$this->widget('zii.widgets.grid.CGridView', array(
 			$this->widget('TGridView', array(
-				//jorry Ext
-				'route'=>$this->route,//TGridView专用
-				'model'=>$model,//TGridView专用
-				'headerTitle'=>Yii::t('manage_user', 'Administrator List'),
+				'headerHtml'=>$headerHtml,
+				'batchHtml'=>$batchHtml,
 				
 				'id'=>'user-grid',
 				'dataProvider'=>$model->search(),

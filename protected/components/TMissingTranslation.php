@@ -14,7 +14,6 @@ class TMissingTranslation extends CComponent
 		//数据库连接对象
 		$connection = $event->sender->getDbConnection();
 		
-		$newId = 0;
 		//查询source message表，没有就创建
 		$result = $connection->createCommand()
 				->select('id')
@@ -23,36 +22,23 @@ class TMissingTranslation extends CComponent
 				->andWhere('message=:message', array(':message'=>$event->message))
 				->queryRow();
 		
-		//创建此记录
+		//创建一对记录
 		if($result === false) {
-			//获取最大id
-			$result = $connection->createCommand()
-					->select('id')
-					->from('{{source_message}}')
-					->where('1=1')
-					->order('id DESC')
-					->queryRow();
-			
-			$line = $connection->createCommand()->insert('{{source_message}}', array(
-				'id'=>($result['id']+1),
+			$connection->createCommand()->insert('{{source_message}}', array(
 				'category'=>$event->category,
 				'message'=>$event->message,
 			));
 			
-			$newId = $result['id']+1;
-		} else {
-			$newId = $result['id'];
-		}
-		
-		//插入一个空的
-		$line = $connection->createCommand()->insert('{{message}}', array(
-				'id'=>$newId,
+			$connection->createCommand()->insert('{{message}}', array(
+				'id'=>$connection->getLastInsertID(),
 				'language'=>$event->language,
 				'translation'=>self::DEFUALT.$event->message,
-		));
+			));
+		}
 		
 		// 发送邮件
 // 		mail('admin@example.com', 'Missing translation', $text);
+		return $event;
 	}
 }
 

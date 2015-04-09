@@ -145,7 +145,7 @@ return array(
 			'sourceMessageTable'=>'{{source_message}}',
 			'translatedMessageTable'=>'{{message}}',
 			'onMissingTranslation'=>array('TMissingTranslation', 'handleMissingTranslation'),//翻译错误处理
-			//'cachingDuration'=>0,//缓存时间
+			//'cachingDuration'=>3600,//缓存时间
 		),
 			
 		//后台管理员
