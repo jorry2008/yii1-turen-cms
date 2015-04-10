@@ -29,12 +29,17 @@ class TMissingTranslation extends CComponent
 				'message'=>$event->message,
 			));
 			
-			$connection->createCommand()->insert('{{message}}', array(
-				'id'=>$connection->getLastInsertID(),
-				'language'=>$event->language,
-				'translation'=>self::DEFUALT.$event->message,
-			));
+			$id = $connection->getLastInsertID();
+		} else {//没有翻译
+			$id = $result['id'];
 		}
+		
+		//只要进入到这里，就没有翻译
+		$connection->createCommand()->insert('{{message}}', array(
+			'id'=>$id,
+			'language'=>$event->language,
+			'translation'=>self::DEFUALT.$event->message,
+		));
 		
 		// 发送邮件
 // 		mail('admin@example.com', 'Missing translation', $text);

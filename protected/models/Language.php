@@ -102,6 +102,19 @@ class Language extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function scopes()
+	{
+		return array(
+			'published'=>array(
+				'condition'=>'status=1',
+			),
+			'recently'=>array(
+				'order'=>'sort_order ASC',
+// 				'limit'=>5,
+			),
+		);
+	}
 
 	/**
 	 * Returns the static model of the specified AR class.

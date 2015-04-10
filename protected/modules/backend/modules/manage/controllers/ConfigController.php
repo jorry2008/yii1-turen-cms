@@ -183,7 +183,7 @@ class ConfigController extends TBackendController
 		
 		//多语言
 		$language = array();
-		$languageObj = Language::model()->findAll();
+		$languageObj = Language::model()->published()->findAll();
 		foreach ($languageObj as $lang)
 			$language[$lang->code] = $lang->name;
 		

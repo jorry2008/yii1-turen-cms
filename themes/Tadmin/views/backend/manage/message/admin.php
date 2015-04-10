@@ -16,10 +16,10 @@ $this->menu=array(
 
 
 // fb($this->route, FirePHP::TRACE);
-
+$id = $this->id.'-grid';
+$headerHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),true);
+$batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),true);
 ?>
-
-<?php //$this->renderPartial('_search', array('model'=>$model));?>
 
 <div class="row">
     <div class="col-xs-12">
@@ -29,11 +29,10 @@ $this->menu=array(
 			//$this->widget('zii.widgets.grid.CGridView', array(
 			$this->widget('TGridView', array(
 				//jorry Ext
-				'route'=>$this->route,//TGridView专用
-				'model'=>$model,//TGridView专用
-				'headerTitle'=>Yii::t('manage_message', 'Language List'),
+				'headerHtml'=>$headerHtml,
+				'batchHtml'=>$batchHtml,
 				
-				'id'=>'message-grid',
+				'id'=>$id,
 				'dataProvider'=>$model->search(),
 				//'filter'=>$model,//不显示过滤器
 				//'filterPosition'=>'body',
