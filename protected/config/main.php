@@ -179,8 +179,11 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
+			'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=turen_pw',
-			'emulatePrepare' => true,
+			'emulatePrepare' => YII_DEBUG,
+			'enableParamLogging' => YII_DEBUG,//启用参数日志记录
+			'enableProfiling' => YII_DEBUG,//开启数据库性能分析
 			'username' => 'root',
 			'password' => '123456',
 			'charset' => 'utf8',
