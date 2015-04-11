@@ -14,6 +14,14 @@
 class Message extends CActiveRecord
 {
 	public $keyword;
+	public $languageCode;
+	
+	public function init()
+	{
+		parent::init();
+		$this->languageCode = Yii::app()->language;
+	}
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -60,6 +68,8 @@ class Message extends CActiveRecord
 			'id' => 'ID',
 			'language' => '语言iso码',
 			'translation' => '翻译',
+			'keyword' => '关键词',
+			'languageCode' => '语言代码',
 		);
 	}
 
@@ -80,6 +90,7 @@ class Message extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		$criteria->addCondition('language=\''.$this->languageCode.'\'');
 		if(!empty($this->keyword)) {
 			$criteria->compare('language',$this->keyword,true,'OR');
 			$criteria->compare('translation',$this->keyword,true,'OR');

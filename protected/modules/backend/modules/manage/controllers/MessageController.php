@@ -11,24 +11,37 @@ class MessageController extends TBackendController
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	//public $layout='//layouts/column2';
-
+	
 	/**
 	 * Updates a particular model.
+	 * 单条更新
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
+	 * 复合主键
+	 * ['id'] =>67
+	 * ['language'] =>'zh_cn'
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model=$this->loadModel($id);
+		$ids = Yii::app()->request->getQuery('id', array());
+		
+		$criteria=new CDbCriteria;
+		$criteria->addCondition('t.id='.$ids['id']);//此id是外键
+		$criteria->addCondition('language=\''.$ids['language'].'\'');
+		
+		$model = Message::model()->with('source')->findAll($criteria);
+		$model = $model[0];//返回一个值即可
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['SourceMessage']))
+		if(isset($_POST['Message']))
 		{
-			$model->attributes=$_POST['SourceMessage'];
+			$id = Yii::app()->request->getQuery('id', array());
+			$model=$this->loadModel($id);
+			$model->attributes=$_POST['Message'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -59,6 +72,7 @@ class MessageController extends TBackendController
 			$model->attributes = $_GET['Message'];
 			$user = Yii::app()->request->getQuery('Message', array());
 			$model->keyword = empty($user['keyword'])?'':trim($user['keyword']);
+			$model->languageCode = empty($user['languageCode'])?Yii::app()->language:trim($user['languageCode']);
 		}
 
 		//这里要判断ajax

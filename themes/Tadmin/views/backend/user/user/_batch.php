@@ -83,7 +83,7 @@ $actions = array(
 echo CHtml::link('ALL', 'javascript:;', array('id'=>'all_select'));
 echo CHtml::link('NO', 'javascript:;', array('id'=>'no_select'));
 echo CHtml::dropDownList('operation', 'batch_null', $actions);
-echo CHtml::button('保存', array('class'=>'btn btn-primary btn-flat batchSave'));
+echo CHtml::button('保存', array('class'=>'btn btn-primary btn-sm batchSave'));
 ?>
 </span>
 </div>

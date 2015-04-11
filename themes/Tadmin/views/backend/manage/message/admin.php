@@ -1,8 +1,7 @@
 <?php
 /* @var $this UserController */
 /* @var $model User */
-
-$this->pageTitle = Yii::t('manage_message', 'Language Manage');
+$this->pageTitle = Yii::t('manage_message', 'Translation Manage');
 
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
@@ -19,6 +18,8 @@ $this->menu=array(
 $id = $this->id.'-grid';
 $headerHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),true);
 $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),true);
+//调用通用弹出窗modal
+$this->renderPartial('_modal', array('model'=>$model, 'id'=>$id));
 ?>
 
 <div class="row">
@@ -82,6 +83,9 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 					array(
 						'header'=>'Operation',//头信息
 						'class'=>'CButtonColumn',
+						'template'=>'{update} {delete}',
+						'htmlOptions'=>array('class'=>$id.'_modal'),//button css模态窗口要用到
+						'updateButtonUrl'=>'Yii::app()->controller->createUrl("admin",array("#"=>""))',
 					),
 				),
 			)); ?>
