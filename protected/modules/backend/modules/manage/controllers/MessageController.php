@@ -15,7 +15,6 @@ class MessageController extends TBackendController
 	
 	public function actionUpdate()
 	{
-		sleep(3);
 		$id = Yii::app()->request->getParam('id');//getQuery是取get，getParam则优先取get再取post
 		$language = Yii::app()->request->getParam('language');
 		$translation = Yii::app()->request->getParam('translation');
@@ -41,30 +40,30 @@ class MessageController extends TBackendController
 	 */
 	public function actionBatchUpdate()
 	{
-		$ids = Yii::app()->request->getQuery('id', array());
-		
-		$criteria=new CDbCriteria;
-		$criteria->addCondition('t.id='.$ids['id']);//此id是外键
-		$criteria->addCondition('language=\''.$ids['language'].'\'');
-		
-		$model = Message::model()->with('source')->findAll($criteria);
-		$model = $model[0];//返回一个值即可
-
+		$keys = Yii::app()->request->getParam($this->id.'-grid_c0', array());
+		if($keys) {
+			$ids = array();
+			$language = '';
+			foreach ($keys as $key) {
+				$ids[] = array_shift(explode(',', $key));
+				empty($language)?($language = array_pop(explode(',', $key))):'';
+			}
+			$criteria = new CDbCriteria;
+			$criteria->addInCondition('t.id', $ids);//此id是外键
+			$criteria->addCondition('language=\''.$language.'\'');
+			$models = Message::model()->with('source')->findAll($criteria);
+			
+			//加载表单模板
+			$this->render('batchUpdate',array(
+				'models'=>$models,
+			));
+		} else {
+			
+			//提示并返回到admin
+			$this->redirect(array('admin'));
+		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Message']))
-		{
-			$id = Yii::app()->request->getQuery('id', array());
-			$model=$this->loadModel($id);
-			$model->attributes=$_POST['Message'];
-			if($model->save())
-				$this->redirect(array('admin'));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
 	}
 
 	/**

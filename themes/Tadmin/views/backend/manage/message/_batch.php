@@ -8,8 +8,8 @@
 <?php 
 //请求之前处理
 $confirmation = "if(!confirm(".CJavaScript::encode(Yii::t('zii','Are you sure you want to delete this item?')).")) return false;";
-$batchDetleteUrl = Yii::app()->createUrl(('backend/user/user/batchDelete'));
-$batchStatusUrl = Yii::app()->createUrl(('backend/user/user/batchStatus'));
+$batchDetleteUrl = Yii::app()->createUrl(('backend/manage/message/batchDelete'));
+$batchUpdateUrl = Yii::app()->createUrl(('backend/manage/message/batchUpdate'));
 
 if(Yii::app()->request->enableCsrfValidation) {
 	$csrfTokenName = Yii::app()->request->csrfTokenName;
@@ -28,9 +28,9 @@ Yii::app()->clientScript->registerScript('batch', "
 		jQuery(\"input[name='{$id}_c0\[\]']:enabled\").each(function() {this.checked=false;});
 	});
 	jQuery(document).on('click', '#{$id} .batchSave', function(){
-		{$confirmation}
 		var ac = $('#{$id} #operation').val();
 		if(ac == 'batch_del') {
+			{$confirmation}
 			var th = this,afterDelete = function(){};
 			jQuery('#{$id}').yiiGridView('update', {
 				type: 'POST',
@@ -46,10 +46,14 @@ Yii::app()->clientScript->registerScript('batch', "
 			return false;
 		}
 		
-		if(ac == 'batch_status') {
+		if(ac == 'batch_update') {
+			//var ids = jQuery('#{$id}').yiiGridView.getChecked('{$id}', '{$id}_c0');
+			//console.debug($('#{$id} input[name=\'{$id}_c0\[\]\'\]').serialize());
+			//console.debug($.param(ids));
+			
 			jQuery('#{$id}').yiiGridView('update', {
 				type: 'POST',
-				url: '{$batchStatusUrl}',
+				url: '{$batchUpdateUrl}',
 				data: $('#{$id} input[name=\'{$id}_c0\[\]\'\]').serialize()+'{$csrf}',
 				success: function(data) {
 					jQuery('#{$id}').yiiGridView('update');
@@ -72,7 +76,7 @@ Yii::app()->clientScript->registerScript('batch', "
 $actions = array(
 		'batch_null'=>'NULL',
 		'batch_del'=>'BATCH_DELETE',
-		'batch_status'=>'BATCH_STATUS',
+		'batch_update'=>'BATCH_UPDATE',
 );
 ?>
 
