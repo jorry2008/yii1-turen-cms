@@ -157,7 +157,6 @@ class UserController extends TBackendController
 			$model->attributes = $_GET['User'];
 			$user = Yii::app()->request->getQuery('User', array());//get
 			$model->keyword = empty($user['keyword'])?'':trim($user['keyword']);
-			fb($model->keyword);
 			//Yii::app()->request->getParam('keyword', '');//get or post
 		}
 

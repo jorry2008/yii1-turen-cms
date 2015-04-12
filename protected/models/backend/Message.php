@@ -90,13 +90,13 @@ class Message extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->addCondition('language=\''.$this->languageCode.'\'');
 		if(!empty($this->keyword)) {
 			$criteria->compare('language',$this->keyword,true,'OR');
 			$criteria->compare('translation',$this->keyword,true,'OR');
 			$criteria->compare('category',$this->keyword,true,'OR');
 			$criteria->compare('message','='.$this->keyword,true,'OR');
 		}
+		$criteria->addCondition('language=\''.$this->languageCode.'\'');//加在最后，与上述所有的进行and
 
 		return new CActiveDataProvider($this->with('source'), array(
 			'criteria'=>$criteria,

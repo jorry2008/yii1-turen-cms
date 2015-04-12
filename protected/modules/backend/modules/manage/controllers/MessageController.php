@@ -12,6 +12,24 @@ class MessageController extends TBackendController
 	 */
 	//public $layout='//layouts/column2';
 	
+	
+	public function actionUpdate()
+	{
+		sleep(3);
+		$id = Yii::app()->request->getParam('id');//getQuery是取get，getParam则优先取get再取post
+		$language = Yii::app()->request->getParam('language');
+		$translation = Yii::app()->request->getParam('translation');
+		
+		$line = Message::model()->updateAll(array('translation'=>$translation), 'id=:id AND language=:language', array('id'=>$id,'language'=>$language));
+		
+		$result = array(
+				'status'=>$line?'1':'0',
+				'message'=>$line?'':'失败>_<',
+				);
+		echo CJSON::encode($result);
+		Yii::app()->end();
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * 单条更新
@@ -21,7 +39,7 @@ class MessageController extends TBackendController
 	 * ['id'] =>67
 	 * ['language'] =>'zh_cn'
 	 */
-	public function actionUpdate()
+	public function actionBatchUpdate()
 	{
 		$ids = Yii::app()->request->getQuery('id', array());
 		

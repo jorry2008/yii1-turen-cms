@@ -70,25 +70,33 @@ $this->renderPartial('_modal', array('model'=>$model, 'id'=>$id));
 					array(
 						'name'=>'source.category',
 						'type'=>'raw',
-						'value'=>'$data->source->category',//$data->messages->language
+						'value'=>'$data->source->category',
 					),
 					array(
 						'name'=>'source.message',
 						'type'=>'raw',
-						'value'=>'$data->source->message',//$data->messages->language
+						'value'=>'$data->source->message',
+						'htmlOptions' => array('class'=>'message'),
 					),
 					'language',
-					'translation',
-					
+					array(
+						'name'=>'translation',
+						'type'=>'raw',
+						'value'=>'$data->translation',
+						'htmlOptions' => array('class'=>'translation'),
+					),
+// 					Yii::app()->createUrl($route)
 					array(
 						'header'=>'Operation',//头信息
 						'class'=>'CButtonColumn',
 						'template'=>'{update} {delete}',
 						'htmlOptions'=>array('class'=>$id.'_modal'),//button css模态窗口要用到
-						'updateButtonUrl'=>'Yii::app()->controller->createUrl("admin",array("#"=>""))',
+						//'updateButtonOptions'=>array('data-id'=>'$data->primaryKey'),
+						'updateButtonUrl'=>'trim("javascript():;")',
 					),
 				),
 			)); ?>
 		</div>
 	</div>
 </div>
+<?php //echo CHtml::link('abc','javascript:;');?>
