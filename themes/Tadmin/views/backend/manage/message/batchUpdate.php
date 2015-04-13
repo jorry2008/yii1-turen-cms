@@ -5,17 +5,20 @@ $this->pageTitle = Yii::t('manage_message', 'Translation Update');
 
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	//$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
 
 $this->menu=array(
 	array('label'=>'List User', 'url'=>array('index')),
 	array('label'=>'Create User', 'url'=>array('create')),
-	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id)),
+	//array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage User', 'url'=>array('admin')),
 );
 //$model->id
+
+
+
 ?>
 
 <?php //echo $form->errorSummary($model); ?>
@@ -35,6 +38,7 @@ $this->menu=array(
     </div>
      -->
     <div class='box-body'>
+    <?php foreach ($models as $key=>$model) {?>
         <div class='row'>
             <div class='col-sm-4 col-md-4'>
                 <h4 class='text-center'>源语言</h4>
@@ -59,6 +63,7 @@ $this->menu=array(
             </div>
             <!-- /.col -->
         </div>
+        <?php }?>
         <!-- /.row -->
     </div><br />
     <!-- /.box-body -->

@@ -47,10 +47,12 @@ Yii::app()->clientScript->registerScript('batch', "
 		}
 		
 		if(ac == 'batch_update') {
-			//var ids = jQuery('#{$id}').yiiGridView.getChecked('{$id}', '{$id}_c0');
-			//console.debug($('#{$id} input[name=\'{$id}_c0\[\]\'\]').serialize());
-			//console.debug($.param(ids));
+			var ids = jQuery('#{$id}').yiiGridView.getChecked('{$id}', '{$id}_c0');
+			ids = ids.join('&id[]=');
+			window.location.href = '{$batchUpdateUrl}&id[]='+ids//直接跳转
+			return false;
 			
+			/*
 			jQuery('#{$id}').yiiGridView('update', {
 				type: 'POST',
 				url: '{$batchUpdateUrl}',
@@ -64,6 +66,7 @@ Yii::app()->clientScript->registerScript('batch', "
 				}
 			});
 			return false;
+			*/
 		}
 		if(ac == 'batch_null') {
 		

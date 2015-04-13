@@ -40,7 +40,7 @@ class MessageController extends TBackendController
 	 */
 	public function actionBatchUpdate()
 	{
-		$keys = Yii::app()->request->getParam($this->id.'-grid_c0', array());
+		$keys = Yii::app()->request->getParam('id', array());
 		if($keys) {
 			$ids = array();
 			$language = '';
