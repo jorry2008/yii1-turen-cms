@@ -16,15 +16,17 @@ $this->menu=array(
 	array('label'=>'Manage User', 'url'=>array('admin')),
 );
 //$model->id
-
-
-
+// fb(Yii::app()->baseUrl);
+// fb(Yii::app()->homeUrl);
 ?>
 
-<?php //echo $form->errorSummary($model); ?>
+<?php 
+//echo $form->errorSummary($model); 
+?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'user-form',
+	'action'=>Yii::app()->createUrl($this->route),
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -38,85 +40,46 @@ $this->menu=array(
     </div>
      -->
     <div class='box-body'>
-    <?php foreach ($models as $key=>$model) {?>
-        <div class='row'>
+    	<div class='row'>
             <div class='col-sm-4 col-md-4'>
                 <h4 class='text-center'>源语言</h4>
-                <div>
+            </div>
+            <!-- /.col -->
+            <div class='col-sm-6 col-md-6'>
+                <h4 class='text-center'>译文</h4>
+            </div>
+            <!-- /.col -->
+            <div class='col-sm-2 col-md-2'></div>
+            <!-- /.col -->
+        </div>
+    <?php foreach ($models as $key=>$model) {?>
+        <div class='row' style="margin: 10px 0 10px;">
+            <div class='col-sm-4 col-md-4'>
+                <div class='text-center'>
                     <?php echo $model->source->message; ?>
                 </div>
             </div>
             <!-- /.col -->
             <div class='col-sm-6 col-md-6'>
-                <h4 class='text-center'>译文</h4>
                 <div>
                     <?php echo $form->textArea($model,'translation', array('rows'=>2, 'style'=>'width:100%')); ?>
 					<?php echo $form->error($model,'translation'); ?>
                 </div>
             </div>
             <!-- /.col -->
-            <div class='col-sm-2 col-md-2'>
-                <h4 class='text-center'>操作</h4>
-                <div>
-					<?php echo CHtml::htmlButton('<i class="fa fa-save"></i> save', array('class'=>'btn btn-primary','type'=>'submit'));?>
-                </div>
-            </div>
+            <div class='col-sm-2 col-md-2'></div>
             <!-- /.col -->
         </div>
         <?php }?>
         <!-- /.row -->
+        
+		<div class='text-center'>
+			<?php echo CHtml::htmlButton('<i class="fa fa-save"></i> save', array('class'=>'btn btn-primary','type'=>'submit'));?>
+		</div>
+                
     </div><br />
     <!-- /.box-body -->
 </div>
 <!-- /.box -->
 <?php $this->endWidget(); ?>
 
-<?php 
-//处理js
-Yii::app()->clientScript->registerScript('batch', "
-
-$('#jj').on('click', function(){
-	$('#exampleModal').modal('show');
-});
-
-$('#exampleModal').on('show.bs.modal', function (event) {
-		alert('abcddd');
-	var button = $(event.relatedTarget);
-	var recipient = button.data('whatever');
-	var modal = $(this);
-	modal.find('.modal-title').text('New message to ' + recipient);
-	modal.find('.modal-body input').val(recipient);
-});
-
-
-");
-?>
-
-<button type="button" id="jj">afds</button>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Translation Message</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="control-label">源语言:</label>
-            <p>Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.</p>
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">译文:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
-      </div>
-    </div>
-  </div>
-</div>

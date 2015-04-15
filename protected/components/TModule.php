@@ -9,5 +9,5 @@
 abstract class TModule extends CWebModule
 {
 	
-	abstract function getTest(){}
+	
 }

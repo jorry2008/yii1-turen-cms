@@ -106,6 +106,7 @@ return array(
 			'modules'=>array(
 				'manage',//后台管理模块（用来管理其它模块的模块）
 				'user',//管理员模块
+				'auth'
 			),
 		),
 	),
@@ -214,6 +215,16 @@ return array(
 			'timeout'=>3600,
 			'connectionID' => 'db',
 			'sessionTableName' => '{{session}}',
+		),
+			
+		//配置权限管理
+		'auth'=>array(
+				'class'=>'CDbAuthManager',
+				//'defaultRoles'=>array(),//这里指定默认被开放访问的角色
+				'connectionID'=>'db',
+				'itemTable'=>'{{auth_item}}',
+				'itemChildTable'=>'{{auth_item_child}}',
+				'assignmentTable'=>'{{auth_assignment}}',
 		),
 		'log'=>array(
 			'class'=>'CLogRouter',
