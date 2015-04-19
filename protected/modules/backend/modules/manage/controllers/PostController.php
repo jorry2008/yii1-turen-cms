@@ -10,6 +10,15 @@ class PostController extends TBackendController
 	//public $layout='column2';
 
 	/**
+	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
+	 * @return multitype:string
+	 */
+	public static function getRbacConf()
+	{
+		return array();
+	}
+	
+	/**
 	 * @var CActiveRecord the currently loaded data model instance.
 	 */
 	private $_model;

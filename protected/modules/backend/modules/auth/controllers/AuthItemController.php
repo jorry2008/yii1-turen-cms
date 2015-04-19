@@ -7,6 +7,17 @@ class AuthItemController extends TBackendController
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	//public $layout='//layouts/column2';
+	
+	/**
+	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
+	 * @return multitype:string
+	 */
+	public static function getRbacConf()
+	{
+		return array(
+				'authItem'=>'',
+				);
+	}
 
 	/**
 	 * Displays a particular model.

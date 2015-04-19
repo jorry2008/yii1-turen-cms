@@ -8,6 +8,12 @@
  */
 abstract class TModule extends CWebModule
 {
-	
+// 	public function init()
+// 	{
+// 		parent::init();
+// 	}
+
+	//为rbac准备基础数据
+	abstract public static function getRbacConf();
 	
 }

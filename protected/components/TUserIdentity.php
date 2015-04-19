@@ -5,7 +5,7 @@
  * 身份验证：密码
  *
  */
-class UserIdentity extends CUserIdentity
+class TUserIdentity extends CUserIdentity
 {
 	private $_id;
 

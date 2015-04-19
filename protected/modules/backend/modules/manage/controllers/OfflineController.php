@@ -7,6 +7,16 @@ class OfflineController extends TBackendController
 	public $param1;
 	public $param2;
 	
+	/**
+	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
+	 * @return multitype:string
+	 */
+	public static function getRbacConf()
+	{
+		return array();
+	}
+	
+	
 	public function init()
 	{
 		$this->param1 = $_GET['param1'];

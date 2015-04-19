@@ -1,6 +1,10 @@
 <?php
-
-class AuthModule extends CWebModule
+/**
+ * 
+ * @author xia.q
+ *
+ */
+class AuthModule extends TModule
 {
 	public function init()
 	{
@@ -11,6 +15,17 @@ class AuthModule extends CWebModule
 		$this->setImport(array(
 			'auth.components.*',
 		));
+	}
+	
+	/**
+	 * 每一个子module都是一个任务的开始，这里创建一个任务权限
+	 * @return multitype:string
+	 */
+	public static function getRbacConf()
+	{
+		return array(
+			'auth'=>Yii::t('common', 'Auth Assignment'),
+		);
 	}
 
 	public function beforeControllerAction($controller, $action)

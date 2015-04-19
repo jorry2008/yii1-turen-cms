@@ -2,7 +2,7 @@
 
 Yii::import('zii.widgets.CPortlet');
 
-class UserMenu extends CPortlet
+class TMenu extends CPortlet
 {
 	public function init()
 	{
