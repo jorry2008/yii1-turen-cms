@@ -13,7 +13,9 @@ class DefaultController extends TBackendController
 	 */
 	public static function getRbacConf()
 	{
-		return array();
+		return array(
+				'index'=>Yii::t('manage_default', 'Index Default Operation'),
+				);
 	}
 	
 	public function actionIndex()

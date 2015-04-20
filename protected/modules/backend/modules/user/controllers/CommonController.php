@@ -15,7 +15,10 @@ class CommonController extends TBackendController
 	 */
 	public static function getRbacConf()
 	{
-		return array();
+		return array(
+				'login'=>Yii::t('auth_common', 'Login User Operation'),
+				'logout'=>Yii::t('auth_common', 'Logout User Operation'),
+				);
 	}
 	
 	/**
@@ -44,20 +47,6 @@ class CommonController extends TBackendController
 			),
 		);
 	}
-
-	/**
-	 * This is the action to handle external exceptions.
-	 */
-// 	public function actionError()
-// 	{
-// 	    if($error=Yii::app()->errorHandler->error)
-// 	    {
-// 	    	if(Yii::app()->request->isAjaxRequest)
-// 	    		echo $error['message'];
-// 	    	else
-// 	        	$this->render('error', $error);
-// 	    }
-// 	}
 
 	/**
 	 * Displays the login page

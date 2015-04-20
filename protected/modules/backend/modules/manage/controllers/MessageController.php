@@ -18,7 +18,12 @@ class MessageController extends TBackendController
 	 */
 	public static function getRbacConf()
 	{
-		return array();
+		return array(
+				'update'=>Yii::t('manage_message', 'Update Message Operation'),
+				'batchUpdate'=>Yii::t('manage_message', 'BatchUpdate Message Operation'),
+				'index'=>Yii::t('manage_message', 'Index Message Operation'),
+				'admin'=>Yii::t('manage_message', 'Admin Message Operation'),
+				);
 	}
 	
 	public function actionUpdate()

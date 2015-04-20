@@ -18,7 +18,16 @@ class UserController extends TBackendController
 	 */
 	public static function getRbacConf()
 	{
-		return array();
+		return array(
+				'view'=>Yii::t('user_user', 'View User Operation'),
+				'create'=>Yii::t('user_user', 'Create User Operation'),
+				'update'=>Yii::t('user_user', 'Update User Operation'),
+				'delete'=>Yii::t('user_user', 'Delete User Operation'),
+				'batchDelete'=>Yii::t('user_user', 'BatchDelete User Operation'),
+				'batchStatus'=>Yii::t('user_user', 'BatchStatus User Operation'),
+				'index'=>Yii::t('user_user', 'Index User Operation'),
+				'admin'=>Yii::t('user_user', 'Admin User Operation'),
+				);
 	}
 	
 	/**

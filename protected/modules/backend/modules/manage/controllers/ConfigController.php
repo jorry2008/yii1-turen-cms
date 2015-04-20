@@ -12,19 +12,23 @@ class ConfigController extends TBackendController
 	 */
 	//public $layout='//layouts/column2';
 	
+	public function init()
+	{
+		parent::init();
+		$this->pageTitle = '站点配置';
+	}
+	
+	
 	/**
 	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
 	 * @return multitype:string
 	 */
 	public static function getRbacConf()
 	{
-		return array();
-	}
-	
-	public function init()
-	{
-		parent::init();
-		$this->pageTitle = '站点配置';
+		return array(
+				'update'=>Yii::t('manage_config', 'Update Config Operation'),
+				'admin'=>Yii::t('manage_config', 'Admin Config Operation'),
+				);
 	}
 
 	/**
