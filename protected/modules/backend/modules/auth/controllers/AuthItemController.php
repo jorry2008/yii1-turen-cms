@@ -15,12 +15,12 @@ class AuthItemController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>Yii::t('auth_authItem', 'View AuthItem Operation'),
-				'create'=>Yii::t('auth_authItem', 'Create AuthItem Operation'),
-				'update'=>Yii::t('auth_authItem', 'Update AuthItem Operation'),
-				'delete'=>Yii::t('auth_authItem', 'Delete AuthItem Operation'),
-				'index'=>Yii::t('auth_authItem', 'Index AuthItem Operation'),
-				'admin'=>Yii::t('auth_authItem', 'Admin AuthItem Operation'),
+				'view'=>'View AuthItem Operation',
+				'create'=>'Create AuthItem Operation',
+				'update'=>'Update AuthItem Operation',
+				'delete'=>'Delete AuthItem Operation',
+				'index'=>'Index AuthItem Operation',
+				'admin'=>'Admin AuthItem Operation',
 				);
 	}
 

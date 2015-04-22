@@ -151,6 +151,8 @@ return array(
 			
 		//后台管理员
 		'user'=>array(
+			//'class'=>'CWebUser',//默认
+			'class'=>'TWebUser',//自定义
 			// enable cookie-based authentication
 			'stateKeyPrefix'=>'x_',//身份验证cookie名称【一个专用cookie】
 			//是否启用基于cookie的登录

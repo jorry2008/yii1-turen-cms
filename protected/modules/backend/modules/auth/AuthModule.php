@@ -24,7 +24,7 @@ class AuthModule extends TModule
 	public static function getRbacConf()
 	{
 		return array(
-			'auth'=>Yii::t('common', 'Auth Assignment'),
+			'auth'=>'Auth Assignment',
 		);
 	}
 

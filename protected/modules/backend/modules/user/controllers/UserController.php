@@ -19,14 +19,14 @@ class UserController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>Yii::t('user_user', 'View User Operation'),
-				'create'=>Yii::t('user_user', 'Create User Operation'),
-				'update'=>Yii::t('user_user', 'Update User Operation'),
-				'delete'=>Yii::t('user_user', 'Delete User Operation'),
-				'batchDelete'=>Yii::t('user_user', 'BatchDelete User Operation'),
-				'batchStatus'=>Yii::t('user_user', 'BatchStatus User Operation'),
-				'index'=>Yii::t('user_user', 'Index User Operation'),
-				'admin'=>Yii::t('user_user', 'Admin User Operation'),
+				'view'=>'View User Operation',
+				'create'=>'Create User Operation',
+				'update'=>'Update User Operation',
+				'delete'=>'Delete User Operation',
+				'batchDelete'=>'BatchDelete User Operation',
+				'batchStatus'=>'BatchStatus User Operation',
+				'index'=>'Index User Operation',
+				'admin'=>'Admin User Operation',
 				);
 	}
 	
@@ -55,11 +55,12 @@ class UserController extends TBackendController
 		if(isset($_POST['User']))
 		{
 			$model->attributes = $_POST['User'];
-			$model->login_ip = '';
-			$model->date_added = time();
-			
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
+			else {
+				$error = $model->getError();
+				Yii::app()->user->setFlash('danger', $error);
+			}
 		}
 
 		$this->render('create',array(
@@ -165,7 +166,7 @@ class UserController extends TBackendController
 	 * Manages all models.
 	 */
 	public function actionAdmin()
-	{
+	{fb(Yii::app()->user);
 		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
 		

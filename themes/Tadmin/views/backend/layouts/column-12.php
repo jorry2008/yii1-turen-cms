@@ -247,6 +247,16 @@
 							</li>
 						</ul>
 					</li>
+					<li class="treeview">
+						<a href="#">
+							<span>角色与权限</span>
+							<i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li><?php echo CHtml::link('自动配置操作',array('/backend/auth/auto/deal'));?></li>
+							<li><?php echo CHtml::link('操作管理',array('/backend/auth/authItem/admin'));?></li>
+						</ul>
+					</li>
 	            </ul>
 	            <!-- /.sidebar-menu -->
 	        </section>
@@ -255,18 +265,42 @@
 	    
 	    <!-- Content Wrapper. Contains page content -->
 	    <div class="content-wrapper">
+	    	<div class="box-body">
+		    	<div class="alert alert-danger alert-dismissable">
+			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				    Danger alert preview. This alert is dismissable. A wonderful serenity
+				    has taken possession of my entire soul, like these sweet mornings of spring
+				    which I enjoy with my whole heart.
+				</div>
+				
+				<div class="alert alert-info alert-dismissable">
+			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				    Danger alert preview. This alert is dismissable. A wonderful serenity
+				    has taken possession of my entire soul, like these sweet mornings of spring
+				    which I enjoy with my whole heart.
+				</div>
+				
+				<div class="alert alert-warning alert-dismissable">
+			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				    Danger alert preview. This alert is dismissable. A wonderful serenity
+				    has taken possession of my entire soul, like these sweet mornings of spring
+				    which I enjoy with my whole heart.
+				</div>
+				
+				<div class="alert alert-success alert-dismissable">
+			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				    Danger alert preview. This alert is dismissable. A wonderful serenity
+				    has taken possession of my entire soul, like these sweet mornings of spring
+				    which I enjoy with my whole heart.
+				</div>
+			</div>
+			
 	        <!-- Content Header (Page header) -->
 	        <section class="content-header">
 	            <h1>
 	                <?php echo $this->pageTitle;?>
 	                <i><small>hi turen!</small></i>
 	            </h1>
-	            
-	            
-					
-						
-	            
-	            
 <!-- 	            <ol class="breadcrumb"> -->
 <!-- 	                <li> -->
 <!-- 	                    <a href="#"><i class="fa fa-dashboard"></i>Level</a> -->

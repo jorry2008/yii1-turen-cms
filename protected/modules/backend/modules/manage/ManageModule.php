@@ -25,7 +25,7 @@ class ManageModule extends TModule
 	public static function getRbacConf()
 	{
 		return array(
-			'manage'=>Yii::t('common', 'Manage Assignment'),
+			'manage'=>'Manage Assignment',
 		);
 	}
 

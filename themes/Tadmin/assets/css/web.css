@@ -8,7 +8,7 @@
 	background-color: #3c8dbc;
 }
 .content-header {
-	padding-top: 10px;
+	padding-top: 0;
 }
 .content-header > .breadcrumb {
 	top: 10px;
@@ -46,9 +46,13 @@
 .box-header {
 	border-bottom: 1px solid #f4f4f4;
 }
-
-
-
+.content-wrapper .box-body {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.content-wrapper .box-body .alert {
+	margin-bottom: 5px;
+}
 
 
 

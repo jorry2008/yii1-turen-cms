@@ -16,8 +16,8 @@ class CommonController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'login'=>Yii::t('auth_common', 'Login User Operation'),
-				'logout'=>Yii::t('auth_common', 'Logout User Operation'),
+				'login'=>'Login User Operation',
+				'logout'=>'Logout User Operation',
 				);
 	}
 	

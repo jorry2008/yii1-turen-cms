@@ -13,7 +13,7 @@ class AutoController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'deal'=>Yii::t('auth_auto', 'Deal Auth Operation'),
+				'deal'=>'Deal Auth Operation',
 				);
 	}
 	

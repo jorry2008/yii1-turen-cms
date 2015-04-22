@@ -21,7 +21,7 @@ class UserModule extends TModule
 	public static function getRbacConf()
 	{
 		return array(
-			'user'=>Yii::t('common', 'User Assignment'),
+			'user'=>'User Assignment',
 		);
 	}
 

@@ -14,7 +14,7 @@ class OfflineController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'notice'=>Yii::t('manage_offline', 'Notice Parten Operation'),
+				'notice'=>'Notice Parten Operation',
 				);
 	}
 	

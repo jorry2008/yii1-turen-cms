@@ -26,8 +26,8 @@ class ConfigController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'update'=>Yii::t('manage_config', 'Update Config Operation'),
-				'admin'=>Yii::t('manage_config', 'Admin Config Operation'),
+				'update'=>'Update Config Operation',
+				'admin'=>'Admin Config Operation',
 				);
 	}
 

@@ -56,6 +56,20 @@ class User extends CActiveRecord
 			'user_group'=>array(self::BELONGS_TO, 'UserGroup', 'user_group_id'),
 		);
 	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see CActiveRecord::beforeSave()
+	 * //CPasswordHelper::verifyPassword($password,$this->password);
+	 */
+	protected function beforeSave()
+	{
+		$this->password = CPasswordHelper::hashPassword($this->password);
+		$this->date_added = time();
+		$this->login_ip = Yii::app()->request->getUserHostAddress();
+		
+		return true;
+	}
 
 	/**
 	 * @return array customized attribute labels (name=>label)

@@ -44,33 +44,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'question'); ?>
-		<?php echo $form->textField($model,'question'); ?>
-		<?php echo $form->error($model,'question'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'answer'); ?>
-		<?php echo $form->textField($model,'answer',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'answer'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'user_group_id'); ?>
 		<?php echo $form->textField($model,'user_group_id',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'user_group_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'login_ip'); ?>
-		<?php echo $form->textField($model,'login_ip',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'login_ip'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'date_added'); ?>
-		<?php echo $form->textField($model,'date_added',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'date_added'); ?>
 	</div>
 
 	<div class="row">
