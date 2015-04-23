@@ -6,12 +6,11 @@
  */
 class TWebUser extends CWebUser
 {
-	public function setFlash($key, $value)
-	{
-		
-		
-		
-	}
+	const DANGER = 'danger';
+	const WARNING = 'warning';
+	const INFO = 'info';
+	const SUCCESS = 'success';
+	const FOREVER = 'forever';//永久警告
 	
 	
 	

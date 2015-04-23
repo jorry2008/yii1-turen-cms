@@ -10,7 +10,13 @@ class UserController extends TBackendController
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
+	
 	//public $layout='//layouts/column2';
+	
+	public function init()
+	{
+		//Yii::app()->user->setFlash(TWebUser::FOREVER, '永久警告测试');
+	}
 
 	/**
 	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
@@ -52,14 +58,14 @@ class UserController extends TBackendController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
-		{
+		if(isset($_POST['User'])) {
 			$model->attributes = $_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-			else {
-				$error = $model->getError();
-				Yii::app()->user->setFlash('danger', $error);
+			if($model->save()) {
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_create', 'Create User Success!'));
+				$this->redirect(array('admin'));
+			} else {
+				$errors = $model->getErrors();
+				Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_create', 'Create User Failure!'));
 			}
 		}
 
@@ -166,7 +172,7 @@ class UserController extends TBackendController
 	 * Manages all models.
 	 */
 	public function actionAdmin()
-	{fb(Yii::app()->user);
+	{
 		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
 		

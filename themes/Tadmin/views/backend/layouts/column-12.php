@@ -266,33 +266,27 @@
 	    <!-- Content Wrapper. Contains page content -->
 	    <div class="content-wrapper">
 	    	<div class="box-body">
-		    	<div class="alert alert-danger alert-dismissable">
-			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-				    Danger alert preview. This alert is dismissable. A wonderful serenity
-				    has taken possession of my entire soul, like these sweet mornings of spring
-				    which I enjoy with my whole heart.
-				</div>
-				
-				<div class="alert alert-info alert-dismissable">
-			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-				    Danger alert preview. This alert is dismissable. A wonderful serenity
-				    has taken possession of my entire soul, like these sweet mornings of spring
-				    which I enjoy with my whole heart.
-				</div>
-				
-				<div class="alert alert-warning alert-dismissable">
-			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-				    Danger alert preview. This alert is dismissable. A wonderful serenity
-				    has taken possession of my entire soul, like these sweet mornings of spring
-				    which I enjoy with my whole heart.
-				</div>
-				
-				<div class="alert alert-success alert-dismissable">
-			    	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-				    Danger alert preview. This alert is dismissable. A wonderful serenity
-				    has taken possession of my entire soul, like these sweet mornings of spring
-				    which I enjoy with my whole heart.
-				</div>
+	    		<?php 
+	    		/*
+	    		if(Yii::app()->user->hasFlash(TWebUser::FOREVER)) {
+	    			$error = Yii::app()->user->getFlash(TWebUser::FOREVER,null,false);
+	    			echo '<div class="alert alert-warning alert-dismissable">'."\r\n";
+	    			echo $error;
+	    			echo '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'."\r\n";
+	    			echo '</div>'."\r\n";
+	    		}
+	    		*/
+	    		
+	    		$flashes = Yii::app()->user->getFlashes();
+	    		if($flashes) {
+	    			foreach ($flashes as $key=>$flash) {
+	    				echo '<div class="alert alert-'.$key.' alert-dismissable">'."\r\n";
+	    				echo $flash;
+	    				echo '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'."\r\n";
+	    				echo '</div>'."\r\n";
+	    			}
+	    		}
+	    		?>
 			</div>
 			
 	        <!-- Content Header (Page header) -->
