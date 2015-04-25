@@ -74,9 +74,6 @@ class CommonController extends TBackendController
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
-		
-		fb($this->layout);
-		
 		$this->render('login',array('model'=>$model));
 	}
 
@@ -86,6 +83,5 @@ class CommonController extends TBackendController
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		//$this->redirect(Yii::app()->user->l);
 	}
 }

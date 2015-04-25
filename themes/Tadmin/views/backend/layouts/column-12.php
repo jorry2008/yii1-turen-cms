@@ -183,9 +183,7 @@
 	                                    </a>
 	                                </div>
 	                                <div class="pull-right">
-	                                    <a href="#" class="btn btn-default btn-flat">
-	                                        Sign out
-	                                    </a>
+	                                	<?php echo CHtml::link(Yii::t('common', 'Sign out'), array('common/logout'), array('class'=>'btn btn-default btn-flat'));?>
 	                                </div>
 	                            </li>
 	                        </ul>

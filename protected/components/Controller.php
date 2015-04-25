@@ -36,7 +36,7 @@ class Controller extends CController
 				'application.filters.backend.LanguageFilter',
 			),
 			array(
-					//登录权限过滤
+				//登录权限过滤
 				'application.filters.backend.LoginFilter',
 			),
 			

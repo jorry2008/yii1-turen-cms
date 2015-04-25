@@ -15,4 +15,7 @@ $app = Yii::createWebApplication($config);
 $app->run();
 
 
+fb($_COOKIE);
+fb($_SESSION);
+
 // echo $app->basePath;

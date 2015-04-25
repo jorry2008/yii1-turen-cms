@@ -20,8 +20,7 @@ class TUserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if(!$user->validatePassword($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-		else
-		{
+		else {
 			$this->_id=$user->id;
 			$this->username=$user->user_name;
 			$this->errorCode=self::ERROR_NONE;

@@ -64,7 +64,7 @@ class User extends CActiveRecord
 	 */
 	protected function beforeSave()
 	{
-		$this->password = CPasswordHelper::hashPassword($this->password);
+		$this->password = $this->hashPassword($this->password);
 		$this->date_added = time();
 		$this->login_ip = Yii::app()->request->getUserHostAddress();
 		
@@ -129,6 +129,26 @@ class User extends CActiveRecord
 				)
 			),
 		));
+	}
+	
+	/**
+	 * Checks if the given password is correct.
+	 * @param string the password to be validated
+	 * @return boolean whether the password is valid
+	 */
+	public function validatePassword($password)
+	{
+		return CPasswordHelper::verifyPassword($password,$this->password);
+	}
+
+	/**
+	 * Generates the password hash.
+	 * @param string password
+	 * @return string hash
+	 */
+	public function hashPassword($password)
+	{
+		return CPasswordHelper::hashPassword($password);
 	}
 
 	/**
