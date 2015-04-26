@@ -151,10 +151,9 @@ return array(
 			
 		//后台管理员
 		'user'=>array(
-			//'class'=>'CWebUser',//默认
-			'class'=>'TWebUser',//自定义
+			'class'=>'TWebUser',//自定义//'class'=>'CWebUser',//默认
 			// enable cookie-based authentication
-			'stateKeyPrefix'=>'x_',//身份验证cookie名称【一个专用cookie】
+			'stateKeyPrefix'=>'user_cookie',//身份验证cookie名称【一个专用cookie】
 			//是否启用基于cookie的登录
 			'allowAutoLogin'=>true,
 			//持久层是否延续最新时间，使cookie保持最新
@@ -212,7 +211,7 @@ return array(
 		
 		'session'=>array(
 			'class' => 'CDbHttpSession',
-			'sessionName'=>'turen',
+			'sessionName'=>'turen_session',
 			//'cookieMode'=>'only',
 			'timeout'=>3600,
 			'connectionID' => 'db',

@@ -26,6 +26,7 @@ class LoginFilter extends CFilter
 	 */
 	protected function preFilter ($filterChain)
 	{
+		fb('登录过滤器');
 		// logic being applied before the action is executed
 		if(Yii::app()->user->isGuest) {
 			//提示

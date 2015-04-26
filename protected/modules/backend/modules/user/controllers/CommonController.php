@@ -20,16 +20,6 @@ class CommonController extends TBackendController
 				'logout'=>'Logout User Operation',
 				);
 	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see CController::filters()
-	 */
-	public function filters()
-	{
-		//return array();
-		//return array('a'=>'b');
-	}
 
 	/**
 	 * Declares class-based actions.

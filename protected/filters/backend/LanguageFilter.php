@@ -18,7 +18,6 @@ class LanguageFilter extends CFilter
 	public function init()
 	{
 		parent::init();
-		//fb('此对象首次执行的方法...');
 	}
 	
 	/**
@@ -28,6 +27,7 @@ class LanguageFilter extends CFilter
 	 */
 	protected function preFilter ($filterChain)
 	{
+		fb('多语言过滤器');
 		//处理多语言切换
 		//fb(Yii::app()->config->get('config_back_language'));
 		Yii::app()->language = Yii::app()->config->get('config_back_language');
