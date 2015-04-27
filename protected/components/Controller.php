@@ -29,8 +29,7 @@ class Controller extends CController
 	
 	public function filters()
 	{
-		$actions = array();//被禁止的动作列表
-		
+		$actions = array();//对所有用户开放访问的动作列表
 		$controllers = array();//被禁止的控制器列表//'post', 'admin/user'
 		$users = array();//被禁止的用户名列表
 		$roles = array();//被禁止角色列表
@@ -53,35 +52,47 @@ class Controller extends CController
 			
 			//授权过滤器
 			//'accessControl',
+			//第一步是匹配，如果为空时，则表示 当前已经匹配。然后是allow或deny，当为空时是未匹配。
+			//以下每个访问控制都是并列的，且依次进行，从上到下-->上面的过了系统即可执行，上面的没过则依次执行下面的过滤规则。
+			//满足以下四条规则：
+			//allow将匹配到的允许，deny将匹配到的禁止
+			//如果为空array()，则是全匹配（要么全禁，要么全开）
+			//未匹配的给下一个权限过滤继续匹配
+			//最终未匹配的默认允许
 			array(
 				'system.web.auth.CAccessControlFilter',
 				'rules'=>array(
+					array('allow', //允许所有用户在任何时候，都能通过'login', 'error', 'captcha', 'logout'
+						'actions'=>array_merge(array('login', 'error', 'captcha', 'logout'), $actions), 
+						//'users'=>array('*'),//为空的时候也表示不参于匹配
+						'message'=>Yii::t('common','Action Access Denied.'), 
+						'deniedCallback'=>$redirectMethod,
+					),
 					/*
-					array(
-						'allow',// or 'deny'
-						'actions'=>array('edit', 'delete'),
-						'controllers'=>array('post', 'admin/user'),
-						'users'=>array('thomas'),
-						'roles'=>array('admin'),//当前用户的角色身份
-						'ips'=>array('127.0.0.1'),
-						//'verbs'=>array('GET', 'POST'),
-						//'expression'=>'!$user->isGuest && $user->level==2',
-						'message'=>'Access Denied.',
-						'deniedCallback'=>'redirectToDeniedMethod',
+					array('allow', 
+						'controllers'=>$controllers, 
+						'message'=>Yii::t('common','Controller Access Denied.'), 
+						'deniedCallback'=>$redirectMethod,
 					),
 					*/
-					
-					//第一步是匹配，如果为空时，则表示 当前已经匹配。然后是allow或deny，当为空时是未匹配。
-					//'deny'
-					array('deny', 'actions'=>$actions, 'message'=>Yii::t('common','Action Access Denied.'), 'deniedCallback'=>$redirectMethod),
-					array('deny', 'controllers'=>$controllers, 'message'=>Yii::t('common','Controller Access Denied.'), 'deniedCallback'=>$redirectMethod),
-					array('deny', 'users'=>$users, 'message'=>Yii::t('common','User Access Denied.'), 'deniedCallback'=>$redirectMethod),
-					array('deny', 'roles'=>$roles, 'message'=>Yii::t('common','Role Access Denied.'), 'deniedCallback'=>$redirectMethod),
-					//array('allow', 'roles'=>array('updateTopic'=>array('topic'=>$topic)))),
-					array('deny', 'ips'=>$ips, 'message'=>Yii::t('common','IP Access Denied.'), 'deniedCallback'=>$redirectMethod),//ip过滤
+					array('deny',
+						'ips'=>array_merge(array('1'), $ips),
+						'message'=>Yii::t('common','IP Access Denied.'),
+						'deniedCallback'=>$redirectMethod,
+					),
+					array('deny', 
+						'users'=>array_merge(array('1'), $users), 
+						'message'=>Yii::t('common','User Access Denied.'), 
+						'deniedCallback'=>$redirectMethod,
+					),
 					//array('allow', 'verbs'=>$verbs, 'message'=>Yii::t('common','Verb Access Denied.'), 'deniedCallback'=>$redirectMethod'),//请求类型过滤
-					
 					//'expression'=>'!$user->isGuest && $user->level==2',//表达式验证
+					array('deny',
+						'roles'=>array('admin'),//$roles,
+						'message'=>Yii::t('common','Role Access Denied.'),
+						'deniedCallback'=>$redirectMethod,
+					),//RBAC权限是最后的关口
+					//array('allow', 'roles'=>array('updateTopic'=>array('topic'=>$topic)))),
 				),
 			),
 		);
@@ -92,11 +103,15 @@ class Controller extends CController
 	public static function redirectToDeniedMethod($rule)
 	{
 		$user = Yii::app()->user;
-		$message = $rule->message;
+		$message = $rule->message;fb($message);exit;
+		
+		//未登录
 		if($user->getIsGuest()) {
 			//发出提示并跳转到一个权限提示页面
-			$user->setFlash(TWebUser::DANGER, Yii::t('common', $message));
+			$user->setFlash(TWebUser::DANGER, Yii::t('common', 'You have not login, please login first.'));
 			$user->loginRequired();
+			
+		//无权限
 		} else
 			throw new CHttpException(403,$message);
 	}

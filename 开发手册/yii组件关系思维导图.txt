@@ -1,0 +1,10 @@
+将创建一个思维导图，
+描述整个yii组件之间的关系，比如
+'format' => array(
+    'class' => 'CLocalizedFormatter',
+),
+在配置格式化组件时，可以取默认的CFormatter类
+也可以取CLocalizedFormatter，仅仅是一个替换。
+但其结果不一样~
+
+类似于这种关系非常多

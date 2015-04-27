@@ -19,7 +19,7 @@ class BackendModule extends CWebModule
 		
 		//独立配置后台模块初始信息
 		$this->layout = 'column-12';//独立模块的布局文件
-		$this->defaultController = 'default';//独立模块中的默认控制器
+		$this->defaultController = 'backend/user/common';//独立模块中的默认控制器
 	}
 	
 	
