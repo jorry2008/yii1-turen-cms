@@ -8,6 +8,8 @@
  */
 abstract class TModule extends CWebModule
 {
+	public $defaultController='default';
+	
 // 	public function init()
 // 	{
 // 		parent::init();

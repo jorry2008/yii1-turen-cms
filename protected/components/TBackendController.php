@@ -5,7 +5,7 @@
  */
 abstract class TBackendController extends Controller
 {
-	public $defaultAction='login';
+	public $defaultAction='index';
 	
 	//为rbac准备基础数据
 	abstract public static function getRbacConf();

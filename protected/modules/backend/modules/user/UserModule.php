@@ -1,7 +1,13 @@
 <?php
-
+/**
+ * 
+ * @author xia.q
+ *
+ */
 class UserModule extends TModule
 {
+	public $defaultController='common';
+	
 	public function init()
 	{
 		// this method is called when the module is being created

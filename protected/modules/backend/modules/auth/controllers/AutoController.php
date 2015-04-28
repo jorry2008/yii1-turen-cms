@@ -64,7 +64,7 @@ class AutoController extends TBackendController
 	protected function createRbac($controllers = array())
 	{
 		//实例化//CDbAuthManager.php
-		$auth = Yii::app()->auth;
+		$auth = Yii::app()->authManager;
 		
 		//清空所有权限和权限层级关系表
 		$auth->clearAll();

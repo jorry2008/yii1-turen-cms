@@ -32,10 +32,18 @@ class Controller extends CController
 		$actions = array();//对所有用户开放访问的动作列表
 		$controllers = array();//被禁止的控制器列表//'post', 'admin/user'
 		$users = array();//被禁止的用户名列表
-		$roles = array();//被禁止角色列表
 		$ips = array();//被禁止的ip列表
-		
 		$verbs = array();//array('GET', 'POST');//被禁止的控请求类型
+		
+// 		fb($this->getRoute());
+// 		fb($this->getUniqueId());
+// 		fb($this->getId());
+		//fb($this->getModule()->);
+		
+		//$action->getId();
+		//$operation = 
+		$roles = array();//允许的角色列表
+		
 		$redirectMethod = 'Controller::redirectToDeniedMethod';
 		
 		return array(
@@ -87,12 +95,19 @@ class Controller extends CController
 					),
 					//array('allow', 'verbs'=>$verbs, 'message'=>Yii::t('common','Verb Access Denied.'), 'deniedCallback'=>$redirectMethod'),//请求类型过滤
 					//'expression'=>'!$user->isGuest && $user->level==2',//表达式验证
-					array('deny',
-						'roles'=>array('admin'),//$roles,
+					array('allow',
+						'roles'=>array('admin'),
 						'message'=>Yii::t('common','Role Access Denied.'),
 						'deniedCallback'=>$redirectMethod,
-					),//RBAC权限是最后的关口
+					),
 					//array('allow', 'roles'=>array('updateTopic'=>array('topic'=>$topic)))),
+					
+					//由匹配机制可知，所有未捕获的权限都将在最后禁止访问，从而实现严格的权限认证
+					array('deny',
+						'users'=>array('*'),
+						'message'=>Yii::t('common','Uncaught Permissions Matching.'),
+						'deniedCallback'=>$redirectMethod,
+					),
 				),
 			),
 		);
@@ -103,7 +118,7 @@ class Controller extends CController
 	public static function redirectToDeniedMethod($rule)
 	{
 		$user = Yii::app()->user;
-		$message = $rule->message;fb($message);exit;
+		$message = $rule->message;//fb($message);exit;
 		
 		//未登录
 		if($user->getIsGuest()) {

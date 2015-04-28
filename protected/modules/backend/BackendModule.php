@@ -6,6 +6,8 @@
  */
 class BackendModule extends CWebModule
 {
+	public $defaultController = 'manage';//独立模块中的默认控制器
+	
 	public function init()
 	{
 		//导入后台模块相关组件和模型
@@ -19,7 +21,7 @@ class BackendModule extends CWebModule
 		
 		//独立配置后台模块初始信息
 		$this->layout = 'column-12';//独立模块的布局文件
-		$this->defaultController = 'backend/user/common';//独立模块中的默认控制器
+		
 	}
 	
 	

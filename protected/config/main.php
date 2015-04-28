@@ -219,13 +219,14 @@ return array(
 		),
 			
 		//配置权限管理
-		'auth'=>array(
+		'authManager'=>array(
 				'class'=>'CDbAuthManager',
 				//'defaultRoles'=>array(),//这里指定默认被开放访问的角色
 				'connectionID'=>'db',
 				'itemTable'=>'{{auth_item}}',
 				'itemChildTable'=>'{{auth_item_child}}',
 				'assignmentTable'=>'{{auth_assignment}}',
+				//'showErrors'=>YII_DEBUG,
 		),
 		'log'=>array(
 			'class'=>'CLogRouter',
