@@ -95,19 +95,19 @@ class Controller extends CController
 					),
 					//array('allow', 'verbs'=>$verbs, 'message'=>Yii::t('common','Verb Access Denied.'), 'deniedCallback'=>$redirectMethod'),//请求类型过滤
 					//'expression'=>'!$user->isGuest && $user->level==2',//表达式验证
-					array('allow',
-						'roles'=>array('admin'),
-						'message'=>Yii::t('common','Role Access Denied.'),
-						'deniedCallback'=>$redirectMethod,
-					),
+// 					array('allow',
+// 						'roles'=>array('admin'),
+// 						'message'=>Yii::t('common','Role Access Denied.'),
+// 						'deniedCallback'=>$redirectMethod,
+// 					),
 					//array('allow', 'roles'=>array('updateTopic'=>array('topic'=>$topic)))),
 					
 					//由匹配机制可知，所有未捕获的权限都将在最后禁止访问，从而实现严格的权限认证
-					array('deny',
-						'users'=>array('*'),
-						'message'=>Yii::t('common','Uncaught Permissions Matching.'),
-						'deniedCallback'=>$redirectMethod,
-					),
+// 					array('deny',
+// 						'users'=>array('*'),
+// 						'message'=>Yii::t('common','Uncaught Permissions Matching.'),
+// 						'deniedCallback'=>$redirectMethod,
+// 					),
 				),
 			),
 		);

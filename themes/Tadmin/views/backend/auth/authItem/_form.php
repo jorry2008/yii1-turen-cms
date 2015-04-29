@@ -4,8 +4,6 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
-
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'auth-item-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -14,45 +12,71 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'name'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'name', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'name'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'type'); ?>
-		<?php echo $form->textField($model,'type'); ?>
-		<?php echo $form->error($model,'type'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'type', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->dropDownList($model,'type',AuthItemController::getTypeName(),array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'type'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'description'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'description', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->textArea($model,'description',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'description'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'bizrule'); ?>
-		<?php echo $form->textArea($model,'bizrule',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'bizrule'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'bizrule', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->textArea($model,'bizrule',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'bizrule'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'data'); ?>
-		<?php echo $form->textArea($model,'data',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'data'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'data', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->textArea($model,'data',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'data'); ?>
+		</div>
 	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	
+	<div class="form-group">
+		<label class="col-md-2 text-right form-label"></label>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo CHtml::submitButton($model->isNewRecord ? '创建' : '更新', array('class'=>'btn btn-primary')); ?>
+			</div>
+		</div>
 	</div>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->
+<!-- form -->

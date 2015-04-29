@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * 
+ * @author xia.q
+ *
+ */
 class AuthItemController extends TBackendController
 {
 	/**
@@ -21,7 +25,26 @@ class AuthItemController extends TBackendController
 				'delete'=>'Delete AuthItem Operation',
 				'index'=>'Index AuthItem Operation',
 				'admin'=>'Admin AuthItem Operation',
-				);
+		);
+	}
+	
+	/**
+	 * 
+	 * @param int $i
+	 * @return string
+	 */
+	public static function getTypeName($i='')
+	{
+		$typeList = array(
+				CAuthItem::TYPE_OPERATION=>Yii::t('auth_authItem', 'Operation'),
+				CAuthItem::TYPE_TASK=>Yii::t('auth_authItem', 'Task'),
+				CAuthItem::TYPE_ROLE=>Yii::t('auth_authItem', 'Role'),
+		);
+		
+		if($i === '')
+			return $typeList;
+		else
+			return isset($typeList[$i])?$typeList[$i]:'';
 	}
 
 	/**
@@ -148,5 +171,43 @@ class AuthItemController extends TBackendController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionSetUser()
+	{
+		$authManager = Yii::app()->authManager;
+		$userId = Yii::app()->user->id;
+		//fb($userId);
+		
+		
+		fb('所有的操作');
+		fb($authManager->getAuthItems(CAuthItem::TYPE_OPERATION));
+		
+		fb('所有的任务');
+		fb($authManager->getAuthItems(CAuthItem::TYPE_TASK));
+		
+		fb('所有角色');
+		fb($authManager->getAuthItems(CAuthItem::TYPE_ROLE));
+		
+		
+		
+		
+		//$authManager->assign($itemName,$userId);
+		//fb($authManager);
+		//fb($this->id);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
