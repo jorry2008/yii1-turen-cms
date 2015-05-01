@@ -252,7 +252,8 @@
 						</a>
 						<ul class="treeview-menu">
 							<li><?php echo CHtml::link('自动配置操作',array('/backend/auth/auto/deal'));?></li>
-							<li><?php echo CHtml::link('操作管理',array('/backend/auth/authItem/admin'));?></li>
+							<li><?php echo CHtml::link('角色管理',array('/backend/auth/role/admin'));?></li>
+							<li><?php echo CHtml::link('权限元管理',array('/backend/auth/authItem/admin'));?></li>
 						</ul>
 					</li>
 	            </ul>

@@ -4,13 +4,21 @@
  * @author xia.q
  *
  */
-class AuthItemController extends TBackendController
+class RoleController extends TBackendController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	//public $layout='//layouts/column2';
+	
+	public $active;
+	
+	public function init()
+	{
+		parent::init();
+		$this->active = Yii::app()->request->getParam('active', 'admin');//控制tabs活动状态
+	}
 	
 	/**
 	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
@@ -19,12 +27,12 @@ class AuthItemController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>'View AuthItem Operation',
-				'create'=>'Create AuthItem Operation',
-				'update'=>'Update AuthItem Operation',
-				'delete'=>'Delete AuthItem Operation',
-				'index'=>'Index AuthItem Operation',
-				'admin'=>'Admin AuthItem Operation',
+				'view'=>'View Role',
+				'create'=>'Create Role',
+				'update'=>'Update Role',
+				'delete'=>'Delete Role',
+				'index'=>'Index Role',
+				'admin'=>'Admin Role',
 		);
 	}
 	
@@ -36,8 +44,8 @@ class AuthItemController extends TBackendController
 	public static function getTypeName($i='')
 	{
 		$typeList = array(
-				CAuthItem::TYPE_OPERATION=>Yii::t('auth_authItem', 'Operation'),
-				CAuthItem::TYPE_TASK=>Yii::t('auth_authItem', 'Task'),
+// 				CAuthItem::TYPE_OPERATION=>Yii::t('auth_authItem', 'Operation'),
+// 				CAuthItem::TYPE_TASK=>Yii::t('auth_authItem', 'Task'),
 				CAuthItem::TYPE_ROLE=>Yii::t('auth_authItem', 'Role'),
 		);
 		
@@ -45,17 +53,6 @@ class AuthItemController extends TBackendController
 			return $typeList;
 		else
 			return isset($typeList[$i])?$typeList[$i]:'';
-	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
 	}
 
 	/**
@@ -67,18 +64,20 @@ class AuthItemController extends TBackendController
 		$model=new AuthItem;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['AuthItem']))
 		{
 			$model->attributes=$_POST['AuthItem'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->name));
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('auth_role', 'Cteate Role Success'));
+			else {
+				Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Create Role Failure'));
+				$this->redirect(array('admin','active'=>'create'));
+			}
 		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+			
+		$this->redirect(array('admin','active'=>'admin'));
 	}
 
 	/**
@@ -102,6 +101,7 @@ class AuthItemController extends TBackendController
 
 		$this->render('update',array(
 			'model'=>$model,
+			'action'=>'update',
 		));
 	}
 
@@ -120,17 +120,6 @@ class AuthItemController extends TBackendController
 	}
 
 	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('AuthItem');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
@@ -142,6 +131,7 @@ class AuthItemController extends TBackendController
 
 		$this->render('admin',array(
 			'model'=>$model,
+			'action'=>'create',//在admin中有create表单
 		));
 	}
 
@@ -166,7 +156,7 @@ class AuthItemController extends TBackendController
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='auth-item-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='role-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
@@ -195,19 +185,6 @@ class AuthItemController extends TBackendController
 		//$authManager->assign($itemName,$userId);
 		//fb($authManager);
 		//fb($this->id);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 }
