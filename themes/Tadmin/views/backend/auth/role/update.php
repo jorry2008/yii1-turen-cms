@@ -19,11 +19,11 @@ $this->menu=array(
 <div class="row">
     <div class="col-md-12">
         <!-- TABLE: LATEST ORDERS -->
-        <div class="box box-primary">
+        <div class="box box-primary collapsed-box">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo $model->isNewRecord?'<i class="fa fa-plus"></i> 创建':'<i class="fa fa-arrow-circle-up"></i> 更新'; ?></h3>
                 <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                     <!-- <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
                 </div>
             </div>
@@ -55,8 +55,20 @@ $this->menu=array(
 
 
 
-
-
+<?php 
+Yii::app()->clientScript->registerScript('batch', "
+	jQuery(document).on('click','#role_box input:checkbox',function() {
+		var type = $(this).attr('data-type');
+		var name_ = $(this).val();
+		var val = $(this).is(\":checked\");
+		if(type == 'task') {
+			jQuery(\"input[name=\'\"+name_+\"\[\]\']:enabled\").each(function() {this.checked=val;});
+		} else if(type == 'operation') {
+			$(this).parents('.box.box-solid').find('.task_on').attr('checked', false);
+		}
+	});
+");
+?>
 <div class="row">
     <div class="col-md-12">
         <!-- TABLE: LATEST ORDERS -->
@@ -67,72 +79,55 @@ $this->menu=array(
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <!-- <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
                 </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-            
-				<div class="row">
-				    <div class="col-md-4">
+            </div><!-- /.box-header -->
+            <div class="box-body" id="role_box">
+            <?php echo CHtml::form($this->createUrl('addAuthToRole', array('id'=>$model->name))); ?>
+            <?php 
+            $col = 3;//$selectItems
+            if(count($tasksAndOperations) > 0) {
+            	foreach ($tasksAndOperations as $key=>$value) {
+            		$task = $value['task'];
+            		$operations = $value['operations'];
+            		echo (($key+1)%$col == 0)?'<div class="row">':'';
+            		?>
+            		<div class="col-md-4">
 				        <div class="box box-solid">
 				            <div class="box-header with-border">
-				                <i class="fa fa-text-width"></i>
-				                <h3 class="box-title">Unordered List</h3>
-				            </div>
-				            <!-- /.box-header -->
+				                <?php echo CHtml::checkBox($task->name.'[]', in_array($task->name, $selectItems), array('id'=>$task->name, 'class'=>'task_on', 'value'=>$task->name, 'data-type'=>'task'));?>
+				                <h3 class="box-title"><?php echo CHtml::label(Yii::t('auth_role', $task->description), $task->name);?></h3>
+				            </div><!-- /.box-header -->
 				            <div class="box-body">
 				                <ul>
-				                    <li>
-				                        Lorem ipsum dolor sit amet
-				                    </li>
+				                	<?php 
+				                	foreach ($operations as $operation) {
+					                	echo '<li>';
+					                	echo CHtml::checkBox($task->name.'[]', (in_array($task->name, $selectItems) || in_array($operation->name, $selectItems)), array('id'=>$operation->name, 'class'=>'operation_on', 'value'=>$operation->name, 'data-type'=>'operation'));
+					                	echo CHtml::label(Yii::t('auth_role', $operation->description), $operation->name);
+						                echo '</li>';
+									}
+									?>
 				                </ul>
-				            </div>
-				            <!-- /.box-body -->
-				        </div>
-				        <!-- /.box -->
-				    </div>
-				    <!-- ./col -->
-				    <div class="col-md-4">
-				        <div class="box box-solid">
-				            <div class="box-header with-border">
-				                <i class="fa fa-text-width"></i>
-				                <h3 class="box-title">Ordered Lists</h3>
-				            </div>
-				            <!-- /.box-header -->
-				            <div class="box-body">
-				                <ol>
-				                    <li>
-				                        Lorem ipsum dolor sit amet
-				                    </li>
-				                </ol>
-				            </div>
-				            <!-- /.box-body -->
-				        </div>
-				        <!-- /.box -->
-				    </div>
-				    <!-- ./col -->
-				    <div class="col-md-4">
-				        <div class="box box-solid">
-				            <div class="box-header with-border">
-				                <i class="fa fa-text-width"></i>
-				                <h3 class="box-title">Unstyled List</h3>
-				            </div>
-				            <!-- /.box-header -->
-				            <div class="box-body">
-				                <ul class="list-unstyled">
-				                    <li>
-				                        Lorem ipsum dolor sit amet
-				                    </li>
-				                </ul>
-				            </div>
-				            <!-- /.box-body -->
-				        </div>
-				        <!-- /.box -->
-				    </div>
-				    <!-- ./col -->
+				            </div><!-- /.box-body -->
+				        </div><!-- /.box -->
+				    </div><!-- ./col -->
+            		<?php 
+            		echo (($key+1)%$col == 0)?'</div>':'';
+            	}
+            }
+            ?>
+            
+            <div class="row">
+	            <div class="form-group">
+					<label class="col-md-2 text-right form-label"></label>
+					<div class="col-md-10">
+						<div class="col-md-7">
+						<?php echo CHtml::submitButton('给'.$model->name.'授权', array('class'=>'btn btn-primary')); ?>
+						</div>
+					</div>
 				</div>
-				<!-- /.row -->
-
-
+			</div>
+			
+            <?php echo CHtml::endForm(); ?>
 			</div>
 		</div>
 	</div>

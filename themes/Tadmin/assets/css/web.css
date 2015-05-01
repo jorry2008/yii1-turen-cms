@@ -71,9 +71,16 @@
     border-color: #00733e;
 }
 
-
-
-
+#role_box .box-body ul {
+	padding-left: 0;
+}
+#role_box .box-body ul li {
+	list-style-type: none;
+}
+#role_box .box {
+	border-radius: 0;
+	box-shadow: none;
+}
 
 
 

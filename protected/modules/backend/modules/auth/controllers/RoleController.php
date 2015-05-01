@@ -33,6 +33,7 @@ class RoleController extends TBackendController
 				'delete'=>'Delete Role',
 				'index'=>'Index Role',
 				'admin'=>'Admin Role',
+				'addAuthToRole'=>'Add Auth To Role',
 		);
 	}
 	
@@ -98,11 +99,59 @@ class RoleController extends TBackendController
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->name));
 		}
+		
+		$auth = Yii::app()->authManager;
+		$tasksAndOperations = $auth->getTasksAndOperations();
+		$selectItems = $auth->getItemChildren($id);
+		$selectItems = array_keys($selectItems);
 
 		$this->render('update',array(
 			'model'=>$model,
 			'action'=>'update',
+			'tasksAndOperations'=>$tasksAndOperations,
+			'selectItems'=>$selectItems,
 		));
+	}
+	
+	/**
+	 * 添加权限到角色
+	 */
+	public function actionAddAuthToRole()
+	{
+		$post = $_POST;
+		$role = Yii::app()->request->getQuery('id');
+		if(empty($role)) {
+			throw new Exception('致命错误!');
+		}
+		
+		$auth = Yii::app()->authManager;
+		if(!empty($post) && count($post)>1) {
+			//清空当角色的所有权限
+			$auth->removeAllItems($role);
+			
+			foreach ($post as $key=>$value) {
+				if(!empty($value) && is_array($value)) {
+					if(in_array($key, $value)) {//只存task
+						if(!$auth->hasItemChild($role, $key)) {
+							$auth->addItemChild($role, $key);
+						}
+					} else {//只存operation
+						foreach ($value as $item) {
+							if(!$auth->hasItemChild($role, $item)) {
+								$auth->addItemChild($role, $item);
+							}
+						}
+					}
+				}
+			}
+			//提示更新成功
+			Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('common', 'Update Role Success'));
+		} else {
+			//提示没有更新
+			Yii::app()->user->setFlash(TWebUser::WARNING, Yii::t('common', 'Update Role Failure'));
+		}
+		
+		$this->redirect(array('update', 'id'=>$role));
 	}
 
 	/**

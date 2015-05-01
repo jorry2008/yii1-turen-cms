@@ -220,7 +220,7 @@ return array(
 			
 		//配置权限管理
 		'authManager'=>array(
-				'class'=>'CDbAuthManager',
+				'class'=>'TCDbAuthManager',
 				//'defaultRoles'=>array(),//这里指定默认被开放访问的角色
 				'connectionID'=>'db',
 				'itemTable'=>'{{auth_item}}',
