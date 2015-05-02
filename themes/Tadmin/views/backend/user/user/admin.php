@@ -14,7 +14,6 @@ $this->menu=array(
 	array('label'=>'Create User', 'url'=>array('create')),
 );
 
-
 $id = $this->id.'-grid';
 $headerHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),true);
 $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),true);
@@ -24,7 +23,6 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
     <div class="col-xs-12">
         <div class="box box-primary">
 			<?php 
-			//$this->widget('zii.widgets.grid.CGridView', array(
 			$this->widget('TGridView', array(
 				'headerHtml'=>$headerHtml,
 				'batchHtml'=>$batchHtml,
@@ -88,6 +86,11 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 						'name'=>'status',
 						'type'=>'raw',
 						'value'=>'($data->status)?\'<span class="label label-success">Yes</span>\':\'<span class="label label-danger">No</span>\'',
+					),
+					array(
+						'name'=>'is_admin',
+						'type'=>'raw',
+						'value'=>'$data->is_admin',
 					),
 					array(
 						'class'=>'CButtonColumn',

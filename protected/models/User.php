@@ -17,6 +17,9 @@
  */
 class User extends CActiveRecord
 {
+	const USER_NO = 0;
+	const USER_YES = 1;
+	
 	public $keyword;
 	/**
 	 * @return string the associated database table name
@@ -34,14 +37,15 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_name, password, email, nick_name, user_group_id, status', 'required'),
+			array('user_name, password, email, nick_name, user_group_id, status, is_admin', 'required'),
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('user_name', 'length', 'max'=>30),
 			array('password, email', 'length', 'max'=>128),
 			array('nick_name', 'length', 'max'=>32),
+			
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_name, password, email, nick_name, user_group_id, login_ip, date_added, status, keyword', 'safe', 'on'=>'search'),
+			array('id, user_name, password, email, nick_name, user_group_id, login_ip, date_added, status, keyword, is_admin', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -86,6 +90,7 @@ class User extends CActiveRecord
 			'login_ip' => Yii::t('user', 'IP'),
 			'date_added' => Yii::t('user', 'Login Time'),
 			'status' => Yii::t('user', 'Status'),
+			'is_admin' => Yii::t('user', 'Is Admin'),
 		);
 	}
 

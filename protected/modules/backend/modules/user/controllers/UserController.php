@@ -68,9 +68,12 @@ class UserController extends TBackendController
 				Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_create', 'Create User Failure!'));
 			}
 		}
+		
+		$group_list = UserGroup::model()->getAllGroupsToArr();
 
 		$this->render('create',array(
 			'model'=>$model,
+			'group_list'=>$group_list,
 		));
 	}
 
@@ -92,9 +95,13 @@ class UserController extends TBackendController
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
+		
+		$group_list = UserGroup::model()->getAllGroupsToArr();
+		$model->password = '';
 
 		$this->render('update',array(
 			'model'=>$model,
+			'group_list'=>$group_list,
 		));
 	}
 
@@ -174,6 +181,7 @@ class UserController extends TBackendController
 	public function actionAdmin()
 	{
 		$model=new User('search');
+		
 		$model->unsetAttributes();  // clear any default values
 		
 // 		$model->with('user_group')->findAll();
@@ -187,9 +195,9 @@ class UserController extends TBackendController
 
 		//这里要判断ajax
 		if(!isset($_GET['ajax'])) //grid默认是get提交数据
-			$this->render('admin',array('model'=>$model,));
+			$this->render('admin',array('model'=>$model));
 		else  
-			$this->renderPartial('admin',array('model'=>$model,));
+			$this->renderPartial('admin',array('model'=>$model));
 	}
 
 	/**

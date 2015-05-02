@@ -18,6 +18,7 @@ class CommonController extends TBackendController
 		return array(
 				'login'=>'Login User Operation',
 				'logout'=>'Logout User Operation',
+				'captcha'=>'Captcha User Operation',
 				);
 	}
 

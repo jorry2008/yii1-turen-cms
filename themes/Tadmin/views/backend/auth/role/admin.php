@@ -52,7 +52,7 @@ $this->renderPartial('_search',array('model'=>$model,));
 							'id'=>'role-grid',
 							'dataProvider'=>$model->search(),
 							'summaryText'=>'',//分页简述信息，为空时就不再显示
-							'filter'=>$model,
+							//'filter'=>$model,
 							'itemsCssClass'=>'table table-hover',//表格table上面的class
 							'htmlOptions'=>array('class'=>'box-body table-responsive no-padding'),//整个表的样式，与id同级
 							//'template'=>"{summary}\n{header}\n{items}\n{pager}",//整个grid的布局占位符

@@ -2,6 +2,8 @@
 /**
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
+ * 
+ * 此抽象类，规定了所有controller的开发规范
  */
 abstract class TBackendController extends Controller
 {

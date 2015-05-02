@@ -27,13 +27,13 @@ class RoleController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>'View Role',
-				'create'=>'Create Role',
-				'update'=>'Update Role',
-				'delete'=>'Delete Role',
-				'index'=>'Index Role',
-				'admin'=>'Admin Role',
-				'addAuthToRole'=>'Add Auth To Role',
+				'view'=>'View Role Operation',
+				'create'=>'Create Role Operation',
+				'update'=>'Update Role Operation',
+				'delete'=>'Delete Role Operation',
+				'index'=>'Index Role Operation',
+				'admin'=>'Admin Role Operation',
+				'addAuthToRole'=>'Add Auth To Role Operation',
 		);
 	}
 	
@@ -45,9 +45,7 @@ class RoleController extends TBackendController
 	public static function getTypeName($i='')
 	{
 		$typeList = array(
-// 				CAuthItem::TYPE_OPERATION=>Yii::t('auth_authItem', 'Operation'),
-// 				CAuthItem::TYPE_TASK=>Yii::t('auth_authItem', 'Task'),
-				CAuthItem::TYPE_ROLE=>Yii::t('auth_authItem', 'Role'),
+			CAuthItem::TYPE_ROLE=>Yii::t('auth_authItem', 'Role'),
 		);
 		
 		if($i === '')
@@ -177,6 +175,8 @@ class RoleController extends TBackendController
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['AuthItem']))
 			$model->attributes=$_GET['AuthItem'];
+		
+		$model->type = CAuthItem::TYPE_ROLE;
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -212,12 +212,12 @@ class RoleController extends TBackendController
 		}
 	}
 	
+	/*
 	public function actionSetUser()
 	{
 		$authManager = Yii::app()->authManager;
 		$userId = Yii::app()->user->id;
 		//fb($userId);
-		
 		
 		fb('所有的操作');
 		fb($authManager->getAuthItems(CAuthItem::TYPE_OPERATION));
@@ -228,12 +228,8 @@ class RoleController extends TBackendController
 		fb('所有角色');
 		fb($authManager->getAuthItems(CAuthItem::TYPE_ROLE));
 		
-		
-		
-		
 		//$authManager->assign($itemName,$userId);
 		//fb($authManager);
 		//fb($this->id);
-		
-	}
+	}*/
 }

@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $name
  * @property string $permission
+ * @property integer $status
  */
 class UserGroup extends CActiveRecord
 {
@@ -27,10 +28,11 @@ class UserGroup extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, permission', 'required'),
+			array('status', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, permission', 'safe', 'on'=>'search'),
+			array('id, name, permission, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +56,7 @@ class UserGroup extends CActiveRecord
 			'id' => 'ID',
 			'name' => Yii::t('usergroup', 'Name'),
 			'permission' => Yii::t('usergroup' ,'Permission'),
+			'status' => Yii::t('usergroup' ,'Status'),
 		);
 	}
 
@@ -78,10 +81,25 @@ class UserGroup extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('permission',$this->permission,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	/**
+	 * 获取所有分组，返回数组
+	 * @return array
+	 */
+	public function getAllGroupsToArr()
+	{
+		$group_list = array();
+		$group_models = self::model()->findAll();
+		foreach ($group_models as $group_model) {
+			$group_list[$group_model->id] = $group_model->name;
+		}
+		return $group_list;
 	}
 
 	/**

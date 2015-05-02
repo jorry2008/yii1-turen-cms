@@ -46,7 +46,7 @@ class TCDbAuthManager extends CDbAuthManager
 	}
 	
 	/**
-	 * 批量删除指定task或者role的所有子item
+	 * 批量删除指定task或者role的所有子item，通过
 	 * @param string $name
 	 */
 	public function removeAllItems($name)
@@ -57,6 +57,24 @@ class TCDbAuthManager extends CDbAuthManager
 			if($this->hasItemChild($name, $value)) {
 				$this->removeItemChild($name, $value);
 			}
+		}
+	}
+	
+	//删除task和operation及它们之间的关联
+	public function clearTaskAndOperation()
+	{
+		//获取所有task
+		$tasks = $this->getAuthItems(CAuthItem::TYPE_TASK);
+		foreach ($tasks as $taskKey=>$task) {
+			$operations = $this->getItemChildren($task->name);
+			foreach ($operations as $opKey=>$operation) {
+				//删除关联关系
+				$this->removeItemChild($task->name, $operation->name);//不需要判断
+				//删除operation
+				$this->removeAuthItem($operation->name);
+			}
+			//删除task
+			$this->removeAuthItem($task->name);
 		}
 	}
 }

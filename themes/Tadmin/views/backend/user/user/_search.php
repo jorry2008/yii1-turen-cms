@@ -6,7 +6,7 @@
 
 <?php 
 Yii::app()->clientScript->registerScript('search', "
-		$('.search-form form').submit(function(){
+		jQuery(document).on('submit','.search-form form',function() {
 			$('#{$id}').yiiGridView('update', {
 				data: $(this).serialize()
 			});
