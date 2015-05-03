@@ -9,15 +9,72 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
+/*
 $this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Create User', 'url'=>array('create')),
+	array('label'=>'List', 'url'=>array('admin')),
+	array('label'=>'Create', 'url'=>array('create')),
+	array('label'=>'Update', 'url'=>array('update')),
 );
+*/
 
 $id = $this->id.'-grid';
 $headerHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),true);
 $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),true);
 ?>
+
+<div class="row">
+    <div class="col-md-12">
+	        <!-- Custom Tabs -->
+	        <div class="nav-tabs-custom">
+	            <?php 
+				echo '<ul class="nav nav-tabs">';
+				foreach ($this->menu as $menu) {
+					$label = $menu['label'];
+					$url = $menu['url'];
+					$class = ($url[0] == $this->action->id)?' class="active"':'';
+					echo '<li'.$class.'>'.CHtml::link($label, $url).'</li>';
+				}
+				echo '</ul>';
+				?>
+	            <div class="tab-content clearfix">
+	                <div class="tab-pane active">
+	                	content
+	                </div>
+	                <!-- /.tab-pane -->
+	                
+	                <div class="form-group">
+			            <label class="col-md-2 text-right form-label"></label>
+			            <div class="col-md-10">
+				            <div class="col-md-7">
+			            		<button class="btn btn-primary" type="submit">提交</button>
+			        		</div>
+			        	</div>
+			        </div>
+	                
+	            </div>
+	            <!-- /.tab-content -->
+			</div>
+        <!-- nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="row">
     <div class="col-xs-12">
