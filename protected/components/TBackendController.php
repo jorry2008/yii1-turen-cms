@@ -15,10 +15,10 @@ abstract class TBackendController extends Controller
 		//fb($action);
 		$id = $action->id;
 		
-		$this->menu[] = array('label'=>Yii::t('common', 'List'), 'url'=>array('admin'));
-		$this->menu[] = array('label'=>Yii::t('common', 'Create'), 'url'=>array('create'));
+		$this->menu[] = array('label'=>Yii::t('common', 'List'), 'url'=>($id == 'admin')?'javascript:;':array('admin'));
 		if($id == 'update')
-			$this->menu[] = array('label'=>Yii::t('common', 'Update'), 'url'=>array('update'));
+			$this->menu[] = array('label'=>Yii::t('common', 'Update'), 'url'=>($id == 'update')?'javascript:;':array('update'));
+		$this->menu[] = array('label'=>Yii::t('common', 'Create'), 'url'=>($id == 'create')?'javascript:;':array('create'));
 		
 		return true;
 	}

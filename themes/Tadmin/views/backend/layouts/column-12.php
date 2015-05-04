@@ -313,7 +313,7 @@
 				<!-- breadcrumbs -->
 				<?php 
 				//改变home链接
-				$homeLink = CHtml::link('<a href="#"><i class="fa fa-dashboard"></i> Home', Yii::app()->homeUrl);
+				$homeLink = CHtml::link('<i class="fa fa-dashboard"></i> Home', Yii::app()->homeUrl);
 				$this->widget('zii.widgets.CBreadcrumbs', 
 					array('links'=>$this->breadcrumbs,'homeLink'=>$homeLink, 'tagName'=>'ol', 'htmlOptions'=>array('class'=>'breadcrumb'))
 				); 

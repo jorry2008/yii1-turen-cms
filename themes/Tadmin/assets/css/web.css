@@ -81,6 +81,18 @@
 	border-radius: 0;
 	box-shadow: none;
 }
+.nav-tabs-custom > .nav-tabs > li > a {
+	font-weight: bold;
+}
+.turen_grid .search-form {
+	position: absolute;
+	right: 26px;
+    top: 7px;
+}
+
+
+
+
 
 
 

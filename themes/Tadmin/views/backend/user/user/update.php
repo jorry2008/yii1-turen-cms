@@ -1,55 +1,39 @@
 <?php
 /* @var $this UserController */
 /* @var $model User */
+$this->pageTitle = Yii::t('user_user', 'Administrator Update');
 
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
-	'Update',
-);
-
-$this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Create User', 'url'=>array('create')),
-	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage User', 'url'=>array('admin')),
+	'Manage'=>array('admin'),
+	$model->user_name,
 );
 ?>
 
-
 <div class="row">
     <div class="col-md-12">
-        <!-- TABLE: LATEST ORDERS -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-plus"></i> 更新</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <div class="table-responsive">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom turen_grid">
+            <?php 
+			echo '<ul class="nav nav-tabs">';
+			foreach ($this->menu as $menu) {
+				$label = $menu['label'];
+				$url = $menu['url'];
+				$class = ($url == 'javascript:;')?' class="active"':'';
+				echo '<li'.$class.'>'.CHtml::link($label, $url).'</li>';
+			}
+			echo '</ul>';
+			?>
+            <div class="tab-content clearfix">
+                <div class="tab-pane active">
                 <?php $this->renderPartial('_form', array('model'=>$model, 'group_list'=>$group_list)); ?>
                 </div>
-                <!-- /.table-responsive -->
+                <!-- /.tab-pane -->
             </div>
-            <!-- /.box-body -->
-            <!-- 
-            <div class="box-footer clearfix">
-                <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">
-                    Place New Order
-                </a>
-                <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">
-                    View All Orders
-                </a>
-            </div>
-             -->
-            <!-- /.box-footer -->
-        </div>
-        <!-- /.box -->
+            <!-- /.tab-content -->
+		</div>
+        <!-- nav-tabs-custom -->
     </div>
     <!-- /.col -->
 </div>
 <!-- /.row -->
+

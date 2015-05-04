@@ -20,10 +20,12 @@ class TGridView extends CGridView
 	/**
 	 * 拓展一个header模板
 	 */
+	/*
 	public function renderheader()
 	{
 		echo $this->headerHtml;
 	}
+	*/
 	
 	/**
 	 * Renders the pager.

@@ -5,7 +5,6 @@
 $this->pageTitle = Yii::t('user_user', 'Administrator Create');
 
 $this->breadcrumbs=array(
-	'Manage'=>array('admin'),
 	'Create',
 );
 ?>
@@ -26,7 +25,7 @@ $this->breadcrumbs=array(
 			?>
             <div class="tab-content clearfix">
                 <div class="tab-pane active">
-                <?php $this->renderPartial('_form', array('model'=>$model, 'group_list'=>$group_list)); ?>
+                <?php $this->renderPartial('_form', array('model'=>$model)); ?>
                 </div>
                 <!-- /.tab-pane -->
             </div>

@@ -17,6 +17,8 @@
  */
 class AuthItem extends CActiveRecord
 {
+	public $keyword;
+	
 	/**
 	 * @return string the associated database table name
 	 */

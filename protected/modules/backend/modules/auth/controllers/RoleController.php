@@ -68,15 +68,16 @@ class RoleController extends TBackendController
 		if(isset($_POST['AuthItem']))
 		{
 			$model->attributes=$_POST['AuthItem'];
-			if($model->save())
+			if($model->save()) {
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('auth_role', 'Cteate Role Success'));
-			else {
+				$this->redirect(array('admin'));
+			} else
 				Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Create Role Failure'));
-				$this->redirect(array('admin','active'=>'create'));
-			}
 		}
-			
-		$this->redirect(array('admin','active'=>'admin'));
+		
+		$this->render('create',array(
+				'model'=>$model,
+		));
 	}
 
 	/**
@@ -180,7 +181,6 @@ class RoleController extends TBackendController
 
 		$this->render('admin',array(
 			'model'=>$model,
-			'action'=>'create',//在admin中有create表单
 		));
 	}
 
@@ -211,25 +211,4 @@ class RoleController extends TBackendController
 			Yii::app()->end();
 		}
 	}
-	
-	/*
-	public function actionSetUser()
-	{
-		$authManager = Yii::app()->authManager;
-		$userId = Yii::app()->user->id;
-		//fb($userId);
-		
-		fb('所有的操作');
-		fb($authManager->getAuthItems(CAuthItem::TYPE_OPERATION));
-		
-		fb('所有的任务');
-		fb($authManager->getAuthItems(CAuthItem::TYPE_TASK));
-		
-		fb('所有角色');
-		fb($authManager->getAuthItems(CAuthItem::TYPE_ROLE));
-		
-		//$authManager->assign($itemName,$userId);
-		//fb($authManager);
-		//fb($this->id);
-	}*/
 }
