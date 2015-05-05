@@ -2,7 +2,7 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->pageTitle = Yii::t('user_user', 'Administrator Create');
+$this->pageTitle = Yii::t('user_user', 'Role Create');
 
 $this->breadcrumbs=array(
 	'Create',

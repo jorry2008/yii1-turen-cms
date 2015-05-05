@@ -31,7 +31,8 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 					$label = $menu['label'];
 					$url = $menu['url'];
 					$class = ($url == 'javascript:;')?' class="active"':'';
-					echo '<li'.$class.'>'.CHtml::link($label, $url).'</li>';
+					$tip = Yii::t('user_user', 'Click Into '.$label);
+					echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link($label, $url).'</li>';
 				}
 				echo '</ul>';
 				?>
@@ -111,7 +112,26 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 									'value'=>'$data->is_admin',
 								),
 								array(
+									'header'=>Yii::t('common', 'Operation'),
+									//'headerHtmlOptions' => array('style'=>'width:100px'),//th
 									'class'=>'CButtonColumn',
+									'template'=>'{update} {delete}',//删除view
+							
+									//'htmlOptions'=>array('class'=>'hidden-sm hidden-xs action-buttons'),//td
+									'viewButtonOptions'=>array('class'=>'btn btn-primary btn-xs','data-toggle'=>'tooltip','title'=>Yii::t('common','View The Item')),//a
+									'viewButtonLabel'=>'<i class="fa fa-eye"></i>',
+									'viewButtonImageUrl'=>0,
+									
+									//'htmlOptions'=>array('class'=>'hidden-sm hidden-xs action-buttons'),//td
+									'updateButtonOptions'=>array('class'=>'btn btn-primary btn-xs','data-toggle'=>'tooltip','title'=>Yii::t('common','Update The Item')),//a
+									'updateButtonLabel'=>'<i class="fa fa-edit"></i>',
+									'updateButtonImageUrl'=>0,
+									
+									//'htmlOptions'=>array('class'=>'hidden-sm hidden-xs action-buttons'),//td
+									'deleteButtonOptions'=>array('class'=>'btn btn-danger btn-xs','data-toggle'=>'tooltip','title'=>Yii::t('common','Delete The Item')),//a
+									'deleteButtonLabel'=>'<i class="fa fa-bitbucket"></i>',
+									'deleteButtonImageUrl'=>0,
+									//'deleteConfirmation'=>'您确定要删除吗？',
 								),
 							),
 						)); ?>
