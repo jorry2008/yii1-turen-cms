@@ -54,23 +54,24 @@ class UserController extends TBackendController
 	public function actionCreate()
 	{
 		$model = new User;
-
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['User'])) {
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
-				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_create', 'Create User Success!'));
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Create User Success!'));
 				$this->redirect(array('admin'));
 			} else {
 				$errors = $model->getErrors();
-				Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_create', 'Create User Failure!'));
+				foreach ($errors as $error) {
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_user', 'Create User Failure '.$error[0].'!'));//取第一个
+					break;
+				}
 			}
 		}
 		
 		$group_list = UserGroup::model()->getAllGroupsToArr();
-
+		
 		$this->render('create',array(
 			'model'=>$model,
 			'group_list'=>$group_list,
@@ -84,16 +85,30 @@ class UserController extends TBackendController
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
+		$model = new User('update');
+		$model = $model->findByPk($id);
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		//$this->performAjaxValidation($model);
+		
+		if(isset($_POST['User'])) {
+			if(empty($_POST['User']['password'])) {
+				unset($_POST['User']['password']);
+			}
+			
+			//$role = '';
+			
+			$model->attributes = $_POST['User'];
+			if($model->save()) {
+				//$model->assign($role, $model->id);
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Update User Success!'));
+				$this->redirect(array('admin'));
+			} else {
+				$errors = $model->getErrors();
+				foreach ($errors as $error) {
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_user', 'Update User Failure '.$error[0].'!'));//取第一个
+					break;
+				}
+			}
 		}
 		
 		$group_list = UserGroup::model()->getAllGroupsToArr();

@@ -37,14 +37,21 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_name, password, email, nick_name, user_group_id, status, is_admin', 'required'),
-			array('status', 'numerical', 'integerOnly'=>true),
-			array('user_name', 'length', 'max'=>30),
-			array('password, email', 'length', 'max'=>128),
-			array('nick_name', 'length', 'max'=>32),
+			//公共部分
+			array('user_name, email, nick_name, user_group_id, status, is_admin', 'required'),
+			array('email', 'email'),
+			
+			//创建管理员(insert是默认场景)
+			array('password', 'required', 'on'=>'insert'),//在更新密码是，不是强制的
+			//更新管理员者
+			array('password', 'safe', 'on'=>'update'),//在更新密码是，不是强制的
+			
+			//array('password', 'compare', 'compareAttribute'=>'password2', 'on'=>'register'),
+			//array('password', 'authenticate', 'on'=>'login'),
 			
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			// 在输入搜索的时候，几乎允许所有的输入，所以下面都是safe
 			array('id, user_name, password, email, nick_name, user_group_id, login_ip, date_added, status, keyword, is_admin', 'safe', 'on'=>'search'),
 		);
 	}
@@ -68,7 +75,9 @@ class User extends CActiveRecord
 	 */
 	protected function beforeSave()
 	{
-		$this->password = $this->hashPassword($this->password);
+		if($this->scenario == 'insert')
+			$this->password = $this->hashPassword($this->password);
+		
 		$this->date_added = time();
 		$this->login_ip = Yii::app()->request->getUserHostAddress();
 		
@@ -154,6 +163,20 @@ class User extends CActiveRecord
 	public function hashPassword($password)
 	{
 		return CPasswordHelper::hashPassword($password);
+	}
+	
+	/**
+	 * 角色授权
+	 * @param string $role
+	 * @return boolean
+	 */
+	public function assign($role)
+	{
+		
+		
+		
+		
+		return true;
 	}
 
 	/**
