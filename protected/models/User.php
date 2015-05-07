@@ -21,6 +21,8 @@ class User extends CActiveRecord
 	const USER_YES = 1;
 	
 	public $keyword;
+	public $role;//角色
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,6 +42,7 @@ class User extends CActiveRecord
 			//公共部分
 			array('user_name, email, nick_name, user_group_id, status, is_admin', 'required'),
 			array('email', 'email'),
+			array('email', 'unique'),
 			
 			//创建管理员(insert是默认场景)
 			array('password', 'required', 'on'=>'insert'),//在更新密码是，不是强制的
@@ -75,7 +78,7 @@ class User extends CActiveRecord
 	 */
 	protected function beforeSave()
 	{
-		if($this->scenario == 'insert')
+		if(!empty($this->password) && $this->scenario == 'update')
 			$this->password = $this->hashPassword($this->password);
 		
 		$this->date_added = time();
@@ -100,6 +103,7 @@ class User extends CActiveRecord
 			'date_added' => Yii::t('user', 'Login Time'),
 			'status' => Yii::t('user', 'Status'),
 			'is_admin' => Yii::t('user', 'Is Admin'),
+			'role' => Yii::t('user', 'Role'),
 		);
 	}
 
@@ -166,17 +170,66 @@ class User extends CActiveRecord
 	}
 	
 	/**
-	 * 角色授权
+	 * 角色授权，保证唯一
 	 * @param string $role
 	 * @return boolean
 	 */
-	public function assign($role)
+	public function assign($roleName)
 	{
+		$auth = Yii::app()->authManager;
+		$userId = $this->id;
 		
+		$roles = $this->getRolesByUserId();
+		foreach ($roles as $role) {//一一清除
+			$auth->revoke($role->itemname, $userId);
+		}
 		
+		if($auth->isAssigned($roleName, $userId)) {
+			//nothing
+		} else {
+			$auth->assign($roleName, $userId);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * get all role by array
+	 */
+	public function getRoles()
+	{
+		$auth = Yii::app()->authManager;
+		$roles = $auth->getAuthItems(CAuthItem::TYPE_ROLE);
+		$role_list = array();
+		foreach ($roles as $role) {
+			$role_list[$role->name] = $role->description;
+		}
+		return $role_list;
+	}
+	
+	/**
+	 * get role by user id
+	 */
+	public function getRolesByUserId()
+	{
+		$auth = Yii::app()->authManager;
+		$userId = $this->id;
+		//$role = $auth->getAuthItems(CAuthItem::TYPE_ROLE, $userId);
+		return $auth->getAuthAssignments($userId);
+	}
+	
+	public function getRoleNameByUserId()
+	{
+		$auth = Yii::app()->authManager;
+		$roles = $this->getRolesByUserId();
 		
-		
-		return true;
+		if(!$roles) {
+			throw new Exception('致命错误'.__FILE__.__LINE__);
+		}
+		foreach ($roles as $role) {//返回一个即可
+			return $role->itemname;
+		}
+		return false;
 	}
 
 	/**

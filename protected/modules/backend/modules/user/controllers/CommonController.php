@@ -47,7 +47,7 @@ class CommonController extends TBackendController
 		if (!defined('CRYPT_BLOWFISH') || !CRYPT_BLOWFISH)
 			throw new CHttpException(500,"This application requires that PHP was compiled with Blowfish support for crypt().");
 
-		$model = new LoginForm;
+		$model = new LoginForm();
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form') {
@@ -59,10 +59,14 @@ class CommonController extends TBackendController
 		if(isset($_POST['LoginForm'])) {
 			$model->attributes = $_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			//登录或者无权时将当前访问的url记录下来
-			//等验证通过后恢复即可
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+			// 登录或者无权时将当前访问的url记录下来
+			// 等验证通过后恢复即可
+			if($model->validate() && $model->login()) {
+				$defaultUrl = array('/backend/manage/default/index');
+				$this->redirect(Yii::app()->user->getReturnUrl($defaultUrl));
+			} else {
+				//nothing
+			}
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));

@@ -59,6 +59,8 @@ class UserController extends TBackendController
 		if(isset($_POST['User'])) {
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
+				$roleName = $_POST['User']['role'];
+				$model->assign($roleName);
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Create User Success!'));
 				$this->redirect(array('admin'));
 			} else {
@@ -75,6 +77,7 @@ class UserController extends TBackendController
 		$this->render('create',array(
 			'model'=>$model,
 			'group_list'=>$group_list,
+			'role_list'=>$model->getRoles(),
 		));
 	}
 
@@ -90,16 +93,18 @@ class UserController extends TBackendController
 		// Uncomment the following line if AJAX validation is needed
 		//$this->performAjaxValidation($model);
 		
+		$roleName = $model->getRoleNameByUserId();
+		$model->role = $roleName;
+		
 		if(isset($_POST['User'])) {
 			if(empty($_POST['User']['password'])) {
 				unset($_POST['User']['password']);
 			}
 			
-			//$role = '';
-			
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
-				//$model->assign($role, $model->id);
+				$roleName = $_POST['User']['role'];
+				$model->assign($roleName);
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Update User Success!'));
 				$this->redirect(array('admin'));
 			} else {
@@ -113,10 +118,11 @@ class UserController extends TBackendController
 		
 		$group_list = UserGroup::model()->getAllGroupsToArr();
 		$model->password = '';
-
+		
 		$this->render('update',array(
 			'model'=>$model,
 			'group_list'=>$group_list,
+			'role_list'=>$model->getRoles(),
 		));
 	}
 
@@ -196,9 +202,7 @@ class UserController extends TBackendController
 	public function actionAdmin()
 	{
 		$model=new User('search');
-		
 		$model->unsetAttributes();  // clear any default values
-		
 // 		$model->with('user_group')->findAll();
 		
 		if(isset($_GET['User'])) {
@@ -214,7 +218,7 @@ class UserController extends TBackendController
 		else  
 			$this->renderPartial('admin',array('model'=>$model));
 	}
-
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

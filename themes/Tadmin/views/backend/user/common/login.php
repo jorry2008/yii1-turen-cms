@@ -1,17 +1,17 @@
 <?php
-$this->pageTitle=Yii::app()->name . ' - Login';
+$this->pageTitle=Yii::app()->name . ' - '.Yii::t('user_common', 'Login');
 $this->breadcrumbs=array(
-	'Login',
+	Yii::t('user_common', 'Login'),
 );
 ?>
 
 <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg"><?php echo Yii::t('user_common', 'Sign in to start your session');?></p>
     
     <?php 
     $form = $this->beginWidget('CActiveForm', array(
 		'id'=>'login-form',//作为ajax标识识别
-		'enableAjaxValidation'=>false,//服务器端验证
+		//'enableAjaxValidation'=>false,//服务器端验证
 		'enableClientValidation'=>true,//客户端验证
 	)); 
     ?>
@@ -23,14 +23,14 @@ $this->breadcrumbs=array(
     
         <div class="form-group has-feedback">
         	<?php //echo $form->labelEx($model,'user_name'); ?>
-            <?php echo $form->textField($model, 'user_name', array('class'=>'form-control', 'placeholder'=>'Email')); ?>
+            <?php echo $form->emailField($model, 'email', array('class'=>'form-control', 'placeholder'=>Yii::t('user_common', 'Email'))); ?>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            <?php echo $form->error($model,'user_name'); ?>
+            <?php echo $form->error($model,'email'); ?>
         </div>
         
         <div class="form-group has-feedback">
 			<?php //echo $form->labelEx($model,'password'); ?>
-			<?php echo $form->passwordField($model, 'password', array('class'=>'form-control', 'placeholder'=>'Password')); ?>
+			<?php echo $form->passwordField($model, 'password', array('class'=>'form-control', 'placeholder'=>Yii::t('user_common', 'Password'))); ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             <?php echo $form->error($model,'password'); ?>
         </div>
@@ -40,7 +40,7 @@ $this->breadcrumbs=array(
 	            <div class="checkbox">
 					<label>
 						<?php //echo $form->label($model,'rememberMe'); ?>
-						<?php echo $form->checkBox($model,'rememberMe'); ?>Remember Me
+						<?php echo $form->checkBox($model,'rememberMe').Yii::t('user_common', 'Remember Me'); ?>
 						<?php echo $form->error($model,'rememberMe'); ?>
 					</label>
 				</div>
@@ -48,9 +48,9 @@ $this->breadcrumbs=array(
             <!-- /.col -->
             <?php if(CCaptcha::checkRequirements()): ?>
             <div class="col-xs-7">
-            	<?php echo $form->textField($model,'verifyCode',array('placeholder'=>'VerifyCode')); ?>
+            	<?php echo $form->textField($model,'verifyCode',array('placeholder'=>Yii::t('user_common', 'VerifyCode'))); ?>
             	<?php $this->widget('CCaptcha',array('clickableImage'=>true,'showRefreshButton'=>false,
-            			'imageOptions'=>array('alt'=>'点击换图','title'=>'点击换图','style'=>'cursor:pointer'))); ?>
+            			'imageOptions'=>array('alt'=>Yii::t('user_common', 'Click Update'),'title'=>Yii::t('user_common', 'Click Update'),'style'=>'cursor:pointer'))); ?>
             	
             	<?php echo $form->error($model,'verifyCode'); ?>
             </div>
@@ -61,7 +61,7 @@ $this->breadcrumbs=array(
         <div class="row">
             <!-- /.col -->
             <div class="col-xs-12">
-                <?php echo CHtml::submitButton('Sign In', array('class'=>'btn btn-primary btn-block btn-flat')); ?>
+                <?php echo CHtml::submitButton(Yii::t('user_common', 'Sign In'), array('class'=>'btn btn-primary btn-block btn-flat')); ?>
             </div>
             <!-- /.col -->
         </div>

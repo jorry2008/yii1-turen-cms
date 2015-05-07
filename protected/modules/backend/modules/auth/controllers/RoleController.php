@@ -60,7 +60,7 @@ class RoleController extends TBackendController
 	 */
 	public function actionCreate()
 	{
-		$model=new AuthItem;
+		$model=new AuthItem();
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
@@ -94,7 +94,7 @@ class RoleController extends TBackendController
 
 		if(isset($_POST['AuthItem']))
 		{
-			$model->attributes=$_POST['AuthItem'];
+			$model->attributes = $_POST['AuthItem'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->name));
 		}

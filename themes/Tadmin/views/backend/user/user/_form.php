@@ -71,6 +71,18 @@
 		</div>
 	</div>
 	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'role', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->dropDownList($model, 'role', $role_list, array('class'=>'form-control col-md-5','placeholder'=>'Enter..', 'style'=>'width:75%;margin-right:5px;')); ?>
+			<?php echo CHtml::link(Yii::t('user_user', 'New Create'), array('/backend/auth/role/create'), array('target'=>'_blank', 'class'=>'btn btn-primary'));?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'role'); ?>
+		</div>
+	</div>
+	
 	<style>
 	#User_status br, #User_is_admin br {
 		display: none;

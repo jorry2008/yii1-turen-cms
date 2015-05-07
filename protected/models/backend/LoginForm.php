@@ -6,7 +6,7 @@
  */
 class LoginForm extends CFormModel
 {
-	public $user_name;
+	public $email;
 	public $password;
 	public $rememberMe;
 	public $verifyCode;
@@ -22,12 +22,13 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('user_name, password, verifyCode', 'required'),
+			array('email, password, verifyCode', 'required'),
+			array('email', 'email'),
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
 			// password needs to be authenticated
 			array('password', 'authenticate'),
-				
+			// allowEmpty
 			array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
@@ -48,9 +49,9 @@ class LoginForm extends CFormModel
 	 */
 	public function authenticate($attribute,$params)
 	{
-		$this->_identity = new TUserIdentity($this->user_name,$this->password);
+		$this->_identity = new TUserIdentity($this->email,$this->password);
 		if(!$this->_identity->authenticate()) {
-			$this->addError('password',Yii::t('loginForm', 'Incorrect username or password.'));
+			$this->addError('password',Yii::t('loginForm', Yii::t('LoginForm', 'Incorrect emial or password.')));
 		}
 	}
 
@@ -61,7 +62,7 @@ class LoginForm extends CFormModel
 	public function login()
 	{
 		if($this->_identity === null) {
-			$this->_identity = new TUserIdentity($this->user_name,$this->password);
+			$this->_identity = new TUserIdentity($this->email,$this->password);
 			$this->_identity->authenticate();
 		}
 		
