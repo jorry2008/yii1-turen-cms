@@ -1,12 +1,12 @@
 <?php
+
 /**
  * This is the model class for table "{{user_group}}".
  *
  * The followings are the available columns in table '{{user_group}}':
  * @property integer $id
- * @property integer $parent_id
  * @property string $name
- * @property string $role
+ * @property string $permission
  * @property integer $status
  */
 class UserGroup extends CActiveRecord
@@ -27,13 +27,12 @@ class UserGroup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('parent_id, name, role', 'required'),
-			array('parent_id, status', 'numerical', 'integerOnly'=>true),
+			array('name, permission', 'required'),
+			array('status', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
-			array('role', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, parent_id, name, role, status, is_default', 'safe', 'on'=>'search'),
+			array('id, name, permission, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +44,6 @@ class UserGroup extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				
 		);
 	}
 
@@ -56,10 +54,9 @@ class UserGroup extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'parent_id' => '父id',
-			'name' => '组名',
-			'role' => '管理组角色',
-			'status' => '状态',
+			'name' => Yii::t('usergroup', 'Name'),
+			'permission' => Yii::t('usergroup' ,'Permission'),
+			'status' => Yii::t('usergroup' ,'Status'),
 		);
 	}
 
@@ -82,14 +79,27 @@ class UserGroup extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('role',$this->role,true);
+		$criteria->compare('permission',$this->permission,true);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	/**
+	 * 获取所有分组，返回数组
+	 * @return array
+	 */
+	public function getAllGroupsToArr()
+	{
+		$group_list = array();
+		$group_models = self::model()->findAll();
+		foreach ($group_models as $group_model) {
+			$group_list[$group_model->id] = $group_model->name;
+		}
+		return $group_list;
 	}
 
 	/**

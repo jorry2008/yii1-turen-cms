@@ -223,10 +223,8 @@
 							<i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
-							<li><?php echo CHtml::link('管理员管理',array('/backend/user/user/admin'));?></li>
-							<li>
-								<a href="#">管理员群组</a>
-							</li>
+							<li><?php echo CHtml::link('企业员工管理',array('/backend/user/user/admin'));?></li>
+							<li><?php echo CHtml::link('企业人事结构管理',array('/backend/user/userGroup/admin'));?></li>
 						</ul>
 					</li>
 					<li class="treeview">
