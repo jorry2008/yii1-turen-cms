@@ -26,16 +26,7 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'type', array('class'=>'col-md-2 text-right form-label')); ?>
-		<div class="col-md-10">
-			<div class="col-md-7">
-			<?php echo $form->dropDownList($model,'type',RoleController::getTypeName(),array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
-			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'type'); ?>
-		</div>
-	</div>
+	<?php echo $form->hiddenField($model, 'type',array('value'=>CAuthItem::TYPE_ROLE)); ?>
 	
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'description', array('class'=>'col-md-2 text-right form-label')); ?>

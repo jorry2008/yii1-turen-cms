@@ -47,7 +47,7 @@ $searchHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),
 							array(
 								'name'=>'type',
 								'type'=>'raw',
-								'value'=>'RoleController::getTypeName($data->type)',
+								'value'=>'Yii::t(\'auth_role\', \'Role\')',
 							),
 							'description',
 							'bizrule',
@@ -56,7 +56,23 @@ $searchHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),
 							'header'=>Yii::t('common', 'Operation'),
 							//'headerHtmlOptions' => array('style'=>'width:100px'),//th
 							'class'=>'CButtonColumn',
-							'template'=>'{update} {delete}',//删除view
+							'template'=>'{role} {update} {delete}',//删除view
+							
+							//增加新按钮
+							'buttons'=>array(
+								'role' => array(
+									'options'=>array('class'=>'btn btn-primary btn-xs','data-toggle'=>'tooltip','title'=>Yii::t('common','Role Config')),//a
+									'label'=>'<i class="fa fa-gear"></i>',
+									'imageUrl'=>0,
+									'url'=>'Yii::app()->createUrl(\'backend/auth/role/config\', array(\'id\'=>$data->name))',
+// 									'label'=>'...',     //按钮的文本标签.
+// 									'url'=>'...',       //使用 PHP 表达式得出按钮的 URL.
+// 									'imageUrl'=>'...',  //按钮的图片路径.
+// 									'options'=>array(), //按钮的 HTML 选项.
+// 									'click'=>'...',     //当点击按钮时调用的 javascript 函数
+// 									'visible'=>'...',   //确定按钮是否显示的 PHP 表达式
+								),
+							),
 					
 							//'htmlOptions'=>array('class'=>'hidden-sm hidden-xs action-buttons'),//td
 							'viewButtonOptions'=>array('class'=>'btn btn-primary btn-xs','data-toggle'=>'tooltip','title'=>Yii::t('common','View The Item')),//a

@@ -5,6 +5,7 @@
 $this->pageTitle = Yii::t('user_user', 'Role Create');
 
 $this->breadcrumbs=array(
+	Yii::t('common', 'Manage')=>array('admin'),
 	'Create',
 );
 ?>

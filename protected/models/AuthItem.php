@@ -35,10 +35,10 @@ class AuthItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, type', 'required'),
+			array('name, type, description', 'required'),
 			array('type', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
-			array('description, bizrule, data', 'safe'),
+			array('bizrule, data', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('name, type, description, bizrule, data', 'safe', 'on'=>'search'),

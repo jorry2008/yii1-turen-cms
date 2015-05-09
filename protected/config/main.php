@@ -159,7 +159,7 @@ return array(
 			//持久层是否延续最新时间，使cookie保持最新
 			'autoRenewCookie'=>true,
 			//未验证者的名字
-			'guestName'=>'游客',
+			'guestName'=>Yii::t('common', 'Guest'),
 			//用户登录的rul
 			'loginUrl'=>array('/backend/user/common/login'),
 			//重点，当开始基于cookie登录时，这个数组就是初始化系列化持久的cookie初始值

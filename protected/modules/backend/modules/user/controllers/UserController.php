@@ -61,12 +61,12 @@ class UserController extends TBackendController
 			if($model->save()) {
 				$roleName = $_POST['User']['role'];
 				$model->assign($roleName);
-				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Create User Success!'));
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Create User Success'));
 				$this->redirect(array('admin'));
 			} else {
 				$errors = $model->getErrors();
 				foreach ($errors as $error) {
-					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_user', 'Create User Failure '.$error[0].'!'));//取第一个
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_user', 'Create User Failure ').$error[0]);//取第一个
 					break;
 				}
 			}
@@ -105,12 +105,12 @@ class UserController extends TBackendController
 			if($model->save()) {
 				$roleName = $_POST['User']['role'];
 				$model->assign($roleName);
-				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Update User Success!'));
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Update User Success'));
 				$this->redirect(array('admin'));
 			} else {
 				$errors = $model->getErrors();
 				foreach ($errors as $error) {
-					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_user', 'Update User Failure '.$error[0].'!'));//取第一个
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_user', 'Update User Failure ').$error[0]);//取第一个
 					break;
 				}
 			}

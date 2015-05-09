@@ -69,7 +69,7 @@ class TCDbAuthManager extends CDbAuthManager
 			$operations = $this->getItemChildren($task->name);
 			foreach ($operations as $opKey=>$operation) {
 				//删除关联关系
-				$this->removeItemChild($task->name, $operation->name);//不需要判断
+				//$this->removeItemChild($task->name, $operation->name);//不需要特意去删除，因为有外键约束
 				//删除operation
 				$this->removeAuthItem($operation->name);
 			}

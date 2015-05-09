@@ -97,7 +97,7 @@ class Controller extends CController
 					//array('allow', 'verbs'=>$verbs, 'message'=>Yii::t('common','Verb Access Denied.'), 'deniedCallback'=>$redirectMethod'),//请求类型过滤
 					//'expression'=>'!$user->isGuest && $user->level==2',//表达式验证
 // 					array('allow',
-// 						'roles'=>array('admin'),
+// 						'roles'=>array('Administrator'),
 // 						'message'=>Yii::t('common','Role Access Denied.'),
 // 						'deniedCallback'=>$redirectMethod,
 // 					),

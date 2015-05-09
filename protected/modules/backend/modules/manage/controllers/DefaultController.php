@@ -21,8 +21,15 @@ class DefaultController extends TBackendController
 	{
 		$this->pageTitle = '仪表盘';
 		
+		$user = Yii::app()->user;
+		fb($user->id);
+		fb($user->name);
 		
-		
+		fb($user->getState('userName'));
+		fb($user->getState('nickName'));
+		fb($user->getState('GroupId'));
+		fb($user->getState('isAdmin'));
+		fb($user->getState('loginTime'));
 		
 		$this->render('index',array());
 	}

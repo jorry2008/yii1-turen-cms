@@ -223,9 +223,9 @@ class User extends CActiveRecord
 		$auth = Yii::app()->authManager;
 		$roles = $this->getRolesByUserId();
 		
-		if(!$roles) {
-			throw new Exception('致命错误'.__FILE__.__LINE__);
-		}
+// 		if(!$roles) {
+// 			throw new Exception('致命错误'.__FILE__.__LINE__);
+// 		}
 		foreach ($roles as $role) {//返回一个即可
 			return $role->itemname;
 		}

@@ -36,23 +36,6 @@ class RoleController extends TBackendController
 				'addAuthToRole'=>'Add Auth To Role Operation',
 		);
 	}
-	
-	/**
-	 * 
-	 * @param string $i
-	 * @return mixed or string
-	 */
-	public static function getTypeName($i='')
-	{
-		$typeList = array(
-			CAuthItem::TYPE_ROLE=>Yii::t('auth_authItem', 'Role'),
-		);
-		
-		if($i === '')
-			return $typeList;
-		else
-			return isset($typeList[$i])?$typeList[$i]:'';
-	}
 
 	/**
 	 * Creates a new model.
@@ -65,14 +48,18 @@ class RoleController extends TBackendController
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['AuthItem']))
-		{
+		if(isset($_POST['AuthItem'])) {
 			$model->attributes=$_POST['AuthItem'];
 			if($model->save()) {
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('auth_role', 'Cteate Role Success'));
 				$this->redirect(array('admin'));
-			} else
-				Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Create Role Failure'));
+			} else {
+				$errors = $model->getErrors();
+				foreach ($errors as $error) {
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Create Role Failure ').$error[0]);//取第一个
+					break;
+				}
+			}
 		}
 		
 		$this->render('create',array(
@@ -92,37 +79,36 @@ class RoleController extends TBackendController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['AuthItem']))
-		{
+		if(isset($_POST['AuthItem'])) {
 			$model->attributes = $_POST['AuthItem'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->name));
+			if($model->save()) {
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('auth_role', 'Update Role Success'));
+				$this->redirect(array('admin'));
+			} else {
+				$errors = $model->getErrors();
+				foreach ($errors as $error) {
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Update Role Failure ').$error[0]);//取第一个
+					break;
+				}
+			}
 		}
-		
-		$auth = Yii::app()->authManager;
-		$tasksAndOperations = $auth->getTasksAndOperations();
-		$selectItems = $auth->getItemChildren($id);
-		$selectItems = array_keys($selectItems);
 
 		$this->render('update',array(
 			'model'=>$model,
 			'action'=>'update',
-			'tasksAndOperations'=>$tasksAndOperations,
-			'selectItems'=>$selectItems,
+			'id'=>$id,
 		));
 	}
 	
 	/**
 	 * 添加权限到角色
 	 */
-	public function actionAddAuthToRole()
+	public function actionConfig($id)
 	{
+		//$role = Yii::app()->request->getQuery('role');
 		$post = $_POST;
-		$role = Yii::app()->request->getQuery('id');
-		if(empty($role)) {
-			throw new Exception('致命错误!');
-		}
-		
+		$role = $id;
+		$model = $this->loadModel($id);
 		$auth = Yii::app()->authManager;
 		if(!empty($post) && count($post)>1) {
 			//清空当角色的所有权限
@@ -145,12 +131,21 @@ class RoleController extends TBackendController
 			}
 			//提示更新成功
 			Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('common', 'Update Role Success'));
-		} else {
+			$this->redirect(array('config', 'id'=>$id));
 			//提示没有更新
-			Yii::app()->user->setFlash(TWebUser::WARNING, Yii::t('common', 'Update Role Failure'));
+			//Yii::app()->user->setFlash(TWebUser::WARNING, Yii::t('common', 'Update Role Failure'));
 		}
 		
-		$this->redirect(array('update', 'id'=>$role));
+		$tasksAndOperations = $auth->getTasksAndOperations();
+		$selectItems = $auth->getItemChildren($id);
+		$selectItems = array_keys($selectItems);
+		
+		$this->render('config',array(
+				'tasksAndOperations'=>$tasksAndOperations,
+				'selectItems'=>$selectItems,
+				'model'=>$model,
+				'id'=>$id,
+		));
 	}
 
 	/**
