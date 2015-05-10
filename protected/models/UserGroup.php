@@ -11,6 +11,12 @@
  */
 class UserGroup extends CActiveRecord
 {
+	public $keyword;
+	
+	const MAX_PAGE_NUM = 100;//最大分页数量，因为涉及到无限级分层一次展示
+	const USER_GROUP_YES = 1;
+	const USER_GROUP_NO = 0;
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -27,13 +33,13 @@ class UserGroup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('parent_id, name, role', 'required'),
-			array('parent_id, status', 'numerical', 'integerOnly'=>true),
+			array('parent_id, name, role, sort', 'required'),
+			array('parent_id, status, sort', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('role', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, parent_id, name, role, status, is_default', 'safe', 'on'=>'search'),
+			array('id, parent_id, name, role, status, is_default, sort', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +51,7 @@ class UserGroup extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				
+			
 		);
 	}
 
@@ -55,14 +61,71 @@ class UserGroup extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'parent_id' => '父id',
-			'name' => '组名',
-			'role' => '管理组角色',
-			'status' => '状态',
+			'id' => Yii::t('userGroup', 'ID'),
+			'parent_id' => Yii::t('userGroup', 'Belong Category'),
+			'name' => Yii::t('userGroup', 'Name'),
+			'role' => Yii::t('userGroup', 'Role'),
+			'status' => Yii::t('userGroup', 'Status'),
 		);
 	}
-
+	
+	/**
+	 * 普通的过滤条件，传Criteria参数条件
+	 * 
+	 * (non-PHPdoc)
+	 * @see CActiveRecord::scopes()
+	 */
+	public function scopes()
+	{
+		return array(
+			'published'=>array(
+				'condition'=>'parent_id=0',
+			),
+// 			'recently'=>array(
+// 				'order'=>'create_time DESC',
+// 				'limit'=>5,
+// 			),
+		);
+	}
+	
+	/**
+	 * 参数化过滤条件，传Criteria对象
+	 * 
+	 * @param int $limit
+	 */
+	public function recently($limit=5)
+	{
+		//这个技巧很灵活
+		$this->getDbCriteria()->mergeWith(array(
+			'order'=>'id DESC',
+			'limit'=>$limit,
+		));
+		return $this;
+	}
+	
+	/**
+	 * 实现无限级分类
+	 *
+	 * @param UserGroup $models
+	 * @param int $pid
+	 * @param int $level
+	 * @param string $html
+	 */
+	protected function muliSort(&$models, $pid=0, $level=0, $tip='└' ,$line='——')
+	{
+		static $tree = array();
+		foreach($models as $model) {
+			if($model->parent_id == $pid) {
+				if($level != 0)
+					$model->name = $tip.str_repeat($line, $level).$model->name;
+	
+				$tree[] = $model;
+				$this->muliSort($models, $model->id, $level+1);
+			}
+		}
+		return $tree;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -78,18 +141,94 @@ class UserGroup extends CActiveRecord
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
-
+		$criteria->order = 'sort ASC';
+	
 		$criteria->compare('id',$this->id);
-		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('role',$this->role,true);
 		$criteria->compare('status',$this->status);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+		$criteria->compare('is_default',$this->is_default);
+	
+		return new TCActiveDataProvider($this, array(
+				'isMuliSort'=>true,//开启无限级分类
+				'parent_id'=>0,//开始父id为0
+					
+				'criteria'=>$criteria,
+				//条件
+		// 			'criteria'=>array(
+				// 				'condition'=>'status=1',
+				// 				'order'=>'create_time DESC',
+				// 				'with'=>array('author'),
+				// 			),
+				//汇总
+		// 			'countCriteria'=>array(
+				// 				'condition'=>'status=1',
+				// 				// 'order' and 'with' clauses have no meaning for the count query
+				// 			),
+				//排序
+		// 			'sort'=>array(
+				// 				//
+				// 			),
+				//分页
+				'pagination'=>array(
+						'pageSize'=>self::MAX_PAGE_NUM,
+				),
 		));
+	}
+	
+	/**
+	 * 返回现一个经过分类排序的user group列表
+	 * //self::MAX_PAGE_NUM
+	 * 
+	 * @return array
+	 */
+	public function getUserGroupSelect($haveTop = true)
+	{
+		$models = $this->findAll(array(
+				'order'=>'sort ASC',
+				'limit'=>self::MAX_PAGE_NUM,
+				));
+		$models = $this->muliSort($models);
+		$selects = $haveTop?array(0=>Yii::t('user_userGroup', 'Top Category')):array();
+		foreach ($models as $model) {
+			$selects[$model->id] = $model->name;
+		}
+		return $selects;
+	}
+	
+	/**
+	 * 创建、更新和删除操作时，检测is_default这个值
+	 * 
+	 * @param int $id
+	 * @return boolean
+	 */
+	protected function dealDefault($id)
+	{
+		
+		return true;
+	}
+	
+	/**
+	 * 当有role更新时，同样也会影响到组对应的role名称，当前组也要同时更新
+	 * 
+	 * @param string $role
+	 * @return boolean
+	 */
+	public function dealRoleUpdate($role)
+	{
+		
+	}
+	
+	/**
+	 * 当有role删除时，当前组就当恢复到role的一个默认值TCDbAuthManager::ROLE_DEFAULT
+	 * 
+	 * @param string $role
+	 * @return boolean
+	 */
+	public function dealRoleDelete($role)
+	{
+		
 	}
 
 	/**

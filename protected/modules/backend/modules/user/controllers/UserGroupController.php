@@ -20,7 +20,10 @@ class UserGroupController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>'View User Operation',
+			'admin'=>'Admin UserGroup Operation',
+			'delete'=>'Delete UserGroup Operation',
+			'update'=>'Update UserGroup Operation',
+			'create'=>'Cteate UserGroup Operation',
 		);
 	}
 
@@ -28,18 +31,29 @@ class UserGroupController extends TBackendController
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($parent_id = '')
 	{
 		$model=new UserGroup;
+		
+		if(!empty($parent_id)) {
+			$model->parent_id = $parent_id;
+		}
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
-		if(isset($_POST['UserGroup']))
-		{
+		if(isset($_POST['UserGroup'])) {
 			$model->attributes=$_POST['UserGroup'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()) {
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_userGroup', 'Create UserGroup Success'));
+				$this->redirect(array('admin'));
+			} else {
+				$errors = $model->getErrors();
+				foreach ($errors as $error) {
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_userGroup', 'Create UserGroup Failure ').$error[0]);//取第一个
+					break;
+				}
+			}
 		}
 
 		$this->render('create',array(
@@ -62,8 +76,16 @@ class UserGroupController extends TBackendController
 		if(isset($_POST['UserGroup']))
 		{
 			$model->attributes=$_POST['UserGroup'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()) {
+				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_userGroup', 'Update UserGroup Success'));
+				$this->redirect(array('admin'));
+			} else {
+				$errors = $model->getErrors();
+				foreach ($errors as $error) {
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('user_userGroup', 'Create UserGroup Failure ').$error[0]);//取第一个
+					break;
+				}
+			}
 		}
 
 		$this->render('update',array(
@@ -86,22 +108,12 @@ class UserGroupController extends TBackendController
 	}
 
 	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('UserGroup');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new UserGroup('search');
+		$model = new UserGroup('search');
+		
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['UserGroup']))
 			$model->attributes=$_GET['UserGroup'];

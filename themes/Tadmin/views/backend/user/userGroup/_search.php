@@ -1,45 +1,33 @@
 <?php
-/* @var $this UserGroupController */
-/* @var $model UserGroup */
+/* @var $this UserController */
+/* @var $model User */
 /* @var $form CActiveForm */
 ?>
 
-<div class="wide form">
+<?php 
+Yii::app()->clientScript->registerScript('search', "
+		jQuery(document).on('submit','.search-form form',function() {
+			$('#{$id}').yiiGridView('update', {
+				data: $(this).serialize()
+			});
+			return false;
+		});
+");
+?>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
-)); ?>
-
-	<div class="row">
-		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id'); ?>
+	<div class="box-tools search-form">
+	<?php $form=$this->beginWidget('CActiveForm', array(
+		'action'=>Yii::app()->createUrl($this->route),
+		'method'=>'get',
+	)); ?>
+	
+		<div class="input-group">
+			<?php echo $form->textField($model,'keyword',array('placeholder'=>'Search', 'style'=>'width: 150px;','class'=>'form-control input-sm pull-right')); ?>
+			<div class="input-group-btn">
+			<?php echo CHtml::htmlButton('<i class="fa fa-search"></i>',array('class'=>'btn btn-sm btn-default', 'type'=>'submit')); ?>
+			</div>
+		</div>
+	
+	<?php $this->endWidget(); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'parent_id'); ?>
-		<?php echo $form->textField($model,'parent_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>64)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>60,'maxlength'=>100)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Search'); ?>
-	</div>
-
-<?php $this->endWidget(); ?>
-
-</div><!-- search-form -->
+<!-- search-form -->

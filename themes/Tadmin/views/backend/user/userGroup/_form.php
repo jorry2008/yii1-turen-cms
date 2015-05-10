@@ -4,49 +4,89 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php 
+$form=$this->beginWidget('CActiveForm', array(
 	'id'=>'user-group-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'parent_id'); ?>
-		<?php echo $form->textField($model,'parent_id'); ?>
-		<?php echo $form->error($model,'parent_id'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'name', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'name'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'name'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'parent_id', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->dropDownList($model,'parent_id',$model->getUserGroupSelect(),array('disabled'=>!empty($model->parent_id),'class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'parent_id'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'role'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'role', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->textField($model,'role',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'role'); ?>
+		</div>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
-		<?php echo $form->error($model,'status'); ?>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'sort', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->numberField($model,'sort',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'sort'); ?>
+		</div>
 	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	
+	<style>
+	#UserGroup_status br {
+		display: none;
+	}
+	#UserGroup_status label {
+		padding-right: 25px;
+	}
+	</style>
+	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'status', array('class'=>'col-md-2 text-right form-label')); ?>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo $form->radioButtonList($model, 'status', array(UserGroup::USER_GROUP_YES=>Yii::t('user_userGroup', 'Enable'),UserGroup::USER_GROUP_NO=>Yii::t('user_userGroup', 'Disable'))); ?>
+			</div>
+			<span class="help-block">Example block-level help text here.</span>
+			<?php echo $form->error($model,'status'); ?>
+		</div>
 	</div>
-
-<?php $this->endWidget(); ?>
-
-</div><!-- form -->
+	
+	<div class="form-group">
+		<label class="col-md-2 text-right form-label"></label>
+		<div class="col-md-10">
+			<div class="col-md-7">
+			<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), array('class'=>'btn btn-primary')); ?>
+			</div>
+		</div>
+	</div>
+	
+<?php $this->endWidget(); ?><!-- form -->

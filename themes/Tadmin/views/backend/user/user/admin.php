@@ -44,7 +44,6 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 	                <div class="tab-pane active">
 	                	<?php 
 						$this->widget('TGridView', array(
-							'headerHtml'=>$searchHtml,
 							'batchHtml'=>$batchHtml,
 							
 							'id'=>$id,

@@ -15,6 +15,7 @@ class UserController extends TBackendController
 	
 	public function init()
 	{
+		parent::init();
 		//Yii::app()->user->setFlash(TWebUser::FOREVER, '永久警告测试');
 	}
 
@@ -35,17 +36,6 @@ class UserController extends TBackendController
 				'admin'=>'Admin User Operation',
 				);
 	}
-	
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
 
 	/**
 	 * Creates a new model.
@@ -55,7 +45,8 @@ class UserController extends TBackendController
 	{
 		$model = new User;
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
+		
 		if(isset($_POST['User'])) {
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
@@ -72,7 +63,7 @@ class UserController extends TBackendController
 			}
 		}
 		
-		$group_list = UserGroup::model()->getAllGroupsToArr();
+		$group_list = UserGroup::model()->getUserGroupSelect(false);//不要top category
 		
 		$this->render('create',array(
 			'model'=>$model,
@@ -91,7 +82,7 @@ class UserController extends TBackendController
 		$model = new User('update');
 		$model = $model->findByPk($id);
 		// Uncomment the following line if AJAX validation is needed
-		//$this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 		
 		$roleName = $model->getRoleNameByUserId();
 		$model->role = $roleName;
@@ -171,7 +162,6 @@ class UserController extends TBackendController
 	{
 		if(isset($_POST[$this->id.'-grid_c0'])) {
 			$ids = $_POST[$this->id.'-grid_c0'];
-			fb($ids);
 			$status = 0;
 			$criteria = new CDbCriteria;
 			$criteria->addInCondition('id', $ids);
@@ -186,22 +176,11 @@ class UserController extends TBackendController
 	}
 
 	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('User');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new User('search');
+		$model = new User('search');
 		$model->unsetAttributes();  // clear any default values
 // 		$model->with('user_group')->findAll();
 		

@@ -118,7 +118,7 @@
 		<label class="col-md-2 text-right form-label"></label>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo CHtml::submitButton($model->isNewRecord ? '创建' : '更新', array('class'=>'btn btn-primary')); ?>
+			<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), array('class'=>'btn btn-primary')); ?>
 			</div>
 		</div>
 	</div>

@@ -16,6 +16,9 @@
  */
 class TCDbAuthManager extends CDbAuthManager
 {
+	//一个默认的角色，授权为空，但无法删除
+	const ROLE_DEFAULT = 'role_default';
+	
 	public function init()
 	{
 		parent::init();
