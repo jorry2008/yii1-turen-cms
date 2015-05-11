@@ -50,8 +50,6 @@ class UserController extends TBackendController
 		if(isset($_POST['User'])) {
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
-				$roleName = $_POST['User']['role'];
-				$model->assign($roleName);
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Create User Success'));
 				$this->redirect(array('admin'));
 			} else {
@@ -63,11 +61,8 @@ class UserController extends TBackendController
 			}
 		}
 		
-		$group_list = UserGroup::model()->getUserGroupSelect(false);//不要top category
-		
 		$this->render('create',array(
 			'model'=>$model,
-			'group_list'=>$group_list,
 			'role_list'=>$model->getRoles(),
 		));
 	}
@@ -84,9 +79,6 @@ class UserController extends TBackendController
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 		
-		$roleName = $model->getRoleNameByUserId();
-		$model->role = $roleName;
-		
 		if(isset($_POST['User'])) {
 			if(empty($_POST['User']['password'])) {
 				unset($_POST['User']['password']);
@@ -94,8 +86,6 @@ class UserController extends TBackendController
 			
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
-				$roleName = $_POST['User']['role'];
-				$model->assign($roleName);
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Update User Success'));
 				$this->redirect(array('admin'));
 			} else {
@@ -107,12 +97,9 @@ class UserController extends TBackendController
 			}
 		}
 		
-		$group_list = UserGroup::model()->getAllGroupsToArr();
 		$model->password = '';
-		
 		$this->render('update',array(
 			'model'=>$model,
-			'group_list'=>$group_list,
 			'role_list'=>$model->getRoles(),
 		));
 	}

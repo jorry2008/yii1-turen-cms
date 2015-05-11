@@ -79,7 +79,11 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 								),
 								'name',
 								'role',
-								'is_default',
+								array(
+									'name'=>'is_default',
+									'type'=>'raw',
+									'value'=>'($data->is_default)?\'<span class="label label-success">Yes</span>\':\'<a class="btn btn-primary btn-xs" href="javascript:;" title="" data-toggle="tooltip" data-original-title="Setting Default"><i class="fa fa-gear "></i></a>\'',
+								),
 								array(
 									'name'=>'status',
 									'type'=>'raw',

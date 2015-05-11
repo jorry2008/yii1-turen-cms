@@ -179,7 +179,7 @@ class UserGroup extends CActiveRecord
 	
 	/**
 	 * 返回现一个经过分类排序的user group列表
-	 * //self::MAX_PAGE_NUM
+	 * self::MAX_PAGE_NUM
 	 * 
 	 * @return array
 	 */
