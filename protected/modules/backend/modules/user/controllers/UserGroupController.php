@@ -33,17 +33,6 @@ class UserGroupController extends TBackendController
 	 */
 	public function actionCreate($parent_id = '')
 	{
-		/**
-		 * 
-		 * $roleName = $model->getRoleNameByUserId();
-		$model->role = $roleName;
-		 * $roleName = $_POST['User']['role'];
-				$model->assign($roleName);
-		 * $roleName = $_POST['User']['role'];
-				$model->assign($roleName);
-				
-		 * 
-		 */
 		$model=new UserGroup;
 		
 		if(!empty($parent_id)) {

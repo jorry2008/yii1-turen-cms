@@ -169,6 +169,16 @@ class User extends CActiveRecord
 		return CPasswordHelper::hashPassword($password);
 	}
 	
+// 	public function getUserRole($id = '')
+// 	{
+// 		if($id) {
+// 			$group = self::model()->with('user_group')->findByPk($id)->user_group;
+// 		} else {
+// 			$group = $this->with('user_group')->user_group;
+// 		}
+// 		return $group->role;
+// 	}
+	
 	/**
 	 * 角色授权，保证唯一
 	 * @param string $role

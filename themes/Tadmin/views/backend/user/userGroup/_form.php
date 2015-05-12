@@ -31,7 +31,8 @@ $form=$this->beginWidget('CActiveForm', array(
 		<?php echo $form->labelEx($model,'parent_id', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->dropDownList($model,'parent_id',$model->getUserGroupSelect(),array('disabled'=>!empty($model->parent_id),'class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php //实现为当前分类添加子分类的效果?>
+			<?php echo $form->dropDownList($model,'parent_id',$model->getUserGroupSelect(),array('disabled'=>(!empty($model->parent_id) && ($this->getAction()->id == 'create')),'class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'parent_id'); ?>
@@ -42,7 +43,7 @@ $form=$this->beginWidget('CActiveForm', array(
 		<?php echo $form->labelEx($model,'role', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textField($model,'role',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->dropDownList($model,'role',Yii::app()->authManager->getAuthItemsForSelects(CAuthItem::TYPE_ROLE),array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'role'); ?>

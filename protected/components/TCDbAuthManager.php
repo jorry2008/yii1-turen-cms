@@ -19,6 +19,9 @@ class TCDbAuthManager extends CDbAuthManager
 	//一个默认的角色，授权为空，但无法删除
 	const ROLE_DEFAULT = 'role_default';
 	
+	//系统中所有的role对象
+	private $roles = array();
+	
 	public function init()
 	{
 		parent::init();
@@ -46,6 +49,24 @@ class TCDbAuthManager extends CDbAuthManager
 		}
 		
 		return $cols;
+	}
+	
+	/**
+	 *
+	 * 获取指定类型的操作item
+	 * @param int $col
+	 * @return array
+	 */
+	public function getAuthItemsForSelects($type = CAuthItem::TYPE_OPERATION)
+	{
+		if(!$this->roles) {
+			$this->roles = $this->getAuthItems($type);
+		}
+		$temp = array();
+		foreach ($this->roles as $name=>$authItem)
+			$temp[$authItem->name] = $authItem->description;
+		
+		return $temp;
 	}
 	
 	/**

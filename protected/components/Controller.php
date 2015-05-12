@@ -69,7 +69,8 @@ class Controller extends CController
 			//未匹配的给下一个权限过滤继续匹配
 			//最终未匹配的默认允许
 			array(
-				'system.web.auth.CAccessControlFilter',
+				//'system.web.auth.CAccessControlFilter',
+				'TCAccessControlFilter',
 				'rules'=>array(
 					array('allow', //允许所有用户在任何时候，都能通过'login', 'error', 'captcha', 'logout'
 						'actions'=>array_merge(array('login', 'error', 'captcha', 'logout'), $actions), 
@@ -96,19 +97,19 @@ class Controller extends CController
 					),
 					//array('allow', 'verbs'=>$verbs, 'message'=>Yii::t('common','Verb Access Denied.'), 'deniedCallback'=>$redirectMethod'),//请求类型过滤
 					//'expression'=>'!$user->isGuest && $user->level==2',//表达式验证
-// 					array('allow',
-// 						'roles'=>array('Administrator'),
-// 						'message'=>Yii::t('common','Role Access Denied.'),
-// 						'deniedCallback'=>$redirectMethod,
-// 					),
+					array('allow',
+						'roles'=>array('Administrator'),
+						'message'=>Yii::t('common','Role Access Denied.'),
+						'deniedCallback'=>$redirectMethod,
+					),
 					//array('allow', 'roles'=>array('updateTopic'=>array('topic'=>$topic)))),
 					
 					//由匹配机制可知，所有未捕获的权限都将在最后禁止访问，从而实现严格的权限认证
-// 					array('deny',
-// 						'users'=>array('*'),
-// 						'message'=>Yii::t('common','Uncaught Permissions Matching.'),
-// 						'deniedCallback'=>$redirectMethod,
-// 					),
+					array('deny',
+						'users'=>array('*'),
+						'message'=>Yii::t('common','Uncaught Permissions Matching.'),
+						'deniedCallback'=>$redirectMethod,
+					),
 				),
 			),
 		);

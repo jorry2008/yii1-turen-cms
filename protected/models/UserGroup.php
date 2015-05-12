@@ -142,8 +142,7 @@ class UserGroup extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 		$criteria=new CDbCriteria;
-		$criteria->order = 'sort ASC';
-	
+		
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('role',$this->role,true);
@@ -153,8 +152,17 @@ class UserGroup extends CActiveRecord
 		return new TCActiveDataProvider($this, array(
 				'isMuliSort'=>true,//开启无限级分类
 				'parent_id'=>0,//开始父id为0
-					
+				
+				//条件
 				'criteria'=>$criteria,
+				//排序
+				'sort'=>array(
+					'class'=>'CSort',//指定排序类
+					//'multiSort'=>true,//连续排序
+					'defaultOrder'=>array(//指定默认排序的属性
+						'sort'=>CSort::SORT_ASC,//降序排列
+					)
+				),
 				//条件
 		// 			'criteria'=>array(
 				// 				'condition'=>'status=1',
@@ -165,10 +173,6 @@ class UserGroup extends CActiveRecord
 		// 			'countCriteria'=>array(
 				// 				'condition'=>'status=1',
 				// 				// 'order' and 'with' clauses have no meaning for the count query
-				// 			),
-				//排序
-		// 			'sort'=>array(
-				// 				//
 				// 			),
 				//分页
 				'pagination'=>array(
