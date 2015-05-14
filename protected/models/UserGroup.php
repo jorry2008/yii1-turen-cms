@@ -17,6 +17,9 @@ class UserGroup extends CActiveRecord
 	const USER_GROUP_YES = 1;
 	const USER_GROUP_NO = 0;
 	
+	//一个默认的组，授权为空，但无法删除
+	const ROLE_DEFUALT = 'group_defualt';
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -211,17 +214,6 @@ class UserGroup extends CActiveRecord
 	{
 		
 		return true;
-	}
-	
-	/**
-	 * 当有role更新时，同样也会影响到组对应的role名称，当前组也要同时更新
-	 * 
-	 * @param string $role
-	 * @return boolean
-	 */
-	public function dealRoleUpdate($role)
-	{
-		
 	}
 	
 	/**

@@ -193,11 +193,21 @@ return array(
 		),
 			
 		//这里可以指定也可以默认以优先的方式获取
+		//注意：如果YII_DEBUG开启，则显示的是异常界面exception，如果关闭正式环境则是报错异常显示界面error
+		//而如果开启调试则与异常界面无关~
+		//正常上线：指定显示错误的路径
+		//优先级：1.errorAction指定在布局内部显示，2.开启调试显示exception，3.关闭调试显示error
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-			//'errorAction'=>'site/error',//默认的内容，非常专业
-			'adminInfo' => '980522557@qq.com',
+			//如果指定了这个路径，则系统还可以参与布局
+			'errorAction'=>'backend/manage/default/error',//指定错误显示界面路径
+			'adminInfo'=>'980522557@qq.com',
+			'maxSourceLines'=>100,
+			'maxTraceSourceLines'=>100,
+// 			'adminInfo'=>'980522557@qq.com',
+// 			'discardOutput'=>true,
 		),
+		
 		/*
 		'urlManager'=>array(
 			'urlFormat'=>'path',

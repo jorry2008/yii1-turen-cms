@@ -12,6 +12,9 @@ class RoleController extends TBackendController
 	 */
 	//public $layout='//layouts/column2';
 	
+	//一个默认的角色，授权为空，但无法删除
+	const ROLE_DEFUALT = 'role_defualt';
+	
 	public $active;
 	
 	public function init()
@@ -27,13 +30,11 @@ class RoleController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>'View Role Operation',
+				'admin'=>'Admin Role Operation',
 				'create'=>'Create Role Operation',
 				'update'=>'Update Role Operation',
 				'delete'=>'Delete Role Operation',
-				'index'=>'Index Role Operation',
-				'admin'=>'Admin Role Operation',
-				'addAuthToRole'=>'Add Auth To Role Operation',
+				'config'=>'Permission Config Operation',
 		);
 	}
 
@@ -56,7 +57,7 @@ class RoleController extends TBackendController
 			} else {
 				$errors = $model->getErrors();
 				foreach ($errors as $error) {
-					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Create Role Failure ').$error[0]);//取第一个
+					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Create Role Failure').' '.$error[0]);//取第一个
 					break;
 				}
 			}
@@ -75,24 +76,34 @@ class RoleController extends TBackendController
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$oldName = $id;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['AuthItem'])) {
-			$model->attributes = $_POST['AuthItem'];
-			if($model->save()) {
-				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('auth_role', 'Update Role Success'));
-				$this->redirect(array('admin'));
-			} else {
-				$errors = $model->getErrors();
-				foreach ($errors as $error) {
-					Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Update Role Failure ').$error[0]);//取第一个
-					break;
+		
+		if($id == self::ROLE_DEFUALT) {
+			Yii::app()->user->setFlash(TWebUser::WARNING, Yii::t('auth_role', 'Is not allowed to update').' '.$id);
+		} else {
+			if(isset($_POST['AuthItem'])) {
+				$model->attributes = $_POST['AuthItem'];
+				if($model->save()) {
+					//同时更新组里面的角色名
+					if($model->name != $oldName) {
+						UserGroup::model()->updateAll(array('role'=>$model->name), 'role=:role', array(':role'=>$oldName));
+					}
+					
+					Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('auth_role', 'Update Role Success'));
+					$this->redirect(array('admin'));
+				} else {
+					$errors = $model->getErrors();
+					foreach ($errors as $error) {
+						Yii::app()->user->setFlash(TWebUser::DANGER, Yii::t('auth_role', 'Update Role Failure').' '.$error[0]);//取第一个
+						break;
+					}
 				}
 			}
 		}
-
+		
 		$this->render('update',array(
 			'model'=>$model,
 			'action'=>'update',
@@ -132,8 +143,6 @@ class RoleController extends TBackendController
 			//提示更新成功
 			Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('common', 'Update Role Success'));
 			$this->redirect(array('config', 'id'=>$id));
-			//提示没有更新
-			//Yii::app()->user->setFlash(TWebUser::WARNING, Yii::t('common', 'Update Role Failure'));
 		}
 		
 		$tasksAndOperations = $auth->getTasksAndOperations();
@@ -155,8 +164,22 @@ class RoleController extends TBackendController
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
+		$oldName = $id;
+		//不允许删除默认角色
+		if($id == self::ROLE_DEFUALT) {
+			//throw new Exception('不允许删除默认角色');
+			$result = array(
+					'status'=>'0',
+					'message'=>Yii::t('auth_role', 'Is not allowed to delete').' '.$id,
+			);
+			echo CJSON::encode($result);
+			Yii::app()->end();
+		} else {
+			$this->loadModel($id)->delete();
+			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别
+			UserGroup::model()->updateAll(array('role'=>self::ROLE_DEFUALT), 'role=:role', array(':role'=>$oldName));
+		}
+		
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -200,8 +223,7 @@ class RoleController extends TBackendController
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='role-form')
-		{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='role-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

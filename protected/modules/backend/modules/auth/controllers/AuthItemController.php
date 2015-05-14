@@ -19,12 +19,10 @@ class AuthItemController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>'View AuthItem Operation',
+				'admin'=>'Admin AuthItem Operation',
 				'create'=>'Create AuthItem Operation',
 				'update'=>'Update AuthItem Operation',
 				'delete'=>'Delete AuthItem Operation',
-				'index'=>'Index AuthItem Operation',
-				'admin'=>'Admin AuthItem Operation',
 		);
 	}
 	
@@ -45,17 +43,6 @@ class AuthItemController extends TBackendController
 			return $typeList;
 		else
 			return isset($typeList[$i])?$typeList[$i]:'';
-	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
 	}
 
 	/**
@@ -120,17 +107,6 @@ class AuthItemController extends TBackendController
 	}
 
 	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('AuthItem');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
@@ -171,43 +147,5 @@ class AuthItemController extends TBackendController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	}
-	
-	public function actionSetUser()
-	{
-		$authManager = Yii::app()->authManager;
-		$userId = Yii::app()->user->id;
-		//fb($userId);
-		
-		
-		fb('所有的操作');
-		fb($authManager->getAuthItems(CAuthItem::TYPE_OPERATION));
-		
-		fb('所有的任务');
-		fb($authManager->getAuthItems(CAuthItem::TYPE_TASK));
-		
-		fb('所有角色');
-		fb($authManager->getAuthItems(CAuthItem::TYPE_ROLE));
-		
-		
-		
-		
-		//$authManager->assign($itemName,$userId);
-		//fb($authManager);
-		//fb($this->id);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }

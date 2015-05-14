@@ -57,7 +57,7 @@ Yii::app()->clientScript->registerScript('batch', "
 	            		echo (($key+1)%$col == 0)?'<div class="row">':'';
 	            		?>
 	            		<div class="col-md-4">
-					        <div class="box box-solid">
+					        <div class="box box-solid normal_font">
 					            <div class="box-header with-border">
 					                <?php echo CHtml::checkBox($task->name.'[]', in_array($task->name, $selectItems), array('id'=>$task->name, 'class'=>'task_on', 'value'=>$task->name, 'data-type'=>'task'));?>
 					                <h3 class="box-title"><?php echo CHtml::label(Yii::t('auth_role', $task->description), $task->name);?></h3>

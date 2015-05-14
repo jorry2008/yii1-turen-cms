@@ -14,6 +14,7 @@ class DefaultController extends TBackendController
 	{
 		return array(
 				'index'=>'Index Default Operation',
+				'error'=>'Error Default Operation',
 				);
 	}
 	
@@ -32,5 +33,22 @@ class DefaultController extends TBackendController
 		fb($user->getState('loginTime'));
 		
 		$this->render('index',array());
+	}
+	
+	
+	//错误信息显示
+	public function actionError()
+	{
+		$error = Yii::app()->errorHandler->error;
+		$error['admin'] = Yii::app()->errorHandler->adminInfo;
+		$error['version'] = '1.1';
+		$error['time'] = time();//Yii::app()->locale->getDateFormatter()->formatDateTime(time(),'short');
+		
+		if($error) {
+			if(Yii::app()->request->isAjaxRequest)
+				echo $error['message'];
+			else
+				$this->render('//system/error'.$error['code'], array('data'=>$error));
+		}
 	}
 }

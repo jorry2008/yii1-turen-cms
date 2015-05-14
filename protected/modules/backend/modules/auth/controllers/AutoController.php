@@ -22,11 +22,9 @@ class AutoController extends TBackendController
 	 */
 	public function actionDeal()
 	{
-		//C:\xampp\htdocs\turen.pw\protected\modules\backend\modules
 		$path = Yii::getPathOfAlias('application.modules.backend.modules');
 		$moudleNames = Yii::app()->modules['backend']['modules'];
 		$controllers = $this->getAllControllers($path, $moudleNames);
-		//fb($controllers);exit;
 		$this->createRbac($controllers);
 	}
 	
@@ -76,7 +74,6 @@ class AutoController extends TBackendController
 					//加载controller并实例化，返回路由
 					$controllerPath = $c;
 					require_once $controllerPath;
-					// C:\xampp\htdocs\turen.pw\protected\modules\backend\modules\auth\controllers\AuthItemController.php
 					$className = substr(($f = basename($controllerPath)), 0, strpos($f, '.'));
 					
 					if(is_subclass_of($className, 'TBackendController')) {
@@ -90,7 +87,6 @@ class AutoController extends TBackendController
 						//创建控制器task
 						if(($item = $auth->getAuthItem($tempRoute)) === null) {
 							$t = ucwords(trim(str_replace('backend', '', str_replace('/', ' ', $tempRoute)))).' '.'Task';
-							//fb($t);exit;
 							$item = $auth->createAuthItem($tempRoute, CAuthItem::TYPE_TASK, $t);
 							if ($auth instanceof CDbAuthManager) {
 								$auth->save();

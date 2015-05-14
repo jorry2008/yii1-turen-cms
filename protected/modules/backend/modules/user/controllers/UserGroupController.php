@@ -11,7 +11,6 @@ class UserGroupController extends TBackendController
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	//public $layout='//layouts/column2';
-
 	
 	/**
 	 * 每一个子controller都是一个操作的开始，这里创建一个操作权限
@@ -34,14 +33,20 @@ class UserGroupController extends TBackendController
 	public function actionCreate($parent_id = '')
 	{
 		$model=new UserGroup;
-		
 		if(!empty($parent_id)) {
 			$model->parent_id = $parent_id;
 		}
-
+		
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
-
+		
+		//默认组处理
+		//判断系统中有没有默认组，如果没有则此新组为默认组
+// 		$defualtGroup = UserGroup::model()->findAll('is_default=:is_default', array(':is_default'=>1));
+// 		if(!$defualtGroup) {
+				
+// 		}
+		
 		if(isset($_POST['UserGroup'])) {
 			$model->attributes=$_POST['UserGroup'];
 			if($model->save()) {
@@ -100,6 +105,22 @@ class UserGroupController extends TBackendController
 	 */
 	public function actionDelete($id)
 	{
+		$model = $this->loadModel($id);
+		
+		if($model == self::ROLE_DEFUALT) {
+			//throw new Exception('不允许删除默认角色');
+			$result = array(
+					'status'=>'0',
+					'message'=>Yii::t('auth_role', 'Is not allowed to delete').' '.$id,
+			);
+			echo CJSON::encode($result);
+			Yii::app()->end();
+		} else {
+			$this->loadModel($id)->delete();
+			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别
+			UserGroup::model()->updateAll(array('role'=>self::ROLE_DEFUALT), 'role=:role', array(':role'=>$oldName));
+		}
+		
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

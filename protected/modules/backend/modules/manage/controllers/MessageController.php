@@ -19,10 +19,9 @@ class MessageController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
+				'admin'=>'Admin Message Operation',
 				'update'=>'Update Message Operation',
 				'batchUpdate'=>'BatchUpdate Message Operation',
-				'index'=>'Index Message Operation',
-				'admin'=>'Admin Message Operation',
 				);
 	}
 	
@@ -77,17 +76,6 @@ class MessageController extends TBackendController
 		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('SourceMessage');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
 	}
 
 	/**

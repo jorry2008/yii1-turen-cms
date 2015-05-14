@@ -26,15 +26,13 @@ class UserController extends TBackendController
 	public static function getRbacConf()
 	{
 		return array(
-				'view'=>'View User Operation',
+				'admin'=>'Admin User Operation',
 				'create'=>'Create User Operation',
 				'update'=>'Update User Operation',
 				'delete'=>'Delete User Operation',
 				'batchDelete'=>'BatchDelete User Operation',
 				'batchStatus'=>'BatchStatus User Operation',
-				'index'=>'Index User Operation',
-				'admin'=>'Admin User Operation',
-				);
+			);
 	}
 
 	/**
@@ -50,6 +48,9 @@ class UserController extends TBackendController
 		if(isset($_POST['User'])) {
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
+				//授权
+				$this->assign($model);
+				
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Create User Success'));
 				$this->redirect(array('admin'));
 			} else {
@@ -63,7 +64,6 @@ class UserController extends TBackendController
 		
 		$this->render('create',array(
 			'model'=>$model,
-			'role_list'=>$model->getRoles(),
 		));
 	}
 
@@ -86,6 +86,9 @@ class UserController extends TBackendController
 			
 			$model->attributes = $_POST['User'];
 			if($model->save()) {
+				//授权
+				$this->assign($model);
+				
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_user', 'Update User Success'));
 				$this->redirect(array('admin'));
 			} else {
@@ -100,7 +103,6 @@ class UserController extends TBackendController
 		$model->password = '';
 		$this->render('update',array(
 			'model'=>$model,
-			'role_list'=>$model->getRoles(),
 		));
 	}
 
@@ -183,6 +185,29 @@ class UserController extends TBackendController
 			$this->render('admin',array('model'=>$model));
 		else  
 			$this->renderPartial('admin',array('model'=>$model));
+	}
+	
+	/**
+	 * 给用户授权
+	 *
+	 * @param User $userId
+	 */
+	protected function assign(User $user)
+	{
+		$userId = $user->id;
+		$userGroup = UserGroup::model()->findByPk($user->user_group_id);
+	
+		$auth = Yii::app()->authManager;
+		//清除所有角色
+		$items = $auth->getAuthAssignments($userId);
+		foreach ($items as $item) {
+			if($auth->isAssigned($item->itemName, $userId)) {
+				$auth->revoke($item->itemName, $userId);
+			}
+		}
+	
+		//角色授权
+		$auth->assign($userGroup->role, $userId);
 	}
 	
 	/**

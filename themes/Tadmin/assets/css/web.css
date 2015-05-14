@@ -89,7 +89,9 @@
 	right: 26px;
     top: 7px;
 }
-
+.normal_font label, .normal_font .box-title {
+	font-weight: normal;
+}
 
 
 

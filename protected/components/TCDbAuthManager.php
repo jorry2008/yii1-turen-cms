@@ -16,22 +16,12 @@
  */
 class TCDbAuthManager extends CDbAuthManager
 {
-	//一个默认的角色，授权为空，但无法删除
-	const ROLE_DEFAULT = 'role_default';
-	
 	//系统中所有的role对象
 	private $roles = array();
 	
-	public function init()
-	{
-		parent::init();
-		
-		
-	}
-	
 	/**
-	 *
 	 * 按列的方式取出Task及下面的operation
+	 * 
 	 * @param int $col
 	 * @return array
 	 */
@@ -52,8 +42,8 @@ class TCDbAuthManager extends CDbAuthManager
 	}
 	
 	/**
-	 *
 	 * 获取指定类型的操作item
+	 * 
 	 * @param int $col
 	 * @return array
 	 */
@@ -71,6 +61,7 @@ class TCDbAuthManager extends CDbAuthManager
 	
 	/**
 	 * 批量删除指定task或者role的所有子item，通过
+	 * 
 	 * @param string $name
 	 */
 	public function removeAllItems($name)
@@ -84,7 +75,12 @@ class TCDbAuthManager extends CDbAuthManager
 		}
 	}
 	
-	//删除task和operation及它们之间的关联
+	/**
+	 * 删除task和operation及它们之间的关联
+	 * //注意，一定要保留role
+	 * 
+	 * @return void
+	 */
 	public function clearTaskAndOperation()
 	{
 		//获取所有task
