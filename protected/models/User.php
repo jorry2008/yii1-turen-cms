@@ -74,12 +74,19 @@ class User extends CActiveRecord
 	/**
 	 * (non-PHPdoc)
 	 * @see CActiveRecord::beforeSave()
-	 * //CPasswordHelper::verifyPassword($password,$this->password);
+	 * CPasswordHelper::verifyPassword($password,$this->password);
 	 */
 	protected function beforeSave()
 	{
-		if(!empty($this->password) && $this->scenario == 'update')
+		//更新的时候，没有填写密码时，恢复为之前的加密密码
+		if(empty($this->password) && $this->scenario == 'update') {
+			$className = __CLASS__;
+			$oldUser = new $className;
+			$user = $oldUser->findByPk($this->id);
+			$this->password = $user->password;//恢复以前的密码
+		} else {
 			$this->password = $this->hashPassword($this->password);
+		}
 		
 		$this->date_added = time();
 		$this->login_ip = Yii::app()->request->getUserHostAddress();

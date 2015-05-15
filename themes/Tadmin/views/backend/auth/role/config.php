@@ -60,7 +60,7 @@ Yii::app()->clientScript->registerScript('batch', "
 					        <div class="box box-solid normal_font">
 					            <div class="box-header with-border">
 					                <?php echo CHtml::checkBox($task->name.'[]', in_array($task->name, $selectItems), array('id'=>$task->name, 'class'=>'task_on', 'value'=>$task->name, 'data-type'=>'task'));?>
-					                <h3 class="box-title"><?php echo CHtml::label(Yii::t('auth_role', $task->description), $task->name);?></h3>
+					                <h3 class="box-title"><?php echo CHtml::label(Yii::t('common', $task->description), $task->name);?></h3>
 					            </div><!-- /.box-header -->
 					            <div class="box-body">
 					                <ul>
@@ -68,7 +68,8 @@ Yii::app()->clientScript->registerScript('batch', "
 					                	foreach ($operations as $operation) {
 						                	echo '<li>';
 						                	echo CHtml::checkBox($task->name.'[]', (in_array($task->name, $selectItems) || in_array($operation->name, $selectItems)), array('id'=>$operation->name, 'class'=>'operation_on', 'value'=>$operation->name, 'data-type'=>'operation'));
-						                	echo CHtml::label(Yii::t('auth_role', $operation->description), $operation->name);
+						                	echo '&nbsp;';
+						                	echo CHtml::label(Yii::t('common', $operation->description), $operation->name);
 							                echo '</li>';
 										}
 										?>

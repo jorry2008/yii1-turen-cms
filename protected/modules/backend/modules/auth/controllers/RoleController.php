@@ -13,7 +13,7 @@ class RoleController extends TBackendController
 	//public $layout='//layouts/column2';
 	
 	//一个默认的角色，授权为空，但无法删除
-	const ROLE_DEFUALT = 'role_defualt';
+	const ROLE_DEFAULT = 'role_default';
 	
 	public $active;
 	
@@ -71,17 +71,20 @@ class RoleController extends TBackendController
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
+	 * @param string $id the ID of the model to be updated
 	 */
 	public function actionUpdate($id)
 	{
+// 		$auth = Yii::app()->authManager;
+// 		$authItem = $auth->getAuthItem($id);
 		$model=$this->loadModel($id);
-		$oldName = $id;
-
+		//异常验证，这个一样得有，否则在验证的时候已经做了更新
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 		
-		if($id == self::ROLE_DEFUALT) {
+		$oldName = $id;
+		
+		if((isset($_POST['AuthItem']['name']) && $model->name != $_POST['AuthItem']['name']) && $id == self::ROLE_DEFAULT) {
 			Yii::app()->user->setFlash(TWebUser::WARNING, Yii::t('auth_role', 'Is not allowed to update').' '.$id);
 		} else {
 			if(isset($_POST['AuthItem'])) {
@@ -166,7 +169,7 @@ class RoleController extends TBackendController
 	{
 		$oldName = $id;
 		//不允许删除默认角色
-		if($id == self::ROLE_DEFUALT) {
+		if($id == self::ROLE_DEFAULT) {
 			//throw new Exception('不允许删除默认角色');
 			$result = array(
 					'status'=>'0',
@@ -177,7 +180,7 @@ class RoleController extends TBackendController
 		} else {
 			$this->loadModel($id)->delete();
 			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别
-			UserGroup::model()->updateAll(array('role'=>self::ROLE_DEFUALT), 'role=:role', array(':role'=>$oldName));
+			UserGroup::model()->updateAll(array('role'=>self::ROLE_DEFAULT), 'role=:role', array(':role'=>$oldName));
 		}
 		
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -213,7 +216,7 @@ class RoleController extends TBackendController
 	{
 		$model=AuthItem::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+			throw new CHttpException(404,Yii::t('common', 'The requested page does not exist.'));
 		return $model;
 	}
 

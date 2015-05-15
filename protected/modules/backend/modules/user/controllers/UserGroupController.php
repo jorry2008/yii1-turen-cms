@@ -23,6 +23,7 @@ class UserGroupController extends TBackendController
 			'delete'=>'Delete UserGroup Operation',
 			'update'=>'Update UserGroup Operation',
 			'create'=>'Cteate UserGroup Operation',
+			'setDefault'=>'Set Default UserGroup Operation',
 		);
 	}
 
@@ -40,15 +41,14 @@ class UserGroupController extends TBackendController
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 		
-		//默认组处理
-		//判断系统中有没有默认组，如果没有则此新组为默认组
-// 		$defualtGroup = UserGroup::model()->findAll('is_default=:is_default', array(':is_default'=>1));
-// 		if(!$defualtGroup) {
-				
-// 		}
-		
 		if(isset($_POST['UserGroup'])) {
 			$model->attributes=$_POST['UserGroup'];
+			//取默认值的组对象
+			$defaultUserGroups = UserGroup::model()->findAllByAttributes(array('is_default'=>1));
+			//确定是否需要默认值
+			if(!$defaultUserGroups) {
+				$model->is_default = 1;
+			}
 			if($model->save()) {
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_userGroup', 'Create UserGroup Success'));
 				$this->redirect(array('admin'));
@@ -107,18 +107,13 @@ class UserGroupController extends TBackendController
 	{
 		$model = $this->loadModel($id);
 		
-		if($model == self::ROLE_DEFUALT) {
-			//throw new Exception('不允许删除默认角色');
-			$result = array(
-					'status'=>'0',
-					'message'=>Yii::t('auth_role', 'Is not allowed to delete').' '.$id,
-			);
-			echo CJSON::encode($result);
+		if($model->is_default == 1) {
+			echo 0;//系统默认的只取字符串
 			Yii::app()->end();
 		} else {
 			$this->loadModel($id)->delete();
 			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别
-			UserGroup::model()->updateAll(array('role'=>self::ROLE_DEFUALT), 'role=:role', array(':role'=>$oldName));
+			UserGroup::model()->updateAll(array('role'=>self::ROLE_default), 'role=:role', array(':role'=>$oldName));
 		}
 		
 		$this->loadModel($id)->delete();
@@ -142,6 +137,34 @@ class UserGroupController extends TBackendController
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	/**
+	 * 设置默认分组，默认组只能有一个
+	 * 
+	 * @param int $id
+	 */
+	public function actionSetdefault($id)
+	{
+		//清除所有默认
+		UserGroup::model()->updateAll(array('is_default'=>0), 'is_default=:is_default', array(':is_default'=>1));
+		
+		$model = $this->loadModel($id);
+		$model->is_default = 1;
+		if($model->save()) {
+			$result = array(
+				'status'=>'1',
+				'message'=>Yii::t('user_userGroup', 'Set Default UserGroup Success!'),
+			);
+		} else {
+			$result = array(
+				'status'=>'0',
+				'message'=>Yii::t('user_userGroup', 'Set Default UserGroup Failure!'),
+			);
+		}
+		
+		echo CJSON::encode($result);
+		Yii::app()->end();
 	}
 
 	/**

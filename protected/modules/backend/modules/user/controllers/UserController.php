@@ -80,11 +80,10 @@ class UserController extends TBackendController
 		$this->performAjaxValidation($model);
 		
 		if(isset($_POST['User'])) {
-			if(empty($_POST['User']['password'])) {
-				unset($_POST['User']['password']);
-			}
-			
 			$model->attributes = $_POST['User'];
+			if(empty($_POST['User']['password'])) {
+				$model->password = '';
+			}
 			if($model->save()) {
 				//授权
 				$this->assign($model);

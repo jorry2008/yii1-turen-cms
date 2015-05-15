@@ -47,7 +47,7 @@ $searchHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),
 							array(
 								'name'=>'type',
 								'type'=>'raw',
-								'value'=>'Yii::t(\'auth_role\', \'Role\')',
+								'value'=>'Yii::t(\'common\', \'Role\')',
 							),
 							'description',
 							'bizrule',

@@ -78,11 +78,16 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 						// 			'checkBoxHtmlOptions'=>array('class'=>'ace'),
 								),
 								'name',
-								'role',
+								array(
+									'name'=>'role',
+									'type'=>'raw',
+									//一一查出角色名对应的角色描述
+									'value'=>'Yii::app()->authManager->getAuthItem($data->role)->description',
+								),
 								array(
 									'name'=>'is_default',
 									'type'=>'raw',
-									'value'=>'($data->is_default)?\'<span class="label label-success">Yes</span>\':\'<a class="btn btn-primary btn-xs" href="javascript:;" title="" data-toggle="tooltip" data-original-title="Setting Default"><i class="fa fa-gear "></i></a>\'',
+									'value'=>'($data->is_default)?\'<span class="label label-success">Yes</span>\':\'<a class="btn btn-primary btn-xs set_default" href="javascript:;" title="" data-toggle="tooltip" data-original-title="Setting Default"><i class="fa fa-gear "></i></a>\'',
 								),
 								array(
 									'name'=>'status',
@@ -127,6 +132,7 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 									'deleteButtonLabel'=>'<i class="fa fa-bitbucket"></i>',
 									'deleteButtonImageUrl'=>0,
 									//'deleteConfirmation'=>'您确定要删除吗？',
+									'afterDelete'=>'function(link,success,data){if(success && data==0){alert("Delete UserGroup Failure!");}}',
 								),
 							),
 						)); ?>
@@ -141,3 +147,51 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 </div>
 <!-- /.row -->
 
+
+<?php 
+//设置为默认
+$defaultUrl = Yii::app()->createUrl(('backend/user/userGroup/setDefault'));
+if(Yii::app()->request->enableCsrfValidation) {
+	$csrfTokenName = Yii::app()->request->csrfTokenName;
+	$csrfToken = Yii::app()->request->csrfToken;
+	$csrf = "&'$csrfTokenName'='$csrfToken'";
+} else
+	$csrf = '';
+
+//处理js
+Yii::app()->clientScript->registerScript('set_default', "
+//全局变量，记录触发者
+var the_this;
+$(document).on('click', '#{$id}'+' .set_default', function(){//因为要刷新，所以应该旧延迟绑定
+	the_this = $(this);
+	//提交处理
+	var tr = the_this.parents('tr').eq(0);
+	var id = tr.find('.checkbox-column input').val();
+	$.ajax({
+		type: 'GET',
+		dataType: 'json',
+		url: '{$defaultUrl}',
+		data: 'id='+id,
+		success: function(data) {
+			if(data.status == '1') {
+				jQuery('#{$id}').yiiGridView('update');//更新整个grid
+			} else {
+				alert(data.message);
+			}
+		},
+		error: function(XHR) {
+			console.debug(XHR);
+			return false;
+			//return afterDelete(th, false, XHR);
+		},
+		beforeSend: function() {
+			//$(this).prepend('<i class=\"fa fa-refresh fa-spin\"></i>');
+		},
+		complete: function() {
+			//$(this).find('.fa').remove();
+		}
+	});
+	return false;
+});
+");
+?>

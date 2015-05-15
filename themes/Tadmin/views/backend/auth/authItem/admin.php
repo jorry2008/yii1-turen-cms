@@ -70,7 +70,13 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 									'type'=>'raw',
 									'value'=>'AuthItemController::getTypeName($data->type)',
 								),
-								'description',
+								//授权翻译
+								array(
+									'name'=>'description',
+									'type'=>'raw',
+									//多处有用到，只有任务和操作才支持数据库翻译，角色不需要翻译
+									'value'=>'($data->type != CAuthItem::TYPE_ROLE)?Yii::t("common", $data->description):$data->description',
+								),
 								'bizrule',
 								'data',
 								array(
