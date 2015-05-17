@@ -18,7 +18,7 @@
 		<?php echo $form->labelEx($model,'name', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'name'); ?>
@@ -29,7 +29,7 @@
 		<?php echo $form->labelEx($model,'type', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->dropDownList($model,'type',AuthItemController::getTypeName(),array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->dropDownList($model,'type',AuthItemController::getTypeName(),array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'type'); ?>
@@ -40,7 +40,7 @@
 		<?php echo $form->labelEx($model,'description', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textArea($model,'description',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->textArea($model,'description',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'description'); ?>
@@ -51,7 +51,7 @@
 		<?php echo $form->labelEx($model,'bizrule', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textArea($model,'bizrule',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->textArea($model,'bizrule',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'bizrule'); ?>
@@ -62,7 +62,7 @@
 		<?php echo $form->labelEx($model,'data', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textArea($model,'data',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->textArea($model,'data',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'data'); ?>

@@ -20,7 +20,7 @@ $form=$this->beginWidget('CActiveForm', array(
 		<?php echo $form->labelEx($model,'name', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'name'); ?>
@@ -32,7 +32,7 @@ $form=$this->beginWidget('CActiveForm', array(
 		<div class="col-md-10">
 			<div class="col-md-7">
 			<?php //实现为当前分类添加子分类的效果?>
-			<?php echo $form->dropDownList($model,'parent_id',$model->getUserGroupSelect(),array('disabled'=>(!empty($model->parent_id) && ($this->getAction()->id == 'create')),'class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->dropDownList($model,'parent_id',$model->getUserGroupSelect(),array('disabled'=>(!empty($model->parent_id) && ($this->getAction()->id == 'create')),'class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'parent_id'); ?>
@@ -43,7 +43,9 @@ $form=$this->beginWidget('CActiveForm', array(
 		<?php echo $form->labelEx($model,'role', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->dropDownList($model,'role',Yii::app()->authManager->getAuthItemsForSelects(CAuthItem::TYPE_ROLE),array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php //没有管理员权限，按钮应该不可用?>
+			<?php echo $form->dropDownList($model,'role',Yii::app()->authManager->getAuthItemsForSelects(CAuthItem::TYPE_ROLE),array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'),'style'=>'width:75%;margin-right:5px;')); ?>
+			<?php echo CHtml::link(Yii::t('common', 'Edit'), array('/backend/auth/role/admin'), array('target'=>'_blank', 'class'=>'btn btn-primary'));?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'role'); ?>
@@ -54,7 +56,7 @@ $form=$this->beginWidget('CActiveForm', array(
 		<?php echo $form->labelEx($model,'sort', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->numberField($model,'sort',array('class'=>'form-control col-md-5','placeholder'=>'Enter..')); ?>
+			<?php echo $form->numberField($model,'sort',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
 			<span class="help-block">Example block-level help text here.</span>
 			<?php echo $form->error($model,'sort'); ?>

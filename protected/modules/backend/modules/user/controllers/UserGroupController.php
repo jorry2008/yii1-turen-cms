@@ -106,14 +106,17 @@ class UserGroupController extends TBackendController
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
+		$oldId = $id;//原来的组id
+		$default_user_group = UserGroup::model()->find('is_default=:is_default', array(':is_default'=>1));
+		$default_user_group_id = $default_user_group->id;
 		
 		if($model->is_default == 1) {
 			echo 0;//系统默认的只取字符串
 			Yii::app()->end();
 		} else {
-			$this->loadModel($id)->delete();
+			$model->delete();
 			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别
-			UserGroup::model()->updateAll(array('role'=>self::ROLE_default), 'role=:role', array(':role'=>$oldName));
+			User::model()->updateAll(array('user_group_id'=>$default_user_group_id), 'user_group_id=:user_group_id', array(':user_group_id'=>$oldId));
 		}
 		
 		$this->loadModel($id)->delete();

@@ -7,6 +7,8 @@
  *
  */
 
+Yii::import('system.web.auth.CAccessControlFilter');
+
 class TCAccessControlFilter extends CAccessControlFilter
 {
 	protected function preFilter($filterChain)
@@ -22,12 +24,12 @@ class TCAccessControlFilter extends CAccessControlFilter
 		$verb=$request->getRequestType();
 		$ip=$request->getUserHostAddress();
 
-		//超级管理员
+		//超级管理员(表达式解析目前还不能正常执行，暂时就这样处理)
 		if($user->getState('isAdmin')) return true;
 		
 		foreach($this->getRules() as $rule)
 		{
-			if($rule->roles)
+			if($rule->roles)//初始化一定得有一个默认值
 				$rule->roles = array($filterChain->controller->getUniqueId(), $filterChain->controller->getRoute());
 			
 			if(($allow=$rule->isUserAllowed($user,$filterChain->controller,$filterChain->action,$ip,$verb))>0) // allowed

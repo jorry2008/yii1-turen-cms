@@ -38,7 +38,7 @@ $this->renderPartial('_modal', array('model'=>$model, 'id'=>$id));
 					$label = $menu['label'];
 					$url = $menu['url'];
 					$class = ($url == 'javascript:;')?' class="active"':'';
-					$tip = Yii::t('user_user', 'Click Into '.$label);
+					$tip = Yii::t('common', 'Click Into').' '.Yii::t('common', $label);
 					echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link($label, $url).'</li>';
 				}
 				echo '</ul>';

@@ -237,7 +237,7 @@
 							<li>
 								<a href="#">模块管理</a>
 							</li>
-							<li><?php echo CHtml::link('多语言',array('/backend/manage/message/admin'));?></li>
+							<li><?php echo CHtml::link('在线翻译',array('/backend/manage/message/admin'));?></li>
 							<li>
 								<a href="#">多货币</a>
 							</li>
