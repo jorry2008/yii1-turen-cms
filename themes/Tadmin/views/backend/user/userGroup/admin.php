@@ -28,14 +28,14 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 					$label = $menu['label'];
 					$url = $menu['url'];
 					$class = ($url == 'javascript:;')?' class="active"':'';
-					$tip = Yii::t('common', 'Click Into').' '.Yii::t('common', $label);
-					echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link($label, $url).'</li>';
+					$tip = Yii::t('common', 'Click Into').'('.Yii::t('common', $label).')';
+					echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link(Yii::t('common', $label), $url).'</li>';
 				}
 				echo '</ul>';
 				?>
 				
 				<?php 
-				echo $searchHtml//搜索框
+				echo $searchHtml;//搜索框
 				?>
 	            <div class="tab-content clearfix">
 	                <div class="tab-pane active">
@@ -79,15 +79,17 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 								),
 								'name',
 								array(
+									//fa-edit
+									//backend/auth/role/config&id=Editor
 									'name'=>'role',
 									'type'=>'raw',
 									//一一查出角色名对应的角色描述
-									'value'=>'Yii::app()->authManager->getAuthItem($data->role)->description',
+									'value'=>'CHtml::link(\'<i class="fa fa-external-link"></i>\', array(\'/backend/auth/role/config\', \'id\'=>$data->role), array(\'class\'=>\'btn btn-primary btn-xs\',\'data-toggle\'=>\'tooltip\',\'data-original-title\'=>Yii::t(\'user_userGroup\', \'Config The Auth\'),\'target\'=>\'_blank\')).\'&nbsp;\'.Yii::app()->authManager->getAuthItem($data->role)->description',
 								),
 								array(
 									'name'=>'is_default',
 									'type'=>'raw',
-									'value'=>'($data->is_default)?\'<span class="label label-success">Yes</span>\':\'<a class="btn btn-primary btn-xs set_default" href="javascript:;" title="" data-toggle="tooltip" data-original-title="Setting Default"><i class="fa fa-gear "></i></a>\'',
+									'value'=>'($data->is_default)?\'<span class="label label-success">Yes</span>\':CHtml::link(\'<i class="fa fa-gear"></i>\', \'javascript:;\', array(\'class\'=>\'btn btn-primary btn-xs set_default\',\'data-toggle\'=>\'tooltip\',\'data-original-title\'=>Yii::t(\'user_userGroup\', \'Setting Default\')))',
 								),
 								array(
 									'name'=>'status',

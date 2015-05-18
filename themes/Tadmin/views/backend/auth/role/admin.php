@@ -19,14 +19,14 @@ $searchHtml = $this->renderPartial('_search', array('model'=>$model, 'id'=>$id),
 				$label = $menu['label'];
 				$url = $menu['url'];
 				$class = ($url == 'javascript:;')?' class="active"':'';
-				$tip = Yii::t('common', 'Click Into').' '.Yii::t('common', $label);
-				echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link($label, $url).'</li>';
+				$tip = Yii::t('common', 'Click Into').'('.Yii::t('common', $label).')';
+				echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link(Yii::t('common', $label), $url).'</li>';
 			}
 			echo '</ul>';
 			?>
 			
 			<?php 
-			echo $searchHtml//搜索框
+			echo $searchHtml;//搜索框
 			?>
             <div class="tab-content clearfix">
                 <div class="tab-pane active">

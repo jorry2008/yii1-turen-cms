@@ -20,7 +20,8 @@ $this->breadcrumbs=array(
 				$label = $menu['label'];
 				$url = $menu['url'];
 				$class = ($url == 'javascript:;')?' class="active"':'';
-				echo '<li'.$class.'>'.CHtml::link($label, $url).'</li>';
+				$tip = Yii::t('common', 'Click Into').'('.Yii::t('common', $label).')';
+				echo '<li data-toggle="tooltip" data-original-title="'.$tip.'"'.$class.'>'.CHtml::link(Yii::t('common', $label), $url).'</li>';
 			}
 			echo '</ul>';
 			?>

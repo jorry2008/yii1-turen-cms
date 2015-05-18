@@ -50,6 +50,9 @@ class UserGroupController extends TBackendController
 				$model->is_default = 1;
 			}
 			if($model->save()) {
+				//更新组授权
+				$this->updateAssign($model->role, $model->id);
+				
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_userGroup', 'Create UserGroup Success'));
 				$this->redirect(array('admin'));
 			} else {
@@ -76,12 +79,14 @@ class UserGroupController extends TBackendController
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
-		if(isset($_POST['UserGroup']))
-		{
+		if(isset($_POST['UserGroup'])) {
 			$model->attributes=$_POST['UserGroup'];
 			if($model->save()) {
+				//更新组授权
+				$this->updateAssign($model->role, $model->id);
+				
 				Yii::app()->user->setFlash(TWebUser::SUCCESS, Yii::t('user_userGroup', 'Update UserGroup Success'));
 				$this->redirect(array('admin'));
 			} else {
@@ -102,11 +107,11 @@ class UserGroupController extends TBackendController
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
+	 * 注意：这里要完成->将原来在此组里面的会员，转移到默认会员组中
 	 */
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
-		$oldId = $id;//原来的组id
 		$default_user_group = UserGroup::model()->find('is_default=:is_default', array(':is_default'=>1));
 		$default_user_group_id = $default_user_group->id;
 		
@@ -114,12 +119,20 @@ class UserGroupController extends TBackendController
 			echo 0;//系统默认的只取字符串
 			Yii::app()->end();
 		} else {
-			$model->delete();
 			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别
-			User::model()->updateAll(array('user_group_id'=>$default_user_group_id), 'user_group_id=:user_group_id', array(':user_group_id'=>$oldId));
+			User::model()->updateAll(array('user_group_id'=>$default_user_group_id), 'user_group_id=:user_group_id', array(':user_group_id'=>$model->id));
+			
+			//删除组的授权
+			$auth = Yii::app()->authManager;
+			$items = $auth->getAuthAssignments($model->id);
+			foreach ($items as $item) {
+				if($auth->isAssigned($item->itemName, $model->id)) {
+					$auth->revoke($item->itemName, $model->id);
+				}
+			}
+			
+			$model->delete();
 		}
-		
-		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -140,6 +153,27 @@ class UserGroupController extends TBackendController
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	/**
+	 * 给用户组授权
+	 *
+	 * @param string $roleItem
+	 * @param int $userGroupId
+	 */
+	protected function updateAssign($itemName, $userGroupId)
+	{
+		$auth = Yii::app()->authManager;
+		//清除所有角色
+		$items = $auth->getAuthAssignments($userGroupId);
+		foreach ($items as $item) {
+			if($auth->isAssigned($item->itemName, $userGroupId)) {
+				$auth->revoke($item->itemName, $userGroupId);
+			}
+		}
+		
+		//角色授权
+		$auth->assign($itemName, $userGroupId);
 	}
 	
 	/**
