@@ -1,4 +1,5 @@
 <?php
+define('START', microtime(true));
 
 require dirname(__FILE__).'/FirePHPCore/fb.php';
 ob_start();
@@ -15,6 +16,7 @@ $app = Yii::createWebApplication($config);
 $app->run();
 
 
+fb('当前执行时间：'.(microtime(true)-START).'秒');
 fb($_COOKIE);
 fb($_SESSION);
 

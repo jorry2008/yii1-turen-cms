@@ -9,6 +9,7 @@ class Bootstrap extends CComponent
     /*
      * 每加一个插件都在此处注册一下并使用
      * 将它们定义为一个一个的包
+    const PLUGIN_AFFIX = 'core';
     const PLUGIN_AFFIX = 'affix';
     const PLUGIN_ALERT = 'alert';
     const PLUGIN_BUTTON = 'button';
@@ -23,15 +24,32 @@ class Bootstrap extends CComponent
     const PLUGIN_TRANSITION = 'transition';
     const PLUGIN_TYPEAHEAD = 'typeahead';
     */
-    
-    /**
-     * @var array $assetsJs of javascript library names to be registered when initializing the library.
-     */
-    public $assetsJs = array();
-    /**
-     * @var array $assetsCss of style library names to be registered when initializing the library.
-     */
-    public $assetsCss = array();
+	
+	/**
+	 * 核心js、css文件（目前不作依赖，手动控制即可）
+	 */
+	public $core = array(
+				'js'=>array(
+						'/bootstrap/js/bootstrap.min.js',
+						'/dist/js/app.min.js',
+				),
+				'css'=>array(
+						'/font-awesome-4.3.0/css/font-awesome.min.css',
+						'/ionicons-2.0.1/css/ionicons.min.css',
+						'/bootstrap/css/bootstrap.min.css',
+						'/dist/css/AdminLTE.min.css',
+						'/dist/css/skins/skin-blue.min.css',
+				),
+			);
+	
+	public $layer = array(
+			'js'=>array('/ext/layer/layer.js'),
+			);
+	
+	public $laydate = array(
+			'js'=>array('/ext/laydate/laydate.js'),
+	);
+	
     /**
      * @var string holds the published assets
      */
@@ -42,24 +60,39 @@ class Bootstrap extends CComponent
      */
     public function init()
     {
-        /* ensure all widgets - plugins are accessible to the library */
     	//Yii::app()->setImport(array());
-    	//响应设计
+    	//响应设计，以下参数，只与当前使用的这个前端框架相关
     	Yii::app()->getClientScript()->registerMetaTag('example', 'description', null, array('lang' => 'en'));
     	Yii::app()->getClientScript()->registerMetaTag('width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no','viewport');
-    	 
+		
     	//加载远程字体
 //     	Yii::app()->getClientScript()->registerCssFile('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 //     	Yii::app()->getClientScript()->registerCssFile('http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css');
+    }
+    
+    /**
+     * @param string $module
+     */
+    public function register($module = '')
+    {
+    	if(!empty($module)) {
+    		if(!is_null($module = $this->{$module})) {
+    			foreach ($module as $type=>$mods) {
+    				foreach ($mods as $value) {
+    					$value = YII_DEBUG?str_replace('.min.', '.', $value):$value;
+    					if($type == 'js') {
+    						$this->registerAssetJs($value);
+    					} elseif($type == 'css') {
+    						$this->registerAssetCss($value);
+    					}
+    				}
+    			}
+    		} else {
+    			//前端扩展不存在
+    		}
+    	}
     	
-        /* register css assets */
-        foreach ($this->assetsCss as $css) {
-            $this->registerAssetCss($css);
-        }
-        /* register js assets */
-        foreach ($this->assetsJs as $js) {
-            $this->registerAssetJs($js);
-        }
+    	return $this;
     }
 
     /**
@@ -87,7 +120,7 @@ class Bootstrap extends CComponent
      * @see CClientScript::registerScriptFile
      * @return $this
      */
-    public function registerAssetJs($jsFile, $position = CClientScript::POS_END)
+    protected function registerAssetJs($jsFile, $position = CClientScript::POS_END)
     {
     	//导入之前依赖jquery，这里只依赖一次
         Yii::app()->getClientScript()->registerCoreScript('jquery')->registerScriptFile($this->getAssetsUrl()."{$jsFile}", $position);
@@ -100,12 +133,12 @@ class Bootstrap extends CComponent
      * @param string $media the media that the CSS file should be applied to. If empty, it means all media types.
      * @return $this
      */
-    public function registerAssetCss($cssFile, $media = '')
+    protected function registerAssetCss($cssFile, $media = '')
     {
         Yii::app()->getClientScript()->registerCssFile($this->getAssetsUrl()."{$cssFile}", $media);
         return $this;
     }
-
+    
     /**
      * Registers a specific Bootstrap plugin using the given selector and options.
      * @param string $name the plugin name.

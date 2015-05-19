@@ -15,7 +15,6 @@ $form=$this->beginWidget('CActiveForm', array(
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
-	
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'name', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">

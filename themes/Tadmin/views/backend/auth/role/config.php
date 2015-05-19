@@ -9,10 +9,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu = array();
-$this->menu[] = array('label'=>Yii::t('common', 'List'), 'url'=>array('admin'));
-$this->menu[] = array('label'=>Yii::t('common', 'Update'), 'url'=>array('update', 'id'=>$id));
-$this->menu[] = array('label'=>Yii::t('common', 'Create'), 'url'=>array('create'));
-$this->menu[] = array('label'=>Yii::t('common', 'Auth'), 'url'=>'javascript:;');
+$this->menu[] = array('label'=>'List', 'url'=>array('admin'));
+$this->menu[] = array('label'=>'Update', 'url'=>array('update', 'id'=>$id));
+$this->menu[] = array('label'=>'Create', 'url'=>array('create'));
+$this->menu[] = array('label'=>'Auth', 'url'=>'javascript:;');
 ?>
 
 <?php 

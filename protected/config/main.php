@@ -121,18 +121,7 @@ return array(
 		//adminlte组件，只是声明，是否使用由前后台自身决定
 		'adminlte' => array(
 			'class' => 'adminlte.components.Bootstrap',   //加载核心接口
-			//导入基础js、css文件，其余的组件在使用的时候按需导入即可
-			'assetsJs'=>array(
-				YII_DEBUG?'/bootstrap/js/bootstrap.js':'/bootstrap/js/bootstrap.min.js',
-				YII_DEBUG?'/dist/js/app.js':'/dist/js/app.min.js',
-			),
-			'assetsCss'=>array(
-				YII_DEBUG?'/font-awesome-4.3.0/css/font-awesome.css':'/font-awesome-4.3.0/css/font-awesome.min.css',
-				YII_DEBUG?'/ionicons-2.0.1/css/ionicons.css':'/ionicons-2.0.1/css/ionicons.min.css',
-				YII_DEBUG?'/bootstrap/css/bootstrap.css':'/bootstrap/css/bootstrap.min.css',
-				YII_DEBUG?'/dist/css/AdminLTE.css':'/dist/css/AdminLTE.min.css',
-				YII_DEBUG?'/dist/css/skins/skin-blue.css':'/dist/css/skins/skin-blue.min.css',
-			),
+			//可以修改配置各种组件
 		),
 		//文件缓存
 		'cache' => array (

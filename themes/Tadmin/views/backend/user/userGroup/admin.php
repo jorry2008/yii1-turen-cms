@@ -1,9 +1,10 @@
 <?php
 /* @var $this UserGroupController */
 /* @var $model UserGroup */
+$this->pageTitle = Yii::t('user_user', 'User Group Manage');
 
 $this->breadcrumbs=array(
-	'Manage',
+	Yii::t('common', 'Manage'),
 );
 
 // $this->menu=array(
@@ -133,8 +134,8 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 									'deleteButtonOptions'=>array('class'=>'btn btn-danger btn-xs','data-toggle'=>'tooltip','title'=>Yii::t('common','Delete The Item')),//a
 									'deleteButtonLabel'=>'<i class="fa fa-bitbucket"></i>',
 									'deleteButtonImageUrl'=>0,
-									//'deleteConfirmation'=>'您确定要删除吗？',
-									'afterDelete'=>'function(link,success,data){if(success && data==0){alert("Delete UserGroup Failure!");}}',
+									//'deleteConfirmation'=>'Yii::t(\'\')',
+									'afterDelete'=>'function(link,success,data){layer.msg(data, {shift: 6})}',
 								),
 							),
 						)); ?>
@@ -152,13 +153,14 @@ $batchHtml = $this->renderPartial('_batch', array('model'=>$model, 'id'=>$id),tr
 
 <?php 
 //设置为默认
-$defaultUrl = Yii::app()->createUrl(('backend/user/userGroup/setDefault'));
 if(Yii::app()->request->enableCsrfValidation) {
 	$csrfTokenName = Yii::app()->request->csrfTokenName;
 	$csrfToken = Yii::app()->request->csrfToken;
-	$csrf = "&'$csrfTokenName'='$csrfToken'";
+	$csrf = array($csrfTokenName=>$csrfToken);
 } else
-	$csrf = '';
+	$csrf = array();
+
+$defaultUrl = Yii::app()->createUrl('backend/user/userGroup/setDefault', $csrf);
 
 //处理js
 Yii::app()->clientScript->registerScript('set_default', "
@@ -187,7 +189,7 @@ $(document).on('click', '#{$id}'+' .set_default', function(){//因为要刷新�
 			//return afterDelete(th, false, XHR);
 		},
 		beforeSend: function() {
-			//$(this).prepend('<i class=\"fa fa-refresh fa-spin\"></i>');
+			layer.msg('加载中', {icon: 16});
 		},
 		complete: function() {
 			//$(this).find('.fa').remove();
@@ -195,5 +197,6 @@ $(document).on('click', '#{$id}'+' .set_default', function(){//因为要刷新�
 	});
 	return false;
 });
+
 ");
 ?>

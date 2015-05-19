@@ -116,7 +116,9 @@ class UserGroupController extends TBackendController
 		$default_user_group_id = $default_user_group->id;
 		
 		if($model->is_default == 1) {
-			echo 0;//系统默认的只取字符串
+			//$result = array('status'=>0, 'msg'=>Yii::t('user_userGroup', 'Default Group can\'t delete!'));
+			//echo CJSON::encode($result);
+			echo Yii::t('user_userGroup', 'Default Group can\'t delete!');
 			Yii::app()->end();
 		} else {
 			//整理，如果当前删除的这个角色已经被相关的用户组使用了，那么就当处理组转移到默认组别

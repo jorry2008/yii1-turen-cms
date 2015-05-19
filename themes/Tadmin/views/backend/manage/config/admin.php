@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Settings'=>array('index'),
-	'Manage',
+	Yii::t('common', 'Manage'),
 );
 
 $this->menu=array(
