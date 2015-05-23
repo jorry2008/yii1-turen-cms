@@ -87,18 +87,18 @@ $('.modal-footer #modal-save').on('click', function(){
       <div class="modal-body">
         <?php echo CHtml::form();?>
           <div class="form-group">
-            <label for="recipient-name" class="control-label">源语言:</label>
+            <label for="recipient-name" class="control-label"><?php echo Yii::t('manage_message', 'Source Lang:');?></label>
             <p id="message-source"></p>
           </div>
           <div class="form-group">
-            <label for="message-text" class="control-label">译文:</label>
+            <label for="message-text" class="control-label"><?php echo Yii::t('manage_message', 'Translation:');?></label> 
             <?php echo CHtml::textArea('message', '', array('class'=>'form-control', 'id'=>'message-text'));?>
           </div>
         <?php echo CHtml::endForm()?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="modal-save">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo Yii::t('manage_message', 'Close');?></button>
+        <button type="button" class="btn btn-primary" id="modal-save"><?php echo Yii::t('common', 'Save');?></button>
       </div>
     </div>
   </div>

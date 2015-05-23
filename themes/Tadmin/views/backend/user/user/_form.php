@@ -13,61 +13,66 @@
 	//'enableAjaxValidation'=>true,
 	'enableClientValidation'=>true,
 )); ?>
-	<?php echo $form->errorSummary($model); ?>
+	<?php //echo $form->errorSummary($model); ?>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'user_name', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textField($model,'user_name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->textField($model,'user_name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'user_name'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'user_name'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'nick_name', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textField($model,'nick_name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->textField($model,'nick_name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'nick_name'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'nick_name'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'password', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->passwordField($model,'password',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->passwordField($model,'password',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'password'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'password'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'email', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->emailField($model,'email',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->emailField($model,'email',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'email'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'email'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'user_group_id', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->dropDownList($model, 'user_group_id', UserGroup::model()->getUserGroupSelect(false), array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'), 'style'=>'width:75%;margin-right:5px;')); ?>
-			<?php echo CHtml::link(Yii::t('user_user', 'New Create'), array('/backend/user/userGroup/admin'), array('target'=>'_blank', 'class'=>'btn btn-primary'));?>
+				<?php echo $form->dropDownList($model, 'user_group_id', UserGroup::model()->getUserGroupSelect(false), array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'user_group_id'); ?>
+			<div class="col-md-3"><?php echo CHtml::link(Yii::t('user_user', 'New Create'), array('/backend/user/userGroup/admin'), array('target'=>'_blank', 'class'=>'btn btn-sm btn-primary'));?></div>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'user_group_id'); ?></span>
+			</div>
 		</div>
 	</div>
 	
@@ -80,29 +85,31 @@
 	}
 	</style>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'status', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->radioButtonList($model, 'status', array(User::USER_YES=>Yii::t('user_user', 'Enable'),User::USER_NO=>Yii::t('user_user', 'Disable'))); ?>
+				<?php echo $form->radioButtonList($model, 'status', array(User::USER_YES=>Yii::t('user_user', 'Enable'),User::USER_NO=>Yii::t('user_user', 'Disable'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'status'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'status'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'is_admin', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->radioButtonList($model, 'is_admin', array(User::USER_YES=>Yii::t('user_user', 'Is Admin'),User::USER_NO=>Yii::t('user_user', 'No Admin'))); ?>
+				<?php echo $form->radioButtonList($model, 'is_admin', array(User::USER_YES=>Yii::t('user_user', 'Is Admin'),User::USER_NO=>Yii::t('user_user', 'No Admin'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'is_admin'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'user_group_id'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<label class="col-md-2 text-right form-label"></label>
 		<div class="col-md-10">
 			<div class="col-md-7">

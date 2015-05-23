@@ -11,57 +11,62 @@
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>true,
+	//'enableAjaxValidation'=>true,
+	'enableClientValidation'=>true,
 )); ?>
-	<?php echo $form->errorSummary($model); ?>
+	<?php //echo $form->errorSummary($model); ?>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'name', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->textField($model,'name',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'name'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'name'); ?></span>
+			</div>
 		</div>
 	</div>
 	
 	<?php echo $form->hiddenField($model, 'type',array('value'=>CAuthItem::TYPE_ROLE)); ?>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'description', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textArea($model,'description',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->textArea($model,'description',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'description'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'description'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'bizrule', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textArea($model,'bizrule',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->textArea($model,'bizrule',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'bizrule'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'bizrule'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<?php echo $form->labelEx($model,'data', array('class'=>'col-md-2 text-right form-label')); ?>
 		<div class="col-md-10">
 			<div class="col-md-7">
-			<?php echo $form->textArea($model,'data',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
+				<?php echo $form->textArea($model,'data',array('class'=>'form-control col-md-5','placeholder'=>Yii::t('common', 'Enter..'))); ?>
 			</div>
-			<span class="help-block">Example block-level help text here.</span>
-			<?php echo $form->error($model,'data'); ?>
+			<div class="col-md-7">
+				<span class="help-block"><?php echo $form->error($model,'data'); ?></span>
+			</div>
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix">
 		<label class="col-md-2 text-right form-label"></label>
 		<div class="col-md-10">
 			<div class="col-md-7">
