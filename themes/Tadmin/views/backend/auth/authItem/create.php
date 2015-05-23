@@ -5,8 +5,8 @@
 $this->pageTitle = Yii::t('user_user', 'Auth Item Create');
 
 $this->breadcrumbs=array(
-	'Mange Items'=>array('admin'),
-	'Create',
+	Yii::t('auth_authItem', 'Mange Items')=>array('admin'),
+	Yii::t('common', 'Create'),
 );
 
 // $this->menu=array(

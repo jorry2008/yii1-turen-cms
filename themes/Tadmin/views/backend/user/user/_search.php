@@ -22,7 +22,7 @@ Yii::app()->clientScript->registerScript('search', "
 	)); ?>
 	
 		<div class="input-group">
-			<?php echo $form->textField($model,'keyword',array('placeholder'=>'Search', 'style'=>'width: 150px;','class'=>'form-control input-sm pull-right')); ?>
+			<?php echo $form->textField($model,'keyword',array('placeholder'=>Yii::t('common', 'Keyword'), 'style'=>'width: 150px;','class'=>'form-control input-sm pull-right')); ?>
 			<div class="input-group-btn">
 			<?php echo CHtml::htmlButton('<i class="fa fa-search"></i>',array('class'=>'btn btn-sm btn-default', 'type'=>'submit')); ?>
 			</div>

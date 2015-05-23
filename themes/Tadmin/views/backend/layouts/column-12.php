@@ -7,19 +7,18 @@
 	    <header class="main-header">
 	    
 	        <!-- Logo固定在这里，不容易修改 -->
-	        <?php echo CHtml::link('土人系统', Yii::app()->homeUrl, array('class'=>'logo'));?>
+	        <?php echo CHtml::link(Yii::t('common', 'TUREN SYSTEM'), Yii::app()->homeUrl, array('class'=>'logo'));?>
 	        
 	        <!-- Header Navbar -->
 	        <nav class="navbar navbar-static-top" role="navigation">
 	        
 	            <!-- Sidebar toggle button-->
-	            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-	                <span class="sr-only">Toggle navigation</span>
-	            </a>
+	            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><span class="sr-only"></span></a>
 	            
 	            <!-- Navbar Right Menu -->
 	            <div class="navbar-custom-menu">
 	                <ul class="nav navbar-nav">
+	                	<li><a data-toggle="dropdown" class="" href="#"><i class="fa fa-arrow-down"></i></a></li><!-- fa-expand -->
 	                    <!-- Messages: style can be found in dropdown.less-->
 	                    <li class="dropdown messages-menu">
 	                        <!-- Menu toggle button -->
@@ -292,7 +291,7 @@
 	        <section class="content-header">
 	            <h1>
 	                <?php echo $this->pageTitle;?>
-	                <i><small>hi turen!</small></i>
+	                <i><small><?php echo Yii::t('common', 'hi turen!');?></small></i>
 	            </h1>
 <!-- 	            <ol class="breadcrumb"> -->
 <!-- 	                <li> -->
@@ -311,7 +310,7 @@
 				<!-- breadcrumbs -->
 				<?php 
 				//改变home链接
-				$homeLink = CHtml::link('<i class="fa fa-dashboard"></i> Home', Yii::app()->homeUrl);
+				$homeLink = CHtml::link('<i class="fa fa-dashboard"></i> '.Yii::t('common', 'Home'), Yii::app()->homeUrl);
 				$this->widget('zii.widgets.CBreadcrumbs', 
 					array('links'=>$this->breadcrumbs,'homeLink'=>$homeLink, 'tagName'=>'ol', 'htmlOptions'=>array('class'=>'breadcrumb'))
 				); 
