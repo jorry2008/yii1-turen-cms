@@ -3,7 +3,7 @@
 /* @var $model UserGroup */
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Manage')=>array('admin'),
+	Yii::t('common', 'User Group Manage')=>array('admin'),
 	Yii::t('common', 'Create'),
 );
 

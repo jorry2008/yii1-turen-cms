@@ -4,7 +4,7 @@
 $this->pageTitle = Yii::t('manage_message', 'Translation Manage');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Manage'),
+	Yii::t('common', 'Message Manage'),
 );
 
 // $this->menu=array(

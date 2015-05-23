@@ -2,7 +2,7 @@
 $this->pageTitle = Yii::t('manage_user', 'Manage Auth Items');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Manage'),
+	Yii::t('common', 'Auth Item Manage'),
 );
 // $this->menu=array(
 // 	array('label'=>'List AuthItem', 'url'=>array('index')),

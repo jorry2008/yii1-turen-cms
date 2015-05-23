@@ -4,7 +4,7 @@
 $this->pageTitle = Yii::t('user_user', 'Role Config Update');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Manage')=>array('admin'),
+	Yii::t('common', 'Role Manage')=>array('admin'),
 	Yii::t('common', 'Update'),
 );
 

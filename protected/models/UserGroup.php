@@ -69,6 +69,8 @@ class UserGroup extends CActiveRecord
 			'name' => Yii::t('userGroup', 'Name'),
 			'role' => Yii::t('userGroup', 'Role'),
 			'status' => Yii::t('userGroup', 'Status'),
+			'sort' => Yii::t('userGroup', 'Sort'),
+			'is_default' => Yii::t('userGroup', 'Is Default'),
 		);
 	}
 	
