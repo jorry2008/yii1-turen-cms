@@ -1,8 +1,8 @@
 <?php
-$this->pageTitle = Yii::t('manage_user', 'Manage Role');
+$this->pageTitle = Yii::t('auth_role', 'Role Manage');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Role Manage'),
+	Yii::t('auth_role', 'Role Manage'),
 );
 
 $id = $this->id.'-grid';

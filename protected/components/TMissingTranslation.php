@@ -9,7 +9,7 @@ class TMissingTranslation extends CComponent
 {
 	const DEFUALT = 'T';
 	
-	static function handleMissingTranslation($event)
+	static function handleMissingTranslation($event)// turen system
 	{
 		//数据库连接对象
 		$connection = $event->sender->getDbConnection();

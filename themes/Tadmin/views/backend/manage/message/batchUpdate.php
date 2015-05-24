@@ -1,19 +1,19 @@
 <?php
 /* @var $this UserController */
 /* @var $model User */
-$this->pageTitle = Yii::t('manage_message', 'Translation Update');
+$this->pageTitle = Yii::t('manage_message', 'Translation Batch Update');
 
 $this->breadcrumbs=array(
-	'Manage'=>array('admin'),
+	Yii::t('manage_message', 'Translation Manage')=>array('admin'),
 	//$model->id=>array('view','id'=>$model->id),
-	'Update',
+	Yii::t('common', 'Batch Update'),
 );
 
 $id = $this->getAction()->id;
 $this->menu = array();
-$this->menu[] = array('label'=>Yii::t('common', 'List'), 'url'=>($id == 'admin')?'javascript:;':array('admin'));
-$this->menu[] = array('label'=>Yii::t('common', 'batchUpdate'), 'url'=>($id == 'batchUpdate')?'javascript:;':array('update'));
-//$this->menu[] = array('label'=>Yii::t('common', 'Create'), 'url'=>($id == 'create')?'javascript:;':array('create'));
+$this->menu[] = array('label'=>'List', 'url'=>($id == 'admin')?'javascript:;':array('admin'));
+$this->menu[] = array('label'=>'Batch Update', 'url'=>($id == 'batchUpdate')?'javascript:;':array('update'));
+//$this->menu[] = array('label'=>'Create', 'url'=>($id == 'create')?'javascript:;':array('create'));
 ?>
 
 <?php 
@@ -69,7 +69,7 @@ $this->menu[] = array('label'=>Yii::t('common', 'batchUpdate'), 'url'=>($id == '
 					        <!-- /.row -->
 					        
 							<div class='text-center'>
-								<?php echo CHtml::htmlButton('<i class="fa fa-save"></i> save', array('class'=>'btn btn-primary','type'=>'submit'));?>
+								<?php echo CHtml::htmlButton('<i class="fa fa-save"></i> '.Yii::t('common', 'Save'), array('class'=>'btn btn-primary','type'=>'submit'));?>
 							</div>
 					                
 					    </div>

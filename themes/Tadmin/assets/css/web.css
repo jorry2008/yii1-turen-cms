@@ -99,7 +99,18 @@
     border-color: #dd4b39 !important;
     box-shadow: none;
 }
-
+.table-responsive table.table thead th a {
+	display: block;
+	float: left;
+	padding-right: 1.2em;
+	background: url("../images/sort/sort_both.png") no-repeat scroll right center;
+}
+.table-responsive table.table thead th a.asc {
+	background: url("../images/sort/sort_asc.png") no-repeat scroll right center;
+}
+.table-responsive table.table thead th a.desc {
+	background: url("../images/sort/sort_desc.png") no-repeat scroll right center;
+}
 
 
 

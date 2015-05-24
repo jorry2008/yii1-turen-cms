@@ -1,10 +1,10 @@
 <?php
 /* @var $this RoleController */
 /* @var $model AuthItem */
-$this->pageTitle = Yii::t('user_user', 'Role Update');
+$this->pageTitle = Yii::t('auth_role', 'Role Config');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Role Manage')=>array('admin'),
+	Yii::t('auth_role', 'Role Manage')=>array('admin'),
 	Yii::t('auth_role', 'Config'),
 );
 

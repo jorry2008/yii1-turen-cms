@@ -42,6 +42,25 @@ class MessageController extends TBackendController
 	}
 	
 	/**
+	 * 复合主键删除
+	 * 
+	 */
+	public function actionDelete()
+	{
+		$id = Yii::app()->request->getParam('id');
+		$language = $id['language'];
+		$id = $id['id'];
+		
+		$model = new Message();
+		$model->find('id=:id and language=:language', array(':id'=>$id, ':language'=>$language))->delete();
+		
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		//以上功能是，删除之后并以php的方式跳转到一个ajax指定的路径
+	}
+	
+	/**
 	 * Updates a particular model.
 	 * 单条更新
 	 * If update is successful, the browser will be redirected to the 'view' page.

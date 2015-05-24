@@ -4,7 +4,7 @@
 $this->pageTitle = Yii::t('user_user', 'Administrator Update');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'User Manage')=>array('admin'),
+	Yii::t('user_user', 'Administrator Manage')=>array('admin'),
 	$model->user_name,
 );
 ?>

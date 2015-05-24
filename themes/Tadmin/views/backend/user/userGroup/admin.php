@@ -1,10 +1,10 @@
 <?php
 /* @var $this UserGroupController */
 /* @var $model UserGroup */
-$this->pageTitle = Yii::t('user_user', 'User Group Manage');
+$this->pageTitle = Yii::t('user_userGroup', 'Administrator Group Manage');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'User Group Manage'),
+	Yii::t('user_userGroup', 'Administrator Group Manage'),
 );
 
 // $this->menu=array(

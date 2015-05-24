@@ -4,7 +4,7 @@
 $this->pageTitle = Yii::t('manage_message', 'Translation Manage');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Message Manage'),
+	Yii::t('manage_message', 'Translation Manage'),
 );
 
 // $this->menu=array(
@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 
 $id = $this->getAction()->id;
 $this->menu = array();
-$this->menu[] = array('label'=>Yii::t('common', 'List'), 'url'=>($id == 'admin')?'javascript:;':array('admin'));
+$this->menu[] = array('label'=>'List', 'url'=>($id == 'admin')?'javascript:;':array('admin'));
 //$this->menu[] = array('label'=>Yii::t('common', 'batchUpdate'), 'url'=>($id == 'batchUpdate')?'javascript:;':array('update'));
 //$this->menu[] = array('label'=>Yii::t('common', 'Create'), 'url'=>($id == 'create')?'javascript:;':array('create'));
 

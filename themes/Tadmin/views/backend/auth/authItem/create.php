@@ -2,10 +2,10 @@
 /* @var $this AuthItemController */
 /* @var $model AuthItem */
 
-$this->pageTitle = Yii::t('user_user', 'Auth Item Create');
+$this->pageTitle = Yii::t('auth_authItem', 'Auth Item Create');
 
 $this->breadcrumbs=array(
-	Yii::t('auth_authItem', 'Mange Items')=>array('admin'),
+	Yii::t('auth_authItem', 'Auth Item Manage')=>array('admin'),
 	Yii::t('common', 'Create'),
 );
 

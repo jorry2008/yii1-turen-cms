@@ -2,10 +2,10 @@
 /* @var $this UserGroupController */
 /* @var $model UserGroup */
 
-$this->pageTitle = Yii::t('user_userGroup', 'User Group Update');
+$this->pageTitle = Yii::t('user_userGroup', 'Administrator Group Update');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'User Group Manage')=>array('admin'),
+	Yii::t('user_userGroup', 'Administrator Group Manage')=>array('admin'),
 	$model->name,
 );
 // $this->menu

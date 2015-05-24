@@ -2,8 +2,10 @@
 /* @var $this UserGroupController */
 /* @var $model UserGroup */
 
+$this->pageTitle = Yii::t('user_userGroup', 'Administrator Group Create');
+
 $this->breadcrumbs=array(
-	Yii::t('common', 'User Group Manage')=>array('admin'),
+	Yii::t('user_userGroup', 'Administrator Group Create')=>array('admin'),
 	Yii::t('common', 'Create'),
 );
 

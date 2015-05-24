@@ -348,15 +348,13 @@
 	    <!-- Main Footer -->
 	    <footer class="main-footer">
 	        <!-- To the right -->
-	        <div class="pull-right hidden-xs">
-	            Anything you want
-	        </div>
+	        <div class="pull-right hidden-xs"><?php echo Yii::t('common', 'Anything you want');?></div>
 	        <!-- Default to the left -->
 	        <strong>
-	            Copyright &copy; 2015
-	            <a target="_blank" href="http://www.turen.pw">土人系统</a>.
+	            <?php echo Yii::t('common', 'Copyright');?> &copy; <?php echo date('Y', time());?>
+	            <?php echo CHtml::link(Yii::t('common', 'TUREN SYSTEM'), 'http://www.turen.pw', array('target'=>'_blank'));?>
 	        </strong>
-	        All rights reserved.
+	        <?php echo Yii::t('common', 'All rights reserved.');?>
 	    </footer>
 	</div>
 	<!-- ./wrapper -->

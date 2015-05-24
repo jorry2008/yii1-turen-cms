@@ -2,10 +2,10 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->pageTitle = Yii::t('user_user', 'Role Create');
+$this->pageTitle = Yii::t('auth_role', 'Role Create');
 
 $this->breadcrumbs=array(
-	Yii::t('common', 'Role Manage')=>array('admin'),
+	Yii::t('auth_role', 'Role Manage')=>array('admin'),
 	Yii::t('common', 'Create'),
 );
 ?>
