@@ -6,6 +6,7 @@
  */
 class TWebUser extends CWebUser
 {
+	const DEFAULT_USER_GROUP_ID = 'default_user_group_id';
 	const DANGER = 'danger';
 	const WARNING = 'warning';
 	const INFO = 'info';
@@ -51,9 +52,14 @@ class TWebUser extends CWebUser
 	{
 		if($allowCaching && $params===array() && isset($this->_access[$operation]))
 			return $this->_access[$operation];
-	
+		
 		$user = User::model()->findByPk($this->getId());
-		$access=Yii::app()->getAuthManager()->checkAccess($operation,$user->user_group_id,$params);//$this->getId()
+		if($user) {//如果是未登录状态，这里需要处理一个user_group_id
+			$user_group_id = $user->user_group_id;
+		} else {
+			$user_group_id = self::DEFAULT_USER_GROUP_ID;
+		}
+		$access=Yii::app()->getAuthManager()->checkAccess($operation,$user_group_id,$params);//$this->getId()
 		if($allowCaching && $params===array())
 			$this->_access[$operation]=$access;
 	
