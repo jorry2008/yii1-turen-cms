@@ -95,8 +95,9 @@
 .form-group label.error {
     color: #dd4b39;
 }
-.form-group input.error, .form-group div.error input, .form-group textarea.error, .form-group div.error textarea {
+.form-group input.error, .form-group div.error input, .form-group textarea.error, .form-group div.error textarea, #LoginForm_verifyCode.error {
     border-color: #dd4b39 !important;
+	border-size: 1px;
     box-shadow: none;
 }
 .table-responsive table.table thead th a {
