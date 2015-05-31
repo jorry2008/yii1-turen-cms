@@ -25,14 +25,14 @@ $this->breadcrumbs=array(
         	<?php //echo $form->labelEx($model,'user_name'); ?>
             <?php echo $form->emailField($model, 'email', array('class'=>'form-control', 'placeholder'=>Yii::t('user_common', 'Email'))); ?>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            <?php //echo $form->error($model,'email'); ?>
+            <?php echo $form->error($model,'email'); ?>
         </div>
         
         <div class="form-group has-feedback">
 			<?php //echo $form->labelEx($model,'password'); ?>
 			<?php echo $form->passwordField($model, 'password', array('class'=>'form-control', 'placeholder'=>Yii::t('user_common', 'Password'))); ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            <?php //echo $form->error($model,'password'); ?>
+            <?php echo $form->error($model,'password'); ?>
         </div>
         
         <div class="row">
@@ -41,7 +41,7 @@ $this->breadcrumbs=array(
 					<label>
 						<?php //echo $form->label($model,'rememberMe'); ?>
 						<?php echo $form->checkBox($model,'rememberMe').Yii::t('user_common', 'Remember Me'); ?>
-						<?php //echo $form->error($model,'rememberMe'); ?>
+						<?php echo $form->error($model,'rememberMe'); ?>
 					</label>
 				</div>
             </div>
@@ -52,7 +52,7 @@ $this->breadcrumbs=array(
             	<?php $this->widget('CCaptcha',array('clickableImage'=>true,'showRefreshButton'=>false,
             			'imageOptions'=>array('alt'=>Yii::t('user_common', 'Click Update'),'title'=>Yii::t('user_common', 'Click Update'),'style'=>'cursor:pointer'))); ?>
             	
-            	<?php //echo $form->error($model,'verifyCode'); ?>
+            	<?php echo $form->error($model,'verifyCode'); ?>
             </div>
             <?php endif; ?>
             <!-- /.col -->
